@@ -1,0 +1,135 @@
+
+body {-webkit-transform:translate3d(0,0,0);}
+
+page-login {
+
+    .#{$ns}login{
+
+        &__header{
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 10;
+            padding-top: 5rem;
+            text-align: center;
+
+            img{
+                width: 100px;
+            }
+        }
+
+        &__logo{
+            margin: 0 auto 4rem;
+            background: url('../assets/img/netvote-logo-vert.png') no-repeat transparent;
+            background-size: 100%;
+            width: 150px;
+            height: 87px;
+        }
+
+        &__initial-btn{
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 97px;
+            background-color: color($colors, attention);
+            text-align: center;
+            padding: 4rem;
+            border-radius: 0;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: white;
+        }
+
+        &__panes{
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+
+            &.is-initial{
+                padding-top: 12rem;
+            }
+
+            &.is-signin{
+
+                .#{$ns}login__pane{
+                    
+                    &--signup{
+                        transform: translateY(-100%);
+                        opacity: 0;
+                    }
+        
+                    &--signin{
+                        transform: translateY(0);
+                    }
+                }
+
+            }
+        }
+
+        &__pane{
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            padding: 12rem 1rem 1rem;
+            text-align: center;
+            transition: all 0.5s;
+
+            &--signup{
+                background-color: color($colors, attention);
+                transform: translateY(0);
+            }
+
+            &--signin{
+                background-color: color($colors, primary);
+                transform: translateY(100%);
+            }
+
+            &__head{
+                padding: 2rem 1rem 1rem;
+                font-size: 2rem;
+            }
+
+            &__form{
+    
+                ion-input{
+                    margin-bottom: 1rem;
+                }
+            }
+        }
+
+        // in tutorial
+        &__intro{
+            font-size: 16px;
+            max-width: 90%;
+            margin: auto;
+
+            p{
+                &:last-child{
+                    font-weight: 600;
+                }
+            }
+        }
+
+        &__shadow{
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 97px;
+            box-shadow: 0 -20px 60px rgba(color($colors, dark), 0.65);
+        }
+    }
+
+    // overall
+    .scroll-content{
+        overflow: hidden;
+        padding-top: 12rem;
+    }
+
+    .item-ios, .item-md{
+        background: transparent;
+    }
+}

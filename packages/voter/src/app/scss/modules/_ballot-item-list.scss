@@ -1,0 +1,72 @@
+// General style for ballot choices in a list
+
+.#{$ns}ballot{
+
+    &__list{
+        margin-bottom: 0;
+
+        > .item-block{
+
+            &:first-child, &:last-child{
+                border: none;
+            }
+        }
+
+        .item{
+            font-size: 14px;
+        }
+        
+        .item-divider{
+            padding-left: 0;
+        }
+
+        .item-md, .item-ios{
+            padding: 0;
+
+            &.item-block{
+
+                .item-inner{
+                    padding: 0;
+                }
+            } 
+        }
+    }
+
+    &__group{
+
+        &__head{
+            padding: 6px;
+            font-weight: 600;
+            color: color($colors, dark);
+        }
+    }
+
+    &__section{
+
+        &__head-item{
+            min-height: 0;
+        }
+
+        &__head{
+            padding: 6px 6px 6px 10px;
+            background-color: rgba(white, 0.7);
+            color: color($colors, dark);
+            font-weight: 600;
+        }
+    }
+
+    &__choice{
+        transition: all 0.1s linear; 
+        border-bottom: 1px solid rgba(white, 0.1);
+
+        &__inner{
+            transition: all 0.15s ease-out; 
+            padding: 8px 8px 8px 10px;
+        }
+
+        &__desc{
+            font-size: 85%;
+            color: rgba(white, 0.5);
+        }
+    }
+}

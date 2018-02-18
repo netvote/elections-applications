@@ -1,0 +1,35 @@
+// Overrides and additional styling of Ionic's modal component
+
+.#{$ns}modal{
+    @include x-platformSelector('.item'){
+        padding: 0;
+        font-size: 1.4rem;
+    }
+
+    ion-label{
+        white-space: normal;
+    }
+
+    &--fullscreen{
+
+        .modal-wrapper {
+            position: absolute;
+            top: 0 !important;
+            left: 0 !important;
+            display: block;
+            width: 100% !important;
+            height: 100% !important;
+        } 
+    }
+
+    &--gradient{
+        @include x-platformSelector('.content'){
+            background: linear-gradient(45deg, color($colors, primary) 0%, mix(color($colors, primary), color($colors, attention), 50%) 48%, color($colors, attention) 100%);
+            color: white;
+        }
+
+        ion-header{
+            color: white;
+        }
+    }
+}

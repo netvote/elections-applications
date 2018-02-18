@@ -1,0 +1,141 @@
+page-ballot-detail {
+
+    .#{$ns}ballot{
+
+        // Covers ballot to disable modifiying ballot selections
+        &__cover{
+
+            @at-root{
+
+                .ios{
+
+                    .#{$ns}ballot__cover{
+                        top: calc( #{$navbar-ios-height} + #{$cordova-ios-statusbar-padding} );
+                        top: calc( #{$navbar-ios-height} + #{constant(safe-area-inset-top)} );
+                        top: calc( #{$navbar-ios-height} + #{cenv(safe-area-inset-top)} );
+                    }     
+                }
+
+                .md{
+                    .#{$ns}ballot__cover{
+                        top: calc( #{$navbar-md-height});
+                    }
+                }
+            }
+            position: fixed;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 10000;
+            height: 100%;
+            width: 100%;
+            background: radial-gradient(ellipse at center, rgba(0,0,0,0.2) 0%,rgba(0,0,0,0.2) 1%,rgba(0,0,0,0.5) 100%);
+
+            &.is-editing{
+                opacity: 0;
+                animation: fadeOutBallotCover 1s forwards linear;
+            }
+
+            @at-root{
+
+                @keyframes fadeOutBallotCover {
+                    0%{
+                        opacity: 1;
+                        display: block;
+                    }
+                    99%{
+                        opacity: 0;
+                        height: 100%;
+                        width: 100%;
+                    }
+                    100%{
+                        height: 0;
+                        width: 0;
+                    }
+                }
+            }
+        }
+
+        &__status{
+            position: fixed;
+            width: 80%;
+            left: 50%;
+            transform: translate(-50%, 25%);
+            z-index: 10001; // above cover
+            padding: 0.375rem;
+            text-align: center;
+            transition: all 0.25s linear;
+
+            &, button{
+                color: white;
+            }
+
+            &--positive{
+                background-color: color($colors, positive);
+            }
+
+            &.is-editing{
+                transform: translate(-50%, -100%);
+                opacity: 0;
+                pointer-events: none;
+            }
+        }
+
+        &__info{
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            padding: 32px 8px 8px;
+            background: linear-gradient(to bottom, rgba(0,0,0,0) 0%,rgba(0,0,0,0.8) 100%);
+            color: white;
+
+            h4, h5, h6{
+                margin: 5px 0;
+                font-size: 1.625rem;
+            }
+        }
+
+        &__section{
+
+            &__head{
+                background-color: rgba(white, 0.2);
+                color: white;
+            }
+
+            // Clear out chosen selections
+            &__clear{
+                color: rgba(white, 0.5);
+                font-size: 12px;
+                line-height: 22px;
+            }
+        }
+
+        &__choice{
+            transition: all 0.1s linear; 
+            border-bottom: 1px solid rgba(white, 0.1);
+            
+            &.is-chosen{
+                font-weight: 600;
+                color: color($colors, attention);
+                //background-color: #051b27;
+
+                .#{$ns}ballot__choice__inner{
+                    padding-left: 16px;
+                }
+
+                .#{$ns}ballot__choice__check{
+                    opacity: 1;
+                    transform: scale3d(1, 1, 1);
+                }
+            }
+
+            // check mark
+            &__check{
+                opacity: 0;
+                transform: scale3d(0,0,0);
+                transition: transform 0.3s cubic-bezier(.75,-0.5,0,1.75);
+                color: color($colors, attention);
+            }
+        }
+    }
+}

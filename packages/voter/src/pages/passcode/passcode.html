@@ -1,0 +1,50 @@
+<ion-content class="nv-login" scroll="false">
+
+  <div class="nv-login__bg"></div>
+
+  <div class="nv-login__info" [class.is-obscured]="false">
+
+    <div class="nv-login__logo"></div>
+
+    <div class="nv-login__intro">
+      <p>{{ 'WELCOME_INTRO1' | translate }}</p>
+      <p>{{ 'WELCOME_INTRO2' | translate }}</p>
+    </div>
+  </div>
+
+  <div class="nv-login__shadow"></div>
+
+  <div class="nv-expand-btn  nv-expand-btn--left" [class.is-open]="true" [class.is-obscured]="false">
+
+    <div class="nv-expand-btn__head">
+      {{title}}
+    </div>
+
+    <div class="nv-expand-btn__head" *ngIf="allowCancel">
+      <ion-icon class="nv-expand-btn__close" name="close-circle" (click)="cancel()" tappable></ion-icon>
+    </div>
+
+    <div class="nv-expand-btn__form">
+
+      <div class="nv-expand-btn__form__inner">
+
+        <ion-list no-lines>
+
+          <ion-item>
+            <ion-label floating>Passcode</ion-label>
+            <ion-input type="tel" [(ngModel)]="account.passcode" name="pin"></ion-input>
+          </ion-item>
+
+          <div padding>
+            <button ion-button color="attention" block (click)="done(account.passcode)">Ok</button>
+          </div>
+
+        </ion-list>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</ion-content>

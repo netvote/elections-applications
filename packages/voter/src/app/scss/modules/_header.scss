@@ -1,0 +1,48 @@
+// Main Header
+.#{$ns}header{
+    background: linear-gradient(to bottom, rgba(color($colors, primary), 1) 0%,rgba(color($colors, primary), 0.65) 40%,rgba(color($colors, primary), 0) 100%);
+
+    &__logo{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+
+        img{
+            height: 32px;
+        }
+    }
+
+    @at-root{
+
+        .ios{
+            .#{$ns}header{
+                
+                &__logo{
+                    top: 24px;
+                    top: constant(safe-area-inset-top);
+                    top: env(safe-area-inset-top);
+                    transform: translateX(-50%);
+                }
+            }
+        }
+    }
+}
+
+// Global List Related Styles/Overrides
+.list-ios, .list-md{
+
+    > .item-wrapper{
+
+        &:last-child{
+            
+            .item-block{
+                border-bottom: none;
+            }
+        }
+    }
+
+    ion-item-options, .item-block .item-inner{
+        border-bottom: none;
+    }
+}

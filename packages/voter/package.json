@@ -1,0 +1,97 @@
+{
+  "name": "netvote-voter",
+  "version": "0.0.1",
+  "author": "Netvote Corporation",
+  "license": "GPL-3.0",
+  "homepage": "https://netvote.io",
+  "private": true,
+  "scripts": {
+    "clean": "ionic-app-scripts clean",
+    "build": "ionic-app-scripts build",
+    "lint": "ionic-app-scripts lint",
+    "ionic:build": "ionic-app-scripts build",
+    "ionic:serve": "ionic-app-scripts serve"
+  },
+  "dependencies": {
+    "@angular/common": "4.4.4",
+    "@angular/compiler": "4.4.4",
+    "@angular/compiler-cli": "4.4.4",
+    "@angular/core": "4.4.4",
+    "@angular/forms": "4.4.4",
+    "@angular/http": "4.4.4",
+    "@angular/platform-browser": "4.4.4",
+    "@angular/platform-browser-dynamic": "4.4.4",
+    "@ionic-native/barcode-scanner": "4.5.3",
+    "@ionic-native/camera": "4.5.3",
+    "@ionic-native/core": "4.5.3",
+    "@ionic-native/google-maps": "4.5.3",
+    "@ionic-native/keyboard": "4.5.3",
+    "@ionic-native/secure-storage": "4.5.3",
+    "@ionic-native/splash-screen": "4.5.3",
+    "@ionic-native/status-bar": "4.5.3",
+    "@ionic-native/touch-id": "4.5.3",
+    "@ionic/storage": "^2.1.1",
+    "@netvote/core": "0.0.13",
+    "@netvote/elections-solidity": "1.0.2",
+    "@netvote/elections-tally": "0.0.1",
+    "@ngx-translate/core": "6.0.1",
+    "@ngx-translate/http-loader": "0.0.3",
+    "@types/password-hash-and-salt": "^0.1.0",
+    "@types/protobufjs": "^6.0.0",
+    "angularfire2": "^5.0.0-rc.6",
+    "cordova-android": "^6.2.3",
+    "cordova-ios": "~4.5.4",
+    "cordova-plugin-compat": "^1.2.0",
+    "cordova-plugin-device": "^1.1.7",
+    "cordova-plugin-ionic-webview": "^1.1.16",
+    "cordova-plugin-secure-storage": "^2.6.8",
+    "cordova-plugin-splashscreen": "^4.1.0",
+    "cordova-plugin-statusbar": "^2.4.1",
+    "cordova-plugin-touch-id": "^3.3.1",
+    "cordova-plugin-whitelist": "^1.3.3",
+    "cordova-sqlite-storage": "^2.2.0",
+    "ethjs": "^0.2.8",
+    "firebase": "^4.9.1",
+    "ionic-angular": "3.9.2",
+    "ionic-plugin-keyboard": "^2.2.1",
+    "ionicons": "3.0.0",
+    "ipfs-mini": "^1.1.2",
+    "password-hash-and-salt": "^0.1.4",
+    "phonegap-plugin-barcodescanner": "^6.0.8",
+    "promise-polyfill": "^6.0.2",
+    "protobufjs": "^6.8.4",
+    "rxjs": "^5.4.3",
+    "sw-toolbox": "3.6.0",
+    "web": "0.0.2",
+    "zone.js": "^0.8.18"
+  },
+  "devDependencies": {
+    "@ionic/app-scripts": "3.1.8",
+    "typescript": "2.3.4"
+  },
+  "description": "Netvote Blockchain Voter Mobile Application",
+  "cordova": {
+    "plugins": {
+      "phonegap-plugin-barcodescanner": {
+        "CAMERA_USAGE_DESCRIPTION": " "
+      },
+      "cordova-plugin-splashscreen": {},
+      "cordova-plugin-whitelist": {},
+      "ionic-plugin-keyboard": {},
+      "cordova-plugin-secure-storage": {},
+      "cordova-sqlite-storage": {},
+      "cordova-plugin-device": {},
+      "cordova-plugin-touch-id": {
+        "FACEID_USAGE_DESCRIPTION": " "
+      },
+      "cordova-plugin-statusbar": {},
+      "cordova-plugin-ionic-webview": {}
+    },
+    "platforms": [
+      "ios"
+    ]
+  },
+  "config": {
+    "ionic_webpack": "./config/webpack.config.js"
+  }
+}

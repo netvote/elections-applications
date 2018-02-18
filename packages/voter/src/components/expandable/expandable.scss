@@ -1,0 +1,17 @@
+.#{$ns}expandable{
+    transition: 0.2s linear;
+    overflow: hidden;
+
+    &.is-collapsed {
+        height: 0 !important;
+
+        .#{$ns}expandable__inner{
+            opacity: 0;
+        }
+    }
+
+    &__inner{
+        opacity: 1;
+        transition: 0.3s linear;
+    }
+}

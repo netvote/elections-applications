@@ -1,0 +1,15 @@
+@keyframes slidingAnimation {
+    0%, 100% {
+      transform: translate3d(0,0,0);
+    }
+   
+    50% {
+      transform: translate3d(-133px,0,0);
+    }
+  }
+
+  .#{$ns}reveal-slideable {
+      animation-name: slidingAnimation;
+      animation-duration: 1000ms;
+      transform-origin: center right;
+  }

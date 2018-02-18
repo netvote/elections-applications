@@ -1,0 +1,7 @@
+.#{$ns}island{
+    background-color: color($colors, dark);
+
+    &--negative{
+        background-color: color($colors, danger);
+    }
+}

@@ -1,0 +1,70 @@
+tutorial {
+
+  .#{$ns}tutorial{
+
+    &__bg{
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: -1;
+      height: 100%;
+      width: 100%;
+      background-size: cover;
+      background-position: center top;
+      background-repeat: no-repeat;
+    }
+
+    &__slide{
+
+      // First slide
+      &.is-first{
+
+        .slide-title{
+          margin-top: 6rem;
+        }
+      }
+    }
+  }
+  ion-slides{
+    padding-bottom: 97px;
+  }
+
+  .swiper-pagination-bullet{
+    opacity: 1;
+
+    &-active{
+      box-shadow: 0 0 0 4px rgba(white, 0.4);
+    }
+  }
+
+  .swiper-pagination-bullet, .swiper-pagination-bullet-active {
+      background: white;
+  }
+
+  .toolbar-background {
+    background: transparent;
+    border-color: transparent;
+  }
+
+  .slide-zoom {
+    height: 100%;
+  }
+
+  .slide-title {
+    margin-top: 2.8rem;
+  }
+
+  .slide-image {
+    margin-top: 2rem;
+    max-height: 220px;
+  }
+
+  p {
+    position: absolute;
+    bottom: 5rem;
+    padding: 0 2rem;
+    font-size: 14px;
+    line-height: 1.3;
+  }
+}
+  

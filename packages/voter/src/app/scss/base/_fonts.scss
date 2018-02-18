@@ -1,0 +1,8 @@
+// Global font
+$open-sans-font-path: "../assets/fonts/Open_Sans";
+@font-face {
+    font-family: "Open Sans";
+    font-style: normal;
+    font-weight: 300;
+    src: local("Open Sans"), local("OpenSans-Regular"), url("#{$open-sans-font-path}/OpenSans-Regular.woff") format("woff"), url("#{$open-sans-font-path}/OpenSans-Regular.ttf") format("truetype");
+}

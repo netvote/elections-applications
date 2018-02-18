@@ -1,0 +1,20 @@
+<ion-menu [content]="content" type="overlay">
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>Netvote</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content>
+    <ion-list no-lines>
+    
+      <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
+        ffff{{p.title}}
+      </button>
+      <button menuClose ion-item (click)="logout()">Logout</button>
+    
+    </ion-list>
+  </ion-content>
+
+</ion-menu>
+<ion-nav #content [root]="rootPage"></ion-nav>

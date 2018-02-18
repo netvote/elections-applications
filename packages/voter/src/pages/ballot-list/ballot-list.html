@@ -1,0 +1,90 @@
+<ion-header class="nv-header" no-border>
+
+  <ion-navbar>
+
+    <button ion-button icon-only menuToggle>
+
+      <ion-icon name="menu"></ion-icon>
+
+    </button>
+
+    <div class="nv-header__logo">
+
+      <img src="assets/img/netvote-mark-white.png">
+
+    </div>
+
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content no-bounce>
+
+  <div padding>
+
+    <h1>{{ 'MY_BALLOTS' | translate }}</h1>
+
+    <p no-margin *ngIf="ballots != 0 && ballots !== 'undefined'">{{ 'MY_BALLOTS_DESC' | translate }}</p>
+
+  </div>
+
+  <ion-searchbar (ionInput)="filterBallots($event)" *ngIf="ballots != 0 && ballots !== 'undefined'"></ion-searchbar>
+
+  <div text-center *ngIf="ballots == 0 || ballots === 'undefined'">
+
+    <div padding class="nv-island">
+
+      <p no-margin>{{ 'NO_BALLOTS_TO_VIEW' | translate }}</p>
+
+      <button ion-button margin-top color="attention" (click)="scanBallotPage()">{{ 'SCAN_BALLOT_QR' | translate }}</button>
+
+    </div>
+    
+  </div>
+
+  <div padding class="nv-island" *ngIf="!searchResults">
+    {{ 'SEARCH_NO_BALLOTS_FOUND' | translate }}
+  </div>
+
+  <ion-list margin-top class="nv-b-list" *ngIf="ballots != 0 && ballots !== 'undefined'">
+
+    <ion-item-sliding #slidingItem [revealSlideable]="ballotIdx === 0 && shouldAnimate" class="nv-b-list__item" *ngFor="let ballot of ballots; let ballotIdx = index">
+      
+      <ion-item (click)="detail(ballot)">
+
+        <ion-thumbnail item-start>
+
+          <img src="assets/img/roswell-ga.jpg">
+
+        </ion-thumbnail>
+
+        <h2>{{ballot.title}}</h2>
+
+        <ion-badge *ngIf="ballot.status === 'submitted'" color="positive" no-margin class="nv-b-list__status">{{ballot.status}}{{ballot.waiting ? " (waiting...)": ""}}</ion-badge>
+        
+        <ion-badge *ngIf="ballot.tx" color="attention" no-margin class="nv-b-list__status">View on Blockchain</ion-badge>
+        <!-- <div>{{ballot.timestamp.getFullYear()}}</div> -->
+
+        <!-- <div style="position: absolute; z-index: 333333; background: blue; top: 0; right: 50%;" (click)="expandItem(ballot); $event.stopPropagation();">blah</div> -->
+        <!-- <expandable [expanded]="ballot.expanded">here is the expanded content</expandable> -->
+
+      </ion-item>
+
+      <ion-item-options>
+
+        <button ion-button color="attention" (tap)="ballotInfoModal(ballot, slidingItem);">
+
+          <ion-icon name="more"></ion-icon>
+          {{ 'MORE' | translate }}
+          
+        </button>
+
+        <button ion-button color="danger" (tap)="delete(ballot)">{{ 'DELETE_BUTTON' | translate }}</button>
+
+      </ion-item-options>
+
+    </ion-item-sliding>
+
+  </ion-list>
+
+</ion-content>

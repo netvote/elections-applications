@@ -1,0 +1,24 @@
+// Mixin to generate class names with supported platforms
+// For example if you are modifying an Ionic class such as .item-<platform>
+// you can pass in the selector you are wanting to modify ('.item' in this case and
+// a scope if you want to have the class be scoped based on sibling selector, etc.
+//
+// $platforms var can be modified in variables.scss
+//
+// Example:
+// body{
+// @include x-splitOutPlatforms('.item', '&'){
+//     background: rebeccapurple;
+// }
+// Will generate
+// body.item-ios{background: green} body.item-md{background: green}
+
+@mixin x-platformSelector($selector, $scope:null){
+
+    @each $platform in $platforms {
+        
+        #{$scope}#{$selector}-#{$platform} {
+          @content;
+      }
+    }
+}

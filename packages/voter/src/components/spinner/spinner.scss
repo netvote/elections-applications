@@ -1,0 +1,112 @@
+.#{$ns}spinner{
+      
+    &__anim{
+    position: relative;
+    border: 4px solid #0F374B;
+    height: 24px;
+    width: 24px;
+    border-radius: 3px;
+    transform: rotate(45deg) scale(1);
+      
+      &:before, &:after{
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(1);
+        height: 4px;
+        width: 4px;
+        border-radius: 50%;
+      }
+    }
+    
+    &.is-animating{
+      
+        .#{$ns}spinner__anim{
+            animation: nvSpinnerObj 1.25s infinite forwards;
+        
+        &:before{
+           animation: nvSpinnerDot 1.25s infinite forwards;
+        }
+        
+        &:after{
+          display: none;
+        }
+      }
+      
+      .#{$ns}spinner__text{
+          animation: nvSpinnerText 1.25s infinite forwards;
+      }
+    }
+    
+    &.is-successful{
+      
+        .#{$ns}spinner__anim{
+         border-color: #23D18B;
+         
+         &:before, &:after{
+           background-color: darken(#23D18B, 8%);
+         }
+         
+         &:before{
+            width: 8px;
+            border-radius: 0;
+          }
+  
+          &:after{
+            border-radius: 0;
+            width: 26px;
+            transform: translate(-10px, -15px) rotate(90deg);
+          }
+        }
+      }
+    
+    &__anim, &__text{
+      // display: inline-block;
+      // vertical-align: middle;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
+    &__text{
+      //margin-left: 0.5rem;
+      margin-top: 1rem;
+      font-size: 2rem;
+    }  
+  }
+  
+  @keyframes nvSpinnerObj {
+    0%{
+      transform: rotate(45deg) scale(1);
+    }
+    50%{
+      transform: rotate(360deg) scale(0.7);
+      border-radius: 50%;
+      border-color: #60BEBD;
+    }
+    100%{
+      transform: rotate(45deg) ;
+    }
+  }
+  
+  @keyframes nvSpinnerText {
+    0%, 100%{
+      opacity: 1;
+      color: #0F374B;
+    }
+    50%{
+      opacity: 0.5;
+      color: #60BEBD;
+    }
+  }
+  
+  @keyframes nvSpinnerDot {
+    0%, 100%{
+      transform: translate(-50%, -50%) scale(1);
+      background-color: #0F374B;
+    }
+    50%{
+      transform: translate(-50%, -50%) scale(3);
+      background-color: #60BEBD;
+    }
+  }

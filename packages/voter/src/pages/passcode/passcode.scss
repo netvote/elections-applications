@@ -1,0 +1,162 @@
+
+body {-webkit-transform:translate3d(0,0,0);}
+
+page-passcode {
+
+    .#{$ns}login{
+
+        &__bg{
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            left: 0;
+            background: url('../assets/img/netvote-login-bg.png') no-repeat transparent;
+            background-size: cover;
+        }
+
+        &__info{
+            position: absolute;
+            top: 25%;
+            left: 50%;
+            width: 100%;
+            transform: translate(-50%);
+            text-align: center;
+            transition: opacity 0.15s;
+            will-change: opacity;
+
+            &.is-obscured{
+                //filter: blur(5px);
+                opacity: 0.2;
+            }
+        }
+
+        &__logo{
+            margin: 0 auto 4rem;
+            background: url('../assets/img/netvote-logo-vert.png') no-repeat transparent;
+            background-size: 100%;
+            width: 150px;
+            height: 87px;
+        }
+
+        &__intro{
+            font-size: 16px;
+            max-width: 90%;
+            margin: auto;
+
+            p{
+                &:last-child{
+                    font-weight: 600;
+                }
+            }
+        }
+
+        &__shadow{
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 97px;
+            box-shadow: 0 -20px 60px rgba(color($colors, dark), 0.65);
+        }
+    }
+
+    .#{$ns}expand-btn{
+        position: absolute;
+        bottom: 0;
+        width: 50%;
+        height: 97px;
+        padding: 4rem;
+        transition: all 0.15s linear;
+        text-align: center;
+        font-weight: 600;
+        //will-change: width, height, filter, padding;
+        
+        &--right{
+            right: 0;
+            background-color: color($colors, attention);
+
+            &.is-open{
+                background-color: rgba(color($colors, attention), 0.85);
+            }
+        }
+
+        &--left{
+            left: 0;
+            background-color: color($colors, primary);
+
+            &.is-open{
+                background-color: rgba(color($colors, primary), 0.85);
+            }
+        }
+
+        &.is-obscured{
+            opacity: 0.2;
+            //filter: blur(5px);
+        }
+
+        &.is-open{
+            padding: 2rem 1rem 1rem;
+            height: 100%;
+            width: 100%;
+            z-index: 10;
+            backface-visibility: hidden;
+            perspective: 1000;
+            transform: translate3d(0,0,0);
+            transform: translateZ(0);
+            transition-delay: 0.1s;
+
+            .#{$ns}expand-btn__head{
+                padding: 2rem 1rem 1rem;
+                transition-delay: 0.1s;
+            }
+
+            .#{$ns}expand-btn__close{
+                visibility: visible;
+                opacity: 1;
+                transition: opacity 2s;
+            }
+
+            .#{$ns}expand-btn__form{
+                position: static;
+                height: auto;
+                overflow: visible;
+
+                &__inner{
+                    opacity: 1;
+                    transition-delay: 0.25s;
+                }
+            }
+        }
+
+        &__head{
+            position: relative;
+            transition: padding 0.1s;
+        }
+
+        &__close{
+            visibility: hidden;
+            position: absolute;
+            top: 1.5rem;
+            right: 0.5rem;
+            opacity: 0;
+            font-size: 24px;
+        }
+
+        &__form{
+            position: absolute;
+            height: 0;
+            overflow: hidden;
+
+            &__inner{
+                opacity: 0;
+                transition: opacity 2s;
+                margin-top: 5rem;
+            }
+
+            ion-input{
+                margin-bottom: 1rem;
+                border-bottom: 1px solid white;
+            }
+        }
+    }
+}

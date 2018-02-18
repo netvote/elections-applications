@@ -1,0 +1,22 @@
+
+ion-input{
+    border: 1px solid transparent;
+    border-bottom-color: $white-color;
+
+    // Add to ion-input fields that get validated
+    &.has-validation{
+    
+        // When invalid dynamically add this modifier
+        &.is-invalid{
+            color: color($colors, danger);
+        }
+    }
+}
+
+ion-label{
+
+    // Add to ion-label dynamically when associated input is disabled
+    &.is-disabled{
+        opacity: 0.4;    
+    }
+}

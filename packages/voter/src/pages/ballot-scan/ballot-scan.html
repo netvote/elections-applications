@@ -1,0 +1,43 @@
+<ion-header class="nv-header" no-border>
+
+  <ion-navbar>
+
+    <button ion-button icon-only menuToggle>
+
+      <ion-icon name="menu"></ion-icon>
+
+    </button>
+
+    <div class="nv-header__logo">
+
+      <img src="assets/img/netvote-mark-white.png">
+
+    </div>
+
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content>
+
+  <div padding>
+
+    <h1>Scan a ballot</h1>
+
+    <p>If you have received a ballot with a QR code, you may scan the code to access and vote on the ballot.</p>
+
+    <ion-row align-items-center>
+
+      <ion-col>
+
+        <button (tap)="scanBallotQr()" ion-button block color="attention">{{ 'SCAN_BALLOT_QR' | translate }}</button>
+
+         <button *ngIf="scanBypass" (tap)="testbypass()" ion-button block color="attention">Test Scan</button>
+
+      </ion-col>
+      
+    </ion-row>
+
+  </div>
+
+</ion-content>

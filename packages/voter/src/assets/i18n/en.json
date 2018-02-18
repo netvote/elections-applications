@@ -1,0 +1,63 @@
+{
+  "SCAN_BALLOT_QR" : "Scan Ballot QR Code",
+  "SCAN_VERFICIATION_QR" : "Scan Verfication QR Code",
+
+  "BACK_BUTTON_TEXT" : "Back",
+
+  "TUTORIAL_SLIDE1_TITLE": "Welcome to Netvote",
+  "TUTORIAL_SLIDE1_DESCRIPTION": "Tamper-proof blockchain-based voting for organizations, corporations and governments worldwide.",
+
+  "TUTORIAL_SLIDE2_TITLE": "",
+  "TUTORIAL_SLIDE2_DESCRIPTION": "Scan election QR codes for secure voting access to elections that are specific your interests.",
+
+  "TUTORIAL_SLIDE3_TITLE": "",
+  "TUTORIAL_SLIDE3_DESCRIPTION": "Simple and intuitive voting interface. Tap to select your choices and cast your ballot.",
+
+  "TUTORIAL_SLIDE4_TITLE": "",
+  "TUTORIAL_SLIDE4_DESCRIPTION": "Through the power of the blockchain, we ensure your vote is counted, secure, and tamper-proof.",
+  
+  "TUTORIAL_SLIDE5_TITLE": "",
+  "TUTORIAL_SLIDE5_DESCRIPTION": "Your voting transaction will always be accessible and verifiable on the blockchain. Start voting with confidence!",
+
+  "WELCOME_INTRO1" : "Tamper-proof blockchain-based voting",
+  "WELCOME_INTRO2" : "Secure. Trusted. Efficient.",
+
+  "SETTINGS_TITLE": "Settings",
+  "SETTINGS_OPTION1": "Option 1",
+  "SETTINGS_OPTION2": "Option 2",
+  "SETTINGS_OPTION3": "Option 3",
+  "SETTINGS_OPTION4": "Option 4",
+
+  "SETTINGS_PROFILE_BUTTON" : "Edit Profile",
+
+  "SETTINGS_PAGE_PROFILE": "Edit Profile",
+
+  "LOGIN_TITLE": "Sign In",
+  "LOGIN_ERROR": "Unable to sign in. Please check your account information and try again.",
+  "LOGIN_BUTTON": "Sign in",
+  "SIGNUP_TITLE": "Sign up",
+  "SIGNUP_ERROR": "Unable to create account. Please check your account information and try again.",
+  "SIGNUP_BUTTON": "Sign up",
+
+  "PASSCODE": "Passcode",
+  "SET_PASSCODE": "Set a Passcode",
+  "REENTER_PASSCODE": "Re-Enter Passcode",
+
+  "ENABLE_TOUCH_ID": "Enable Touch ID",
+
+  "DONE_BUTTON" : "Done",
+  "CANCEL_BUTTON" : "Cancel",
+  "DELETE_BUTTON" : "Delete",
+
+  "MY_BALLOTS": "My Ballots",
+  "MY_BALLOTS_DESC": "These are the ballots you have rights to vote on. Select a ballot to begin voting.",
+  "NO_BALLOTS_TO_VIEW": "There are currently no ballots to view. Scan a ballot QR to open a ballot and begin voting.",
+
+  "SEARCH_NO_BALLOTS_FOUND": "Sorry, no ballots were found. Please search again.",
+
+  "MORE": "More",
+
+  "TRANSACTION_ID": "Transaction ID",
+
+  "LAST_MODIFIED_TIMESTAMP": "Last Modified"
+}

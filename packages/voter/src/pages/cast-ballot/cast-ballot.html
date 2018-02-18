@@ -1,0 +1,159 @@
+<ion-header class="nv-header" no-border>
+
+  <ion-navbar>
+
+    <button ion-button icon-only menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <div class="nv-header__logo">
+      <img src="assets/img/netvote-mark-white.png">
+    </div>
+
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content>
+
+  <div padding>
+
+    <div class="sending" no-border text-center>
+
+      <div>
+
+        <div *ngIf="ballot && currentSelected && ballotStatus === 'confirming' ">
+
+          <div padding>
+
+            <h1>Confirm your votes</h1>
+            <p>Please ensure all of your votes are correct.</p>            
+          </div>
+
+          <div class="nv-ballot">
+
+            <ion-list class="nv-ballot__list" *ngIf="ballot.meta">
+
+              <ion-item-group *ngFor="let bGroup of ballot.meta.ballotGroups; let groupIdx = index" class="nv-ballot__group">
+
+                <!-- Group title -->
+                <ion-item-divider color="light" sticky>
+
+                  <div class="nv-ballot__group__head">{{bGroup.groupTitle}}</div>
+
+                </ion-item-divider>
+
+                <ion-item>
+
+                  <!-- Section of a group -->
+                  <ion-list class="nv-ballot__list  nv-ballot__section" *ngFor="let bSection of bGroup.ballotSections; let sectionIdx = index">
+
+                    <ion-item *ngIf="bSection.sectionTitle" class="nv-ballot__section__head-item">
+                      <div class="nv-ballot__section__head">{{bSection.sectionTitle}}
+                        <small *ngIf="bSection.sectionNote">({{bSection.sectionNote}})</small>
+                      </div>
+                    </ion-item>
+
+                    <ng-container *ngFor="let bItem of bSection.ballotItems; let itemIdx = index">
+
+                      <!-- Section items for user to choose as a vote -->
+                      <ion-item *ngIf="itemIdx === currentSelected[groupIdx+'-'+sectionIdx]" class="nv-ballot__choice">
+
+                        <div class="nv-ballot__choice__inner">
+
+                          <div class="nv-ballot__choice__title">{{bItem.itemTitle}}</div>
+                          <div class="nv-ballot__choice__desc">{{bItem.itemDescription}}</div>
+
+                        </div>
+
+                      </ion-item>
+                    </ng-container>
+
+                  </ion-list>
+
+                </ion-item>
+
+              </ion-item-group>
+
+            </ion-list>
+
+          </div>
+
+          <p>
+            <button ion-button margin-right color="danger" (tap)="returnToBallot();">Cancel</button>
+            <button ion-button color="attention" (tap)="secureVotes();">Yes, these are my votes</button>
+          </p>
+
+        </div>
+
+        <div class="wrap" *ngIf="ballotStatus=== 'securing'">
+
+          <p>For security purposes, please scan the verification QR code associated with this ballot.</p>
+
+          <p>
+
+            <button (tap)="scanVerificationQr(false, currentSelected)" ion-button block color="attention">{{ 'SCAN_VERFICIATION_QR' | translate }}</button>
+
+          </p>
+
+          <p *ngIf="verifyBypass">
+
+            <button (tap)="scanVerificationQr(true, currentSelected)"  ion-button block color="attention">Test Verify</button>
+
+          </p>
+
+          <!-- <ion-list no-lines>
+
+            <ion-item>
+              <ion-input type="password" name="verificationCode" placeholder="Verification Code" [(ngModel)]="verificationCode"></ion-input>
+            </ion-item>
+
+          </ion-list> -->
+
+          <!-- <p>
+            <button type="submit" ion-button color="attention" (tap)="castVote(verificationCode, currentSelected);">Cast Votes</button>
+          </p> -->
+
+        </div>
+
+        <div class="wrap" *ngIf="submitting && ballotStatus === 'submitting'">
+
+          <nv-spinner [spinnerState]=" 'is-animating' ">
+
+            <div class="nv-spinner__text">Sending your votes to the blockchain...</div>
+
+          </nv-spinner>
+
+        </div>
+
+        <div class="wrap" *ngIf="ballotStatus === 'submitted'">
+
+          <div *ngIf="waiting">Waiting...</div>
+          <div *ngIf="!waiting">{{ballot.tx}}</div>
+
+          <nv-spinner [spinnerState]=" 'is-successful' ">
+            
+              <div class="nv-spinner__text">Success! Your votes have been registered.
+                <br>
+                <a style="color: #60BEBD; font-size: 1.5rem;" href="{{ballot.url}}">View your votes on the blockchain</a>
+                <br>
+                <br>
+                <button ion-button color="attention" (tap)="viewResults()">View current results</button>
+                <br>
+                <br>
+                <div style="font-size: 1rem; text-align: left; color: rgba(255, 255, 255, 0.699);">
+                  <strong>Transaction ID:</strong>
+                  <br>{{ballot.tx}}
+                </div>
+              </div>
+
+          </nv-spinner>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</ion-content>

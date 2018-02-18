@@ -1,0 +1,127 @@
+<ion-header class="nv-header" no-border>
+
+  <ion-navbar>
+
+    <button ion-button icon-only menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <div class="nv-header__logo">
+      <img src="assets/img/netvote-mark-white.png">
+    </div>
+
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content no-bounce>
+
+  <div class="nv-ballot" *ngIf="ballot">
+
+    <div class="nv-ballot__status  nv-ballot__status--positive" *ngIf="ballot.status === 'submitted' " [class.is-editing]="canEditBallot">This ballot has already been submitted. <br><button ion-button small clear (tap)="toggleEditBallot();">Edit ballot?</button></div>
+
+    <div class="nv-ballot__cover" [class.is-editing]="canEditBallot"></div>
+
+    <!-- <div *ngFor="let b of ballot" (tap)="expandItem(b)"> -->
+
+    <ion-list class="nv-ballot__list" *ngIf="ballot.meta">
+
+      <ion-item-group>
+
+        <ion-item-divider>
+
+          <img src="assets/img/roswell-ga.jpg">
+
+          <div class="nv-ballot__info">
+
+            <h4>{{ballot.meta.ballotTitle}}</h4>
+
+            <h5>{{ballot.meta.ballotLocation}}</h5>
+
+            <small>{{ballot.meta.ballotDate}}</small>
+
+          </div>
+
+        </ion-item-divider>
+
+      </ion-item-group>
+
+      <!-- Groups of ballot items to vote on -->
+      <ion-item-group *ngFor="let bGroup of ballot.meta.ballotGroups; let groupIdx = index" class="nv-ballot__group">
+
+        <!-- Group title -->
+        <ion-item-divider color="light" sticky>
+
+          <div class="nv-ballot__group__head">{{bGroup.groupTitle}}</div>
+
+        </ion-item-divider>
+
+        <ion-item>
+
+          <!-- Section of a group -->
+          <ion-list class="nv-ballot__list  nv-ballot__section" *ngFor="let bSection of bGroup.ballotSections; let sectionIdx = index">
+
+            <ion-item *ngIf="bSection.sectionTitle" class="nv-ballot__section__head-item">
+              <div class="nv-ballot__section__head">{{bSection.sectionTitle}}
+                <small *ngIf="bSection.sectionNote">({{bSection.sectionNote}})</small>
+                <div float-end class="nv-ballot__section__clear" *ngIf="currentSelected[groupIdx+'-'+sectionIdx] != null && canEditBallot" (tap)="clearSelectedBallots(groupIdx, sectionIdx)">Clear</div>
+              </div>
+            </ion-item>
+
+            <!-- Section items for user to choose as a vote -->
+            <ion-item *ngFor="let bItem of bSection.ballotItems; let itemIdx = index" (tap)="selectBallotItem(groupIdx, sectionIdx, itemIdx, bItem)" class="nv-ballot__choice"
+              [class.is-chosen]="itemIdx === currentSelected[groupIdx+'-'+sectionIdx]">
+
+              <div class="nv-ballot__choice__inner">
+
+                <div class="nv-ballot__choice__title">{{bItem.itemTitle}}</div>
+                <div class="nv-ballot__choice__desc">{{bItem.itemDescription}}</div>
+
+              </div>
+
+              <ion-icon class="nv-ballot__choice__check" name="checkmark-circle-outline" item-end></ion-icon>
+
+            </ion-item>
+
+          </ion-list>
+
+        </ion-item>
+
+      </ion-item-group>
+
+    </ion-list>
+
+    <!-- </div> -->
+
+  </div>
+
+</ion-content>
+
+<ion-footer no-border color="attention" text-center *ngIf=" ballot && ballot.status !== 'confirmed' && canEditBallot">
+
+  <ion-toolbar color="attention" *ngIf=" ballot.status !== 'submitted' " (tap)=" enterCastFlow()">
+
+    <ion-title >Confirm Votes</ion-title>
+
+  </ion-toolbar>
+  
+  <ion-toolbar color="attention" *ngIf=" ballot.status === 'submitted' ">
+
+    <ion-title style="padding: 0">
+
+      <ion-grid no-padding>
+
+          <ion-row align-items-center>
+
+            <ion-col><button ion-button full color="danger" (tap)="cancelBallotEdit()"><strong>Cancel</strong></button></ion-col>
+
+            <ion-col (tap)=" enterCastFlow();">Update Votes</ion-col>
+
+          </ion-row>
+
+        </ion-grid>
+
+    </ion-title>
+
+  </ion-toolbar>
+
+</ion-footer>

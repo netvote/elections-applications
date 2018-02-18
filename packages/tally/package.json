@@ -1,0 +1,32 @@
+{
+  "name": "@netvote/elections-tally",
+  "version": "0.0.1",
+  "description": "Tally Netvote Elections",
+  "main": "index.js",
+  "scripts": {
+    "test": "./pre-test.sh && cd elections-solidity && run-with-testrpc -l 20000000 'truffle test --network testing test/tally/Tally.js'",
+    "tally": "bin/cli.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/netvote/elections-tally.git"
+  },
+  "author": "Netvote",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/netvote/elections-tally/issues"
+  },
+  "homepage": "https://github.com/netvote/elections-tally#readme",
+  "dependencies": {
+    "@netvote/elections-solidity": "^1.0.4",
+    "commander": "^2.12.1",
+    "crypto": "^1.0.1",
+    "ipfs-mini": "^1.1.2",
+    "protobufjs": "^6.8.3",
+    "truffle-contract": "^3.0.1"
+  },
+  "devDependencies": {
+    "run-with-testrpc": "^0.3.0",
+    "truffle": "^4.0.6"
+  }
+}

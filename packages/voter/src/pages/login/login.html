@@ -1,0 +1,91 @@
+<header class="nv-login__header">
+
+  <img src="assets/img/netvote-logo-vert.png">
+
+</header>
+
+<ion-content class="nv-login" scroll="false">
+  
+  <div class="nv-login__panes" [class.is-signin]="isOpenEntry === 'signin'"  [class.is-initial]="isOpenEntry === 'initial'">
+
+    <!-- welcome tour -->
+    <tutorial *ngIf="isOpenEntry === 'initial'"></tutorial>
+    
+    <div *ngIf="isOpenEntry === 'initial'" class="nv-login__shadow"></div>
+
+    <button *ngIf="isOpenEntry === 'initial'" type="button" class="nv-login__initial-btn" (click)="openEntryType($event, 'signup')">{{ 'SET_PASSCODE' | translate }}</button>
+
+    <!-- Signup/Set Passcode pane -->
+    <div *ngIf="isOpenEntry !== 'initial'" class="nv-login__pane  nv-login__pane--signup">
+      
+      <div class="nv-login__pane__head">{{ 'SET_PASSCODE' | translate }}</div>
+  
+      <form [formGroup]="registerForm" class="nv-login__pane__form">
+  
+        <p *ngIf="false && !registerForm.controls.passcode.valid && registerForm.controls.passcode.dirty && registerSubmitAttempt" padding color="danger" class="nv-island--negative">Passcode must be between 4 and 12 characters and consist of only numbers.</p>
+        <p *ngIf="false && !registerForm.controls.verifyPasscode.valid && registerForm.controls.verifyPasscode.dirty" padding color="danger" class="nv-island--negative">Passcodes do not match. Please try again.</p>
+        
+        <ion-list no-lines>
+          
+          <ion-item>
+            <ion-label floating>{{ 'PASSCODE' | translate }}</ion-label>
+            <ion-input type="tel" formControlName="passcode" class="has-validation" [class.is-invalid]="!registerForm.controls.passcode.valid && (registerForm.controls.passcode.dirty || registerSubmitAttempt)"></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label floating [class.is-disabled]="!registerForm.controls.passcode.valid">{{ 'REENTER_PASSCODE' | translate }}</ion-label>
+            <ion-input type="tel" formControlName="verifyPasscode" class="has-validation" [disabled]="!registerForm.controls.passcode.valid" [class.is-invalid]="!registerForm.controls.verifyPasscode.valid && (registerForm.controls.verifyPasscode.dirty || registerSubmitAttempt)"></ion-input>
+          </ion-item>
+
+          <ion-item *ngIf="touchId">
+            <ion-label>{{biometricPrompt}}</ion-label>
+            <ion-toggle formControlName="touchId"></ion-toggle>
+          </ion-item>
+
+          <div padding>
+            <button type="submit" ion-button color="primary" block (tap)="register()"
+              [disabled]="processing">{{ 'SET_PASSCODE' | translate }}</button>
+            <button ion-button small clear (click)="openEntryType($event, 'signin')" color="primary" [disabled]="processing">{{ 'LOGIN_BUTTON' | translate }}</button>
+          </div>
+          
+        </ion-list>
+  
+      </form>
+
+    </div>
+
+    <!-- Signin pane-->
+    <div class="nv-login__pane  nv-login__pane--signin">
+      
+      <div class="nv-login__pane__head">{{ 'LOGIN_TITLE' | translate }}</div>
+  
+      <form [formGroup]="loginForm" class="nv-login__pane__form">
+
+        <p *ngIf="!loginForm.controls.passcode.valid && loginForm.controls.passcode.dirty && loginSubmitAttempt" padding color="danger" class="nv-island--negative">Passcode you entered is not correct. Please try again.</p>
+  
+        <ion-list no-lines>
+          
+          <ion-item>
+            <ion-label floating>{{ 'PASSCODE' | translate }}</ion-label>
+            <ion-input type="tel" formControlName="passcode" class="has-validation" [class.is-invalid]="!loginForm.controls.passcode.valid && (loginForm.controls.passcode.dirty || loginSubmitAttempt)"></ion-input>
+          </ion-item>
+
+          <ion-item *ngIf="touchId">
+            <ion-label>{{ 'ENABLE_TOUCH_ID' | translate }} Enable Touch Id</ion-label>
+            <ion-toggle formControlName="touchId"></ion-toggle>
+          </ion-item>
+
+          <div padding>
+            <button type="submit" ion-button color="attention" block (tap)="login()">{{ 'LOGIN_BUTTON' | translate }}</button>
+            <button type="button" ion-button small clear color="attention" (click)="openEntryType($event, 'signup')">{{ 'SET_PASSCODE' | translate }}</button>
+          </div>
+
+        </ion-list>
+  
+      </form>
+
+    </div>
+    
+  </div>
+
+</ion-content>

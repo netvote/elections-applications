@@ -1,0 +1,13 @@
+page-ballot-list {
+
+    .#{$ns}b-list{
+
+        &__item{
+            border-bottom: 1px solid rgba(white, 0.5);
+        }
+
+        &__status{
+            text-transform: capitalize;
+        }
+    }
+}

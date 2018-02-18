@@ -1,0 +1,126 @@
+// Ionic Variables and Theming. For more info, please see:
+// http://ionicframework.com/docs/v2/theming/
+$font-path: "../assets/fonts";
+
+@import "ionic.globals";
+
+// Named Color Variables
+// --------------------------------------------------
+// Named colors makes it easy to reuse colors on various components.
+// It's highly recommended to change the default colors
+// to match your app's branding. Ionic uses a Sass map of
+// colors so you can add, rename and remove colors as needed.
+// The "primary" color is the only required color in the map.
+
+$colors: (
+  primary:    #093146,
+  secondary:  #0A2432,
+  attention:  #5BC0BE,
+  dark:       #071822,
+  danger:     #f53d3d,
+  positive:   #41B66C,
+  benign:     rgb(184, 184, 184)
+);
+
+$white-color: white;
+$black-color: black;
+
+// Shared Variables
+// --------------------------------------------------
+// To customize the look and feel of this app, you can override
+// the Sass variables found in Ionic's source scss files.
+// To view all the possible Ionic variables, see:
+// http://ionicframework.com/docs/v2/theming/overriding-ionic-variables/
+
+// Global
+$ns: "nv-";
+
+// Ionic platforms app supports
+$platforms: 'ios', 'md';
+
+$text-color:        $white-color;
+$background-color:  color($colors, primary);
+
+// Toolbar
+$toolbar-background: transparent !default;
+
+// Labels
+$label-margin: 0 !default;
+
+// Lists
+$list-border-color: $white-color;
+$list-background-color: color($colors, primary);
+
+// Items
+$item-ios-avatar-border-radius: 0;
+
+// App iOS Variables
+// --------------------------------------------------
+// iOS only Sass variables can go here
+
+// Labels
+$label-ios-margin: $label-margin;
+
+// Toggle
+$toggle-ios-border-radius: 3px;
+$toggle-ios-handle-border-radius: 3px;
+$toggle-ios-background-color-off: color($colors, benign);
+$toggle-ios-border-color-off: $toggle-ios-background-color-off;
+$toggle-ios-background-color-on: color($colors, positive);
+$toggle-ios-handle-background-color: color($colors, primary);
+$toggle-ios-handle-box-shadow: none;
+
+
+// App Material Design Variables
+// --------------------------------------------------
+// Material Design only Sass variables can go here
+
+// Labels
+$label-md-margin: $label-margin;
+$label-md-text-color: $white-color;
+$label-md-text-color-focused: $white-color;
+$list-md-border-color: transparent;
+
+$text-input-md-show-focus-highlight: false;
+
+// Toggle
+$toggle-md-border-radius: 3px;
+$toggle-md-handle-border-radius: 3px;
+$toggle-md-background-color-off: color($colors, benign);
+$toggle-md-border-color-off: $toggle-ios-background-color-off;
+$toggle-md-background-color-on: color($colors, positive);
+$toggle-md-handle-background-color: color($colors, primary);
+$toggle-md-handle-box-shadow: none;
+
+// App Windows Variables
+// --------------------------------------------------
+// Windows only Sass variables can go here
+
+// Currently not supporting Windows Apps
+
+
+
+// App Theme
+// --------------------------------------------------
+// Ionic apps can have different themes applied, which can
+// then be future customized. This import comes last
+// so that the above variables are used and Ionic's
+// default are overridden.
+
+@import "ionic.theme.default";
+
+
+// Ionicons
+// --------------------------------------------------
+// The premium icon font for Ionic. For more info, please see:
+// http://ionicframework.com/docs/v2/ionicons/
+
+@import "ionic.ionicons";
+
+
+// Fonts
+// --------------------------------------------------
+$font-family-base: 'Open Sans';
+$font-family-ios-base: 'Open Sans';
+$font-family-md-base: 'Open Sans';
+$font-family-wp-base: 'Open Sans';

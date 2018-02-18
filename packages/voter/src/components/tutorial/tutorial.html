@@ -1,0 +1,10 @@
+
+    <ion-slides class="nv-tutorial" pager="true" dir="{{dir}}" (ionSlideWillChange)="onSlideChangeStart($event)">
+        <ion-slide *ngFor="let slide of slides; let i = index" class="nv-tutorial__slide" [ngClass]="{'is-first' : i===0}">
+            <img *ngIf="i !== 0" [src]="slide.image" class="slide-image" />
+            <h2 *ngIf="i === 0" class="slide-title" [innerHTML]="slide.title"></h2>
+            <h5 *ngIf="i === 0">{{ 'WELCOME_INTRO2' | translate}}</h5>
+            <p [innerHTML]="slide.description"></p>
+            <div *ngIf="i === 0" class="nv-tutorial__bg" [style.backgroundImage]="'url(' + slide.image + ')'"></div>
+        </ion-slide>
+    </ion-slides>

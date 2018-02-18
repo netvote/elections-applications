@@ -1,0 +1,27 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>{{ballotData.title}}</ion-title>
+    <ion-buttons end>
+      <button ion-button (tap)="closeBallotInfoModal();"><ion-icon name="close" color="dark"></ion-icon></button>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content padding>
+
+  <div *ngIf="ballotData.status === 'submitted' ">This ballot has been successfully submitted and is pending activation on the blockchain.</div>
+
+  <ion-list class="nv-list  nv-list--clear">
+
+    <ion-item>
+        <strong>{{ 'TRANSACTION_ID' | translate }}: </strong><br><span *ngIf="ballotData.tx === undefined"><em>Transaction ID not available</em></span><span *ngIf="ballotData.tx">{{ballotData.tx}} </span>
+    </ion-item>
+
+    <ion-item>
+        <strong>{{ 'LAST_MODIFIED_TIMESTAMP' | translate }}: </strong><br>{{ballotData.timestamp}} 
+    </ion-item>
+
+  </ion-list>
+
+</ion-content>
