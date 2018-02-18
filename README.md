@@ -6,7 +6,7 @@ Monorepo for netvote applications
 
 ## setup
 ```
-npm install -g ionic cordova @angular/cli
+npm install -g ionic cordova @angular/cli lerna
 
 lerna bootstrap
 lerna run build
