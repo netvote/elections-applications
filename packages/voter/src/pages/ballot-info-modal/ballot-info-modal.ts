@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavParams, ViewController } from 'ionic-angular';
 import {TranslateService} from '@ngx-translate/core';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
 
 @IonicPage()
 @Component({
@@ -13,9 +14,10 @@ export class BallotInfoModalPage {
   ballotData: any;
 
   constructor(
-    private viewCtrl: ViewController, 
+    private viewCtrl: ViewController,
     public navParams: NavParams,
-    public translateService: TranslateService) {
+    public translateService: TranslateService,
+    private iab: InAppBrowser) {
   }
 
   ionViewWillLoad() {
@@ -40,5 +42,21 @@ export class BallotInfoModalPage {
     else{
       return 'is-'+status;
     }
+  }
+
+  launchTxLink(url: string){
+
+    let iabDoneText: string;
+
+    this.translateService.get(['IAB_DONE_BUTTON_TEXT']).subscribe(values => {
+      iabDoneText = values.IAB_DONE_BUTTON_TEXT;
+    });
+
+    const iabOptions = "location=yes,clearcache=yes,transitionstyle=crossdissolve,closebuttoncolor=#5BC0BE,closebuttoncaption=" + iabDoneText;
+
+    const browser = this.iab.create(url, '_blank', iabOptions);
+
+    browser.show();
+
   }
 }

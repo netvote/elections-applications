@@ -117,6 +117,7 @@ export function provideSettings(storage: Storage) {
     // Keep this to enable Ionic's runtime error handling during development
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AuthProvider,
+    InAppBrowser,
     NetvoteProvider,
     BallotProvider,
     GatewayProvider,

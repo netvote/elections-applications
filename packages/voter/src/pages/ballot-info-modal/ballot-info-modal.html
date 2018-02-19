@@ -29,7 +29,7 @@
   <ion-list class="nv-list  nv-list--clear">
 
     <ion-item margin-bottom>
-        <strong>{{ 'TRANSACTION_ID' | translate }}: </strong><br><span *ngIf="ballotData.tx === undefined"><em>Transaction ID not available</em></span><a href="{{ballotData.url}}" *ngIf="ballotData.tx">{{ballotData.tx}}</a>
+        <strong>{{ 'TRANSACTION_ID' | translate }}: </strong><br><span *ngIf="ballotData.tx === undefined"><em>Transaction ID not available</em></span><a href="#" (click)='$event.preventDefault(); launchTxLink(ballotData.url);' *ngIf="ballotData.tx">{{ballotData.tx}}</a>
     </ion-item>
 
     <ion-item margin-bottom>

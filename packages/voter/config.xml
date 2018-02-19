@@ -101,6 +101,6 @@
         <param name="ios-package" value="CDVWKWebViewEngine" />
     </feature>
     <preference name="CordovaWebViewEngine" value="CDVWKWebViewEngine" />
-    <engine name="ios" spec="~4.5.4" />
     <plugin name="cordova-plugin-inappbrowser" spec="^2.0.2" />
+    <engine name="ios" spec="~4.5.4" />
 </widget>
