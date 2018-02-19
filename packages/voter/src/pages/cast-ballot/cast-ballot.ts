@@ -68,13 +68,6 @@ export class CastBallotPage {
 
   ionViewDidLoad() {
 
-    // if(this.ballotStatus === 'submitted' || this.ballotStatus === 'initial' ){
-
-    //   this.ballotProvider.updateBallot(this.address, {
-    //     status: "confirming"
-    //   });
-    // }
-
   }
 
   secureVotes() {
@@ -114,12 +107,12 @@ export class CastBallotPage {
       };
 
       // Gather
-      for (let group in this.ballot.meta.ballotGroups) {
-        for (let section in this.ballot.meta.ballotGroups[group].ballotSections) {
-          const selection = selections[`${group}-${section}`];
+      this.ballot.meta.ballotGroups.forEach((group, groupIndex) => {
+        group.ballotSections.forEach((section, sectionIndex) => {
+          const selection = selections[`${groupIndex}-${sectionIndex}`];
           vote.ballotVotes[0].choices.push({selection: selection == null ? null : +selection});
-        }
-      }
+        });
+      });
 
       const voteBase64 = await this.netvote.encodeVote(vote);
 
@@ -163,6 +156,7 @@ export class CastBallotPage {
     this.navCtrl.pop();
   }
 
+<<<<<<< HEAD
   launchTxLink(url: string){
 
     let iabDoneText: string;
@@ -179,4 +173,6 @@ export class CastBallotPage {
 
   }
   
+=======
+>>>>>>> master
 }

@@ -1,7 +1,8 @@
 {
     "paths": {
         "gatewayBase": "https://us-central1-netvote1.cloudfunctions.net",
-        "ethereumBase": "https://ropsten.etherscan.io"    
+        "ethereumBase": "https://ropsten.etherscan.io",
+        "infuraBase": "https://ropsten.infura.io"    
     },
     "ballotScanBypass": true,
     "ballotVerifyBypass": true
