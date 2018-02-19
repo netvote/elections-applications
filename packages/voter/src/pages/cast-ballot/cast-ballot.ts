@@ -1,6 +1,8 @@
 import {Component} from '@angular/core';
 import {IonicPage, NavController, NavParams, ViewController} from 'ionic-angular';
+import {TranslateService} from '@ngx-translate/core';
 import {BarcodeScanner} from '@ionic-native/barcode-scanner';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
 
 import {NetvoteProvider} from '../../providers/netvote/netvote';
 import {BallotProvider} from '../../providers/ballot/ballot';
@@ -26,7 +28,6 @@ export class CastBallotPage {
   address: string;
   verificationCode: string;
   voterKeys: any;
-  submitting: boolean = false;
   waiting: boolean = false;
 
   constructor(
@@ -34,7 +35,9 @@ export class CastBallotPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     public viewCtrl: ViewController,
+    public translateService: TranslateService,
     private barcodeScanner: BarcodeScanner,
+    private iab: InAppBrowser,
     private netvote: NetvoteProvider,
     private ballotProvider: BallotProvider,
     private gatewayProvider: GatewayProvider,
@@ -74,6 +77,10 @@ export class CastBallotPage {
     this.navCtrl.push("ballot-results", {address: this.address});
   }
 
+  backToBallotList() {
+    this.navCtrl.setRoot('ballot-list');
+  }
+
   async scanVerificationQr(test: boolean, selections: any) {
 
     try {
@@ -88,8 +95,14 @@ export class CastBallotPage {
         verificationCode = barcodeData.text;
       }
 
-      this.submitting = true;
       this.ballotStatus = "submitting";
+
+      // UX timeout to indicate submission and processing
+      // while token and gateway is set
+      setTimeout(() => {
+        this.ballotStatus = "submitted";
+        this.waiting = true;
+      }, 3000);
 
       token = await this.netvote.getVoterToken(verificationCode, this.address);
 
@@ -114,8 +127,6 @@ export class CastBallotPage {
 
       const result: any = await this.netvote.submitVote(voteBase64, token.token);
 
-      this.ballotStatus = "submitted";
-
       const baseEthereumUrl = this.config.base.paths.ethereumBase;
 
       await this.ballotProvider.updateBallot(this.address, {
@@ -125,13 +136,12 @@ export class CastBallotPage {
         selections: selections
       });
 
-      this.waiting = true;
-
       const gatewayOb = this.gatewayProvider.getVoteObservable(result.collection, result.txId);
       gatewayOb.subscribe(async (vote) => {
 
-        if (vote.tx)
+        if(vote.tx){
           this.waiting = false;
+        }
 
         await this.ballotProvider.updateBallot(this.address, {
           tx: vote.tx,
@@ -152,4 +162,20 @@ export class CastBallotPage {
     this.navCtrl.pop();
   }
 
+  launchTxLink(url: string){
+
+    let iabDoneText: string;
+
+    this.translateService.get(['IAB_DONE_BUTTON_TEXT']).subscribe(values => {
+      iabDoneText = values.IAB_DONE_BUTTON_TEXT;
+    });
+
+    const iabOptions = "location=yes,clearcache=yes,transitionstyle=crossdissolve,toolbarcolor=#071822,closebuttoncolor=#5BC0BE,closebuttoncaption=" + iabDoneText;
+
+    const browser = this.iab.create(url, '_blank', iabOptions);
+
+    browser.show();
+
+  }
+  
 }

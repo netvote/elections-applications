@@ -16,7 +16,6 @@ export class SpinnerComponent {
   }
 
   ngAfterViewInit(){
-    console.log("spinner state", this.spinnerState);
   }
 
 }
