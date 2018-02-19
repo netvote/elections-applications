@@ -114,13 +114,12 @@ export class LoginPage {
       this.showLoading("Setting up your secure voting application...");
       const res = await this.authProvider.register(this.registerForm.value.passcode, touchId);
       if (res.success) {
-        console.log("successul registration");
         this.hideLoading();
       }
     }
 
     if(!this.registerForm.valid){
-      console.log("Registration form values are invalid!");
+      console.log("NV: Registration form values are invalid!");
     }
   }
 
@@ -161,7 +160,7 @@ export class LoginPage {
     }
 
     if(!this.loginForm.valid){
-      console.log("Login form values are invalid!");
+      console.log("NV: Login form values are invalid!");
     }
   }
 

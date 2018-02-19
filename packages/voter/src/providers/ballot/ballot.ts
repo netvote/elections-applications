@@ -58,6 +58,10 @@ export class BallotProvider {
     return ballot;
   }
 
+  async clear(): Promise<any> {
+    return await this.storage.set(`${this.STORAGE_KEY}`, []);
+  }
+
   private _clean(ballots: any): Ballot[] {
     if (!Array.isArray(ballots))
       return [];
@@ -65,8 +69,7 @@ export class BallotProvider {
   }
 
   private async _save(): Promise<any> {
-    await this.storage.set(`${this.STORAGE_KEY}`, this._ballots);
-    return;
+    return await this.storage.set(`${this.STORAGE_KEY}`, this._ballots);
   }
 
   private async _loadBallots(): Promise<any> {

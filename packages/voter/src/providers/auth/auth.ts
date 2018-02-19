@@ -13,10 +13,10 @@ export declare var lightwallet: any;
 @Injectable()
 export class AuthProvider {
 
-  readonly STORAGE_KEY = "auth";
-  readonly LOGIN_STATE_KEY = "state";
+  readonly STORAGE_KEY = "auth1.0";
+  readonly LOGIN_STATE_KEY = "state1.0";
   readonly WALLLET_XREF_KEY = "walletxref";
-  readonly HASH_KEY = "hash";
+  readonly HASH_KEY = "hash1.0";
   readonly KEYSTORE_KEY = "keystore";
   readonly BIOMETRIC_KEY = "biometric";
 
@@ -166,7 +166,9 @@ export class AuthProvider {
         const storage = await this.getSecureStorage(this.STORAGE_KEY);
         const hash = await storage.get(this.HASH_KEY);
         pwHashSalt(passcode).verifyAgainst(hash, async (err, verified) => {
-          if (err) return resolve(new AuthResponse(false, err));
+          if (err) {
+            return resolve(new AuthResponse(false, err));
+          }
           if (!verified) return resolve(new AuthResponse(false));
           return resolve(new AuthResponse(true));
         });
@@ -293,7 +295,6 @@ export class AuthProvider {
         return ss.clear();
       }
     } else {
-      console.log("NV ***: failed");
       return false;
     }
   }

@@ -5,6 +5,7 @@ import {NavController, NavParams, ModalController} from 'ionic-angular';
 import {Settings} from '../../providers/settings';
 import {TranslateService} from '@ngx-translate/core';
 import {AuthProvider} from '../../providers/auth/auth';
+import {BallotProvider} from '../../providers/ballot/ballot';
 
 @Component({
   selector: 'page-settings',
@@ -35,6 +36,7 @@ export class SettingsPage {
     public navParams: NavParams,
     public translate: TranslateService,
     private authProvider: AuthProvider,
+    private ballotProvider: BallotProvider,
     public modalCtrl: ModalController) {
   }
 
@@ -86,10 +88,11 @@ export class SettingsPage {
   ngOnChanges() {
   }
 
-  resetDevice() {
+  resetDevice() {    
     const prompt = this.modalCtrl.create("get-passcode", {title: "Enter passcode to reset device", returnPasscode: true, allowCancel: true, allowBiometric: false});
     prompt.onDidDismiss(async (passcode) => {
       if (passcode) {
+        await this.ballotProvider.clear();
         await this.authProvider.reset(passcode);
       }
     });
