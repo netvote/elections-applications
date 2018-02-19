@@ -49,11 +49,7 @@ export class BallotScanPage {
 
       const barcodeData = await this.barcodeScanner.scan();
       const address = barcodeData.text;
-      const data = await this.netvote.getRemoteBallotMeta(address);
-      const ballot = new Ballot(address, data.ballotTitle, data.ipfs, data.type)
-      await this.ballotProvider.addBallot(ballot);
-      this.navCtrl.setRoot('ballot-detail', {meta: data, address: address});
-
+      this.importBallot(address);
     } catch (err) {
       console.log("NV: No scan, error: ", err);
     }
@@ -63,17 +59,18 @@ export class BallotScanPage {
   // Temporary to test in browser
   // Pretend scan was successful
   async testbypass() {
-
     const address = "0x3e0e98b422261242519e4cba69c0afaa47da2d3f";
-    //const address = "0x2788b142f3a23a3cd66a34faa585e2c58467f154";
-    //const address = "0xcc4e70ea8a0fd2a9cfa14c36ba961e9b05b3ca93";
-    //const address = "0xe612241f9d5b810ce3f76a449d45a0d044475f2e";
-    //const address = "0x24c23193360b2cd37b936c59b0b86a5b055ceb04";
-    const data = await this.netvote.getRemoteBallotMeta(address);
-    const ballot = new Ballot(address, data.ballotTitle, data.ipfs, data.type)
-    await this.ballotProvider.addBallot(ballot);
-    this.navCtrl.setRoot('ballot-detail', {meta: data, address: address});
+    this.importBallot(address);
+  }
 
+  async importBallot(address: string) {
+    const data = await this.netvote.getRemoteBallotMeta(address);
+    let ballot = await this.ballotProvider.getBallot(address);
+    if(!ballot) {
+      ballot = new Ballot(address, data.ballotTitle, data.ipfs, data.type);
+      await this.ballotProvider.addBallot(ballot);
+    }
+    this.navCtrl.setRoot('ballot-detail', {meta: data, address: address});
   }
 
   async lockApp() {
