@@ -6,8 +6,6 @@ import {NetvoteProvider} from '../../providers/netvote/netvote';
 import {BallotProvider} from '../../providers/ballot/ballot';
 import {Ballot} from '../../models/ballot';
 
-import * as tally from '@netvote/elections-tally';
-
 @IonicPage({
   segment: "ballot-results/:address",
   name: "ballot-results"
@@ -46,41 +44,32 @@ export class BallotResultsPage {
       this.currentSelected = this.ballot.selections;
 
     const meta = await this.netvote.getRemoteBallotMeta(this.address);
-    
+
     this.ballot.meta = meta;
 
     this.tallyIt();
   }
 
-  tallyIt() {
+  async tallyIt() {
+
+    const res = await this.netvote.getTally(this.ballot.address);
+
+    const ballot = res.ballots[this.address];
+
+    if (ballot && ballot.results) {
+      const results = ballot.results.ALL;
+      let sectionIdx = 0;
+      this.ballot.meta.ballotGroups.forEach((group, index) => {
+        group.ballotSections.forEach((section, index) => {
+          section.ballotItems.forEach((item, index) => {
+            item.result = results[sectionIdx][item.itemTitle];
+          });
+          sectionIdx++;
+        })
+
+      });
+    }
     
-    tally.tally({
-      electionAddress: this.ballot.address,
-      provider: 'https://ropsten.infura.io',
-      protoPath: 'assets/proto/vote.proto',
-      resultsUpdateCallback: (resultsStatusObj) => {
-      }
-    }).then((res) => {
-      
-      const ballot = res.ballots[this.address];
-      
-      if(ballot && ballot.results){
-        const results = ballot.results.ALL;
-        let sectionIdx = 0;
-        this.ballot.meta.ballotGroups.forEach((group, index) =>{
-          group.ballotSections.forEach((section, index) => {
-            section.ballotItems.forEach((item, index) => {
-              item.result = results[sectionIdx][item.itemTitle];
-            });
-            sectionIdx++;
-          })
-          
-        });
-      }
-        
-    }).catch((err) => {
-      console.error(err);
-    });
   }
 
 }

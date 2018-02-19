@@ -1,10 +1,11 @@
 import {Injectable} from '@angular/core';
 import {Http, Headers} from '@angular/http';
 import 'rxjs/add/operator/map';
+import * as protobuf from 'protobufjs';
+import * as tally from '@netvote/elections-tally';
+
 import {SecureStorage, SecureStorageObject} from "@ionic-native/secure-storage";
 import {BallotFactory, BlockchainConnection} from '@netvote/core';
-import * as protobuf from 'protobufjs';
-
 import {ConfigurationProvider} from '../configuration/configuration';
 
 export declare var lightwallet: any;
@@ -52,9 +53,6 @@ export class NetvoteProvider {
       headers.append('Authorization', 'Bearer ' + ballotKey);
       var body = {"address": ballotAddress};
 
-      console.log("From config: ", baseUrl);
-
-      // TODO: Config
       this.http.post(`${baseUrl}/vote/auth`, body, {
         headers: headers,
       })
@@ -97,6 +95,20 @@ export class NetvoteProvider {
 
   public async getTransaction(tx: string) {
     return this.blockchain.getTransaction(tx);
+  }
+
+  public getTally(address: string): Promise<any> {
+
+    const baseUrl = this.config.base.paths.infuraBase;
+
+    return tally.tally({
+      electionAddress: address,
+      provider: baseUrl,
+      protoPath: 'assets/proto/vote.proto',
+      resultsUpdateCallback: (resultsStatusObj) => {
+      }
+    });
+
   }
 
   // TODO: Implement
