@@ -102,7 +102,7 @@ export class LoginPage {
 
   }
 
-  async register(passcode: string, touchId: boolean) {
+  async register() {
 
     this.registerSubmitAttempt = true;
 
@@ -112,7 +112,7 @@ export class LoginPage {
       await this.pause(500);
 
       this.showLoading("Setting up your secure voting application...");
-      const res = await this.authProvider.register(this.registerForm.value.passcode, touchId);
+      const res = await this.authProvider.register(this.registerForm.value.passcode, this.registerForm.value.touchId);
       if (res.success) {
         this.hideLoading();
       }

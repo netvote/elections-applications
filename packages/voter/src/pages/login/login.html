@@ -71,7 +71,7 @@
           </ion-item>
 
           <ion-item *ngIf="touchId">
-            <ion-label>{{ 'ENABLE_TOUCH_ID' | translate }} Enable Touch Id</ion-label>
+            <ion-label>{{biometricPrompt}}</ion-label>
             <ion-toggle formControlName="touchId"></ion-toggle>
           </ion-item>
 
