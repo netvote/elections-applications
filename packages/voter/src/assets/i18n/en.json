@@ -52,7 +52,7 @@
   "IAB_DONE_BUTTON_TEXT": "Done",
 
   "MY_BALLOTS": "My Ballots",
-  "MY_BALLOTS_DESC": "These are the ballots you have rights to vote on. Select a ballot to begin voting.",
+  "MY_BALLOTS_DESC": "Select a ballot to begin voting.",
   "NO_BALLOTS_TO_VIEW": "There are currently no ballots to view. Scan a ballot QR to open a ballot and begin voting.",
 
   "SEARCH_NO_BALLOTS_FOUND": "Sorry, no ballots were found. Please search again.",

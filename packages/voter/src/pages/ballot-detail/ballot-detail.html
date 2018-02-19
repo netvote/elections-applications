@@ -17,7 +17,7 @@
 
   <div class="nv-ballot" *ngIf="ballot">
 
-    <div class="nv-ballot__status  nv-ballot__status--positive" *ngIf="ballot.status === 'submitted' " [class.is-editing]="canEditBallot">This ballot has already been submitted. <br><button ion-button small clear (tap)="toggleEditBallot();">Edit ballot?</button></div>
+    <div class="nv-ballot__status  nv-ballot__status--positive" *ngIf="ballot.status === 'submitted' " [class.is-editing]="canEditBallot">You have already voted on this ballot. <br><button ion-button small clear (tap)="toggleEditBallot();">Update your votes?</button></div>
 
     <div class="nv-ballot__cover" [class.is-editing]="canEditBallot"></div>
 
