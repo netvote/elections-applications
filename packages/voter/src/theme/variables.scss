@@ -19,11 +19,15 @@ $colors: (
   dark:       #071822,
   danger:     #f53d3d,
   positive:   #41B66C,
-  benign:     rgb(184, 184, 184)
+  //warning:    #D2B833,
+  warning:    #ecbc02,
+  benign:     #b8b8b8
 );
 
 $white-color: white;
 $black-color: black;
+
+$link-color: $white-color;
 
 // Shared Variables
 // --------------------------------------------------

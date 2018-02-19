@@ -137,5 +137,9 @@ page-ballot-detail {
                 color: color($colors, attention);
             }
         }
+
+        &__end{
+            border-top: 1px solid rgba(white, 0.1);
+        }
     }
 }

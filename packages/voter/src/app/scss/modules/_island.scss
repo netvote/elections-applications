@@ -5,7 +5,15 @@
         background-color: color($colors, danger);
     }
 
+    &--positive{
+        background-color: color($colors, positive);
+    }
+
+    &--warning{
+        background-color: color($colors, warning);
+    }
+
     &--trans{
-        background-color: rgba(white, 0.2);
+        background-color: rgba($white-color, 0.2);
     }
 }

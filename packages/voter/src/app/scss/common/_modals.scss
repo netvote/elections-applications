@@ -22,10 +22,35 @@
         } 
     }
 
-    &--gradient{
-        @include x-platformSelector('.content'){
-            background: linear-gradient(45deg, color($colors, primary) 0%, mix(color($colors, primary), color($colors, attention), 50%) 48%, color($colors, attention) 100%);
-            color: white;
+    &__gradient{
+        @include x-gradient-swap(false, 'positive', 'attention', 'warning');
+        color: white;
+
+        &.is-initial{
+            @include x-gradient-swap(true, $gradColors: 'primary');
+        }
+
+        &:before{
+            content: ' ';
+            position: absolute;
+            top: 0;
+            right: 0;
+            left: 0;
+            bottom: 0;
+            animation: gradientSwitch 7s ease-in-out infinite;
+            transform: translate3d(0,0,0);
+        }
+
+        @at-root{
+
+            @keyframes gradientSwitch {
+                0%, 100%{
+                    opacity: 0;
+                }
+                50%{
+                    opacity: 1;
+                }
+            }
         }
 
         ion-header{

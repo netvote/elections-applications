@@ -21,6 +21,7 @@ export class BallotInfoModalPage {
   ionViewWillLoad() {
     
     this.ballotData = this.navParams.get('data');
+    console.log("BALLOT INFO: ", this.ballotData);
     
   }
 
@@ -28,4 +29,16 @@ export class BallotInfoModalPage {
     this.viewCtrl.dismiss();
   }
 
+  matchStatusClass(status, waiting){
+
+    if(status === 'submitted' && waiting){
+      return 'is-positive'
+    }
+    else if(status === 'submitted'){
+      return 'is-attention'
+    }
+    else{
+      return 'is-'+status;
+    }
+  }
 }

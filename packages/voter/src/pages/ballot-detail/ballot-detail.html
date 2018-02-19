@@ -21,8 +21,6 @@
 
     <div class="nv-ballot__cover" [class.is-editing]="canEditBallot"></div>
 
-    <!-- <div *ngFor="let b of ballot" (tap)="expandItem(b)"> -->
-
     <ion-list class="nv-ballot__list" *ngIf="ballot.meta">
 
       <ion-item-group>
@@ -88,9 +86,17 @@
 
       </ion-item-group>
 
-    </ion-list>
+      <ion-item>
 
-    <!-- </div> -->
+        <div text-center padding class="nv-ballot__end">
+
+          <em>You've reached the end of the ballot.</em>
+
+        </div>
+        
+      </ion-item>
+
+    </ion-list>
 
   </div>
 
