@@ -11,6 +11,8 @@ import {
 } from 'ionic-angular';
 import {Storage, IonicStorageModule} from '@ionic/storage';
 import {Keyboard} from '@ionic-native/keyboard';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
+
 
 import {NetVoteApp} from './app.component';
 
@@ -106,6 +108,7 @@ export function provideSettings(storage: Storage) {
     TouchID,
     Camera,
     Keyboard,
+    InAppBrowser,
     SplashScreen,
     StatusBar,
     BarcodeScanner,
