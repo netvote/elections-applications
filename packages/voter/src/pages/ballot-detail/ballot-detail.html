@@ -66,12 +66,12 @@
             </ion-item>
 
             <!-- Section items for user to choose as a vote -->
-            <ion-item *ngFor="let bItem of bSection.ballotItems; let itemIdx = index" (tap)="selectBallotItem(groupIdx, sectionIdx, itemIdx, bItem)" class="nv-ballot__choice"
+            <ion-item *ngFor="let bItem of bSection.ballotItems; let itemIdx = index" (click)="selectBallotItem(groupIdx, sectionIdx, itemIdx, bItem)" class="nv-ballot__choice"
               [class.is-chosen]="itemIdx === currentSelected[groupIdx+'-'+sectionIdx]">
 
               <div class="nv-ballot__choice__inner">
 
-                <div class="nv-ballot__choice__title">{{bItem.itemTitle}}</div>
+                <span class="nv-ballot__choice__title" (click)="candidateInfoModal(bItem, $event)">{{bItem.itemTitle}}</span>
                 <div class="nv-ballot__choice__desc">{{bItem.itemDescription}}</div>
 
               </div>
