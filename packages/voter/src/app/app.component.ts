@@ -58,6 +58,14 @@ export class NetVoteApp {
     private modalCtrl: ModalController
   ) {
 
+    platform.ready().then(() => {
+      platform.resume.subscribe ((e) => {
+      });      
+      platform.pause.subscribe (async (e) => {
+        await this.authProvider.lock();
+      });
+    });
+
     this.initializeAuth();
 
     this.initTranslate();
@@ -75,8 +83,6 @@ export class NetVoteApp {
 
   ionViewDidLoad() {
 
-    this.platform.ready().then(() => {
-
       // Must be set for background colors to work in iOS
       this.statusBar.overlaysWebView(false);
 
@@ -84,10 +90,6 @@ export class NetVoteApp {
       this.statusBar.styleLightContent();
 
       this.splashScreen.hide();
-
-      this.initializeAuth();
-
-    });
 
   }
 
@@ -120,7 +122,7 @@ export class NetVoteApp {
         if (active === undefined || auth.prior !== AuthState.Locked)
           this.navCtrl.setRoot('ballot-list')
       } else if (auth.current === AuthState.Locked) {
-        this.modalCtrl.create("get-passcode", {title: "Enter passcode to unlock"}).present();
+        this.modalCtrl.create("get-passcode", {title: "Enter passcode to unlock", allowBiometric: true}).present();
       } else if (auth.current === AuthState.NotSetUp) {
         this.navCtrl.setRoot('login', {initial: "initial"});
       } else {
@@ -130,7 +132,9 @@ export class NetVoteApp {
     });
   }
 
-  logout() {
+  async logout() {
+    
+    const bioType = await this.authProvider.getBiometricType();
 
     this.alertCtrl.create({
       title: 'Confirm Logout',
@@ -142,9 +146,9 @@ export class NetVoteApp {
         {
           text: 'Logout',
           handler: data => {
-
+            
             this.account = null;
-            this.authProvider.logout(false);
+            this.authProvider.logout(bioType === "face");
           }
         }
       ]

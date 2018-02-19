@@ -43,10 +43,6 @@ export class BallotDetailPage {
     if (!this.ballot)
       return;
 
-    if (this.ballot.tx) {
-      console.log("TX: ", this.ballot.tx);
-    }
-
     if (this.ballot.selections)
       this.currentSelected = this.ballot.selections;
 
@@ -98,7 +94,6 @@ export class BallotDetailPage {
   viewOnBlockchain(ballot: Ballot) {
     if (ballot.tx)
       window.open(ballot.url, "_system");
-    console.log(ballot);
   }
 
   async testRequest() {
@@ -107,7 +102,6 @@ export class BallotDetailPage {
       if (passcode) {
         try {
           const wallet = await this.auth.getWalletAddress(passcode, this.address);
-          console.log("NV: Voting with wallet", wallet);
         } catch (err) {
           console.log("NV: Err", err.message);
         }

@@ -216,8 +216,6 @@ export class NetvoteProvider {
 
     return new Promise((resolve, reject) => {
 
-      console.log("NV ***: Getting wallet");
-
       // Get the key store
       this.getKeyStore(password).then((keystore) => {
 
@@ -236,7 +234,7 @@ export class NetvoteProvider {
           let addrs = keystore.getAddresses();
 
           if (addrs.length) {
-            console.log("NV ***: New wallet generated: ", addrs);
+            console.log("NV: New wallet generated: ", addrs);
 
             // Save keystore with newly generated wallet address
             this.saveKeyStore(keystore).then(() => {

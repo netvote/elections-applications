@@ -16,6 +16,7 @@ export class SpinnerComponent {
   }
 
   ngAfterViewInit(){
+
   }
 
 }

@@ -61,7 +61,7 @@
   
       <form [formGroup]="loginForm" class="nv-login__pane__form">
 
-        <p *ngIf="!loginForm.controls.passcode.valid && loginForm.controls.passcode.dirty && loginSubmitAttempt" padding color="danger" class="nv-island--negative">Passcode you entered is not correct. Please try again.</p>
+        <p *ngIf="false && !loginForm.controls.passcode.valid && loginForm.controls.passcode.dirty && loginSubmitAttempt" padding color="danger" class="nv-island--negative">Passcode you entered is not correct. Please try again.</p>
   
         <ion-list no-lines>
           
@@ -71,7 +71,7 @@
           </ion-item>
 
           <ion-item *ngIf="touchId">
-            <ion-label>{{ 'ENABLE_TOUCH_ID' | translate }} Enable Touch Id</ion-label>
+            <ion-label>{{biometricPrompt}}</ion-label>
             <ion-toggle formControlName="touchId"></ion-toggle>
           </ion-item>
 

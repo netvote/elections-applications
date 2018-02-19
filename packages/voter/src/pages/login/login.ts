@@ -102,7 +102,7 @@ export class LoginPage {
 
   }
 
-  async register(passcode: string, touchId: boolean) {
+  async register() {
 
     this.registerSubmitAttempt = true;
 
@@ -112,15 +112,14 @@ export class LoginPage {
       await this.pause(500);
 
       this.showLoading("Setting up your secure voting application...");
-      const res = await this.authProvider.register(this.registerForm.value.passcode, touchId);
+      const res = await this.authProvider.register(this.registerForm.value.passcode, this.registerForm.value.touchId);
       if (res.success) {
-        console.log("successul registration");
         this.hideLoading();
       }
     }
 
     if(!this.registerForm.valid){
-      console.log("Registration form values are invalid!");
+      console.log("NV: Registration form values are invalid!");
     }
   }
 
@@ -141,7 +140,7 @@ export class LoginPage {
     this.isOpenEntry = '';
   }
 
-  async login(passcode: string, enableTouchId: boolean) {
+  async login() {
 
     this.loginSubmitAttempt = true;
 
@@ -150,7 +149,7 @@ export class LoginPage {
       this.keyboard.close();
       await this.pause(500);
       try {
-        await this.authProvider.login(this.loginForm.value.passcode, enableTouchId, "Scan fingerprint to enable touch id");
+        await this.authProvider.login(this.loginForm.value.passcode, this.loginForm.value.touchId, "Scan fingerprint to enable touch id");
       } catch (error) {
         this.toastCtrl.create({
           message: "Invalid passcode",
@@ -161,7 +160,7 @@ export class LoginPage {
     }
 
     if(!this.loginForm.valid){
-      console.log("Login form values are invalid!");
+      console.log("NV: Login form values are invalid!");
     }
   }
 
