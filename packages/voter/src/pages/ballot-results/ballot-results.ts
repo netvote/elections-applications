@@ -1,10 +1,8 @@
 import {Component, ViewChild} from '@angular/core';
 import {IonicPage, NavController, NavParams, Content, ModalController, ToastController} from 'ionic-angular';
 import {TranslateService} from '@ngx-translate/core';
-import {isNgTemplate} from '@angular/compiler';
 
 import {NetvoteProvider} from '../../providers/netvote/netvote';
-import {AuthProvider} from '../../providers/auth/auth';
 import {BallotProvider} from '../../providers/ballot/ballot';
 import {Ballot} from '../../models/ballot';
 
@@ -28,16 +26,15 @@ export class BallotResultsPage {
   canEditBallot: boolean = false;
 
   constructor(public navCtrl: NavController,
-    private navParams: NavParams,
+    public navParams: NavParams,
     public modalCtrl: ModalController,
     public toastCtrl: ToastController,
     public translateService: TranslateService,
     private netvote: NetvoteProvider,
-    private auth: AuthProvider,
     private ballotProvider: BallotProvider) {
 
     // Address of the ballot contract  
-    this.address = navParams.get("address");
+    this.address = this.navParams.get("address");
   }
 
   async ionViewDidEnter() {
@@ -53,7 +50,6 @@ export class BallotResultsPage {
     this.ballot.meta = meta;
 
     this.tallyIt();
-//    this.content.resize();
   }
 
   tallyIt() {

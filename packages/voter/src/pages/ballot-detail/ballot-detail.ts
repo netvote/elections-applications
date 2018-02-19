@@ -1,7 +1,6 @@
 import {Component, ViewChild} from '@angular/core';
 import {IonicPage, NavController, NavParams, Content, ModalController, ToastController} from 'ionic-angular';
 import {TranslateService} from '@ngx-translate/core';
-import {isNgTemplate} from '@angular/compiler';
 
 import {NetvoteProvider} from '../../providers/netvote/netvote';
 import {AuthProvider} from '../../providers/auth/auth';
