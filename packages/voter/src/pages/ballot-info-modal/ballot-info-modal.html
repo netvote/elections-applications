@@ -10,15 +10,15 @@
 
 <ion-content padding>
 
-  <div *ngIf="ballotData.status === 'submitted' ">This ballot has been successfully submitted and is pending activation on the blockchain.</div>
+  <p padding *ngIf="ballotData.status === 'submitted' " class="nv-island--trans">This ballot has been successfully submitted and is pending activation on the blockchain.</p>
 
   <ion-list class="nv-list  nv-list--clear">
 
-    <ion-item>
+    <ion-item margin-bottom>
         <strong>{{ 'TRANSACTION_ID' | translate }}: </strong><br><span *ngIf="ballotData.tx === undefined"><em>Transaction ID not available</em></span><span *ngIf="ballotData.tx">{{ballotData.tx}} </span>
     </ion-item>
 
-    <ion-item>
+    <ion-item margin-bottom>
         <strong>{{ 'LAST_MODIFIED_TIMESTAMP' | translate }}: </strong><br>{{ballotData.timestamp}} 
     </ion-item>
 

@@ -4,4 +4,8 @@
     &--negative{
         background-color: color($colors, danger);
     }
+
+    &--trans{
+        background-color: rgba(white, 0.2);
+    }
 }

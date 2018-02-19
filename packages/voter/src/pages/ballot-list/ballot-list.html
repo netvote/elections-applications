@@ -60,19 +60,15 @@
 
         <h2>{{ballot.title}}</h2>
 
-        <ion-badge *ngIf="ballot.status === 'submitted'" color="positive" no-margin class="nv-b-list__status">{{ballot.status}}{{ballot.waiting ? " (waiting...)": ""}}</ion-badge>
+        <ion-badge *ngIf="ballot.status === 'submitted' && !ballot.tx" color="positive" no-margin class="nv-b-list__status">{{ballot.status}}{{ballot.waiting ? " (waiting...)": ""}}</ion-badge>
         
-        <ion-badge *ngIf="ballot.tx" color="attention" no-margin class="nv-b-list__status">View on Blockchain</ion-badge>
-        <!-- <div>{{ballot.timestamp.getFullYear()}}</div> -->
-
-        <!-- <div style="position: absolute; z-index: 333333; background: blue; top: 0; right: 50%;" (click)="expandItem(ballot); $event.stopPropagation();">blah</div> -->
-        <!-- <expandable [expanded]="ballot.expanded">here is the expanded content</expandable> -->
+        <ion-badge *ngIf="ballot.tx" color="attention" no-margin class="nv-b-list__status">On Blockchain</ion-badge>
 
       </ion-item>
 
       <ion-item-options>
 
-        <button ion-button color="attention" (tap)="ballotInfoModal(ballot, slidingItem);">
+        <button ion-button color="secondary" (tap)="ballotInfoModal(ballot, slidingItem);">
 
           <ion-icon name="more"></ion-icon>
           {{ 'MORE' | translate }}
