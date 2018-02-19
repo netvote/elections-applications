@@ -11,8 +11,8 @@ import {
 } from 'ionic-angular';
 import {Storage, IonicStorageModule} from '@ionic/storage';
 import {Keyboard} from '@ionic-native/keyboard';
-import { InAppBrowser } from '@ionic-native/in-app-browser';
-
+import {InAppBrowser} from '@ionic-native/in-app-browser';
+import {Firebase} from '@ionic-native/firebase';
 
 import {NetVoteApp} from './app.component';
 
@@ -31,8 +31,6 @@ import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 
 import {AngularFireModule} from "angularfire2";
 import {AngularFirestoreModule} from "angularfire2/firestore";
-
-//import {ComponentsModule} from '../components/components.module';
 
 import {AuthProvider} from '../providers/auth/auth';
 import {NetvoteProvider} from '../providers/netvote/netvote';
@@ -79,7 +77,6 @@ export function provideSettings(storage: Storage) {
     SettingsPage
   ],
   imports: [
-    //ComponentsModule,
     BrowserModule,
     HttpModule,
     TranslateModule.forRoot({
@@ -107,6 +104,7 @@ export function provideSettings(storage: Storage) {
   providers: [
     TouchID,
     Camera,
+    Firebase,
     Keyboard,
     InAppBrowser,
     SplashScreen,

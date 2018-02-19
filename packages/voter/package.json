@@ -24,6 +24,7 @@
     "@ionic-native/barcode-scanner": "4.5.3",
     "@ionic-native/camera": "4.5.3",
     "@ionic-native/core": "4.5.3",
+    "@ionic-native/firebase": "^4.5.3",
     "@ionic-native/google-maps": "4.5.3",
     "@ionic-native/in-app-browser": "^4.5.3",
     "@ionic-native/keyboard": "4.5.3",
@@ -44,6 +45,7 @@
     "cordova-ios": "~4.5.4",
     "cordova-plugin-compat": "^1.2.0",
     "cordova-plugin-device": "^1.1.7",
+    "cordova-plugin-firebase": "^0.1.25",
     "cordova-plugin-inappbrowser": "^2.0.2",
     "cordova-plugin-ionic-webview": "^1.1.16",
     "cordova-plugin-secure-storage": "^2.6.8",
@@ -88,7 +90,8 @@
       },
       "cordova-plugin-statusbar": {},
       "cordova-plugin-ionic-webview": {},
-      "cordova-plugin-inappbrowser": {}
+      "cordova-plugin-inappbrowser": {},
+      "cordova-plugin-firebase": {}
     },
     "platforms": [
       "ios"

@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {IonicPage, NavController, NavParams} from 'ionic-angular';
-
 import {BarcodeScanner} from '@ionic-native/barcode-scanner';
+import {Firebase} from '@ionic-native/firebase';
 
 import {NetvoteProvider} from '../../providers/netvote/netvote';
 import {AuthProvider} from '../../providers/auth/auth';
@@ -24,12 +24,13 @@ export class BallotScanPage {
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
     private barcodeScanner: BarcodeScanner,
+    private firebase: Firebase,
     private netvote: NetvoteProvider,
     private ballotProvider: BallotProvider,
     private auth: AuthProvider,
     public config: ConfigurationProvider) {
 
-      this.scanBypass = config.base.ballotScanBypass;
+    this.scanBypass = config.base.ballotScanBypass;
 
   }
 
@@ -64,9 +65,10 @@ export class BallotScanPage {
   }
 
   async importBallot(address: string) {
+    
     const data = await this.netvote.getRemoteBallotMeta(address);
     let ballot = await this.ballotProvider.getBallot(address);
-    if(!ballot) {
+    if (!ballot) {
       ballot = new Ballot(address, data.ballotTitle, data.ipfs, data.type);
       await this.ballotProvider.addBallot(ballot);
     }

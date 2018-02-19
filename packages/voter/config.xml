@@ -102,5 +102,6 @@
     </feature>
     <preference name="CordovaWebViewEngine" value="CDVWKWebViewEngine" />
     <plugin name="cordova-plugin-inappbrowser" spec="^2.0.2" />
+    <plugin name="cordova-plugin-firebase" spec="^0.1.25" />
     <engine name="ios" spec="~4.5.4" />
 </widget>
