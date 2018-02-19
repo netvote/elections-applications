@@ -28,7 +28,6 @@ export class CastBallotPage {
   address: string;
   verificationCode: string;
   voterKeys: any;
-  submitting: boolean = false;
   waiting: boolean = false;
 
   constructor(
@@ -96,8 +95,14 @@ export class CastBallotPage {
         verificationCode = barcodeData.text;
       }
 
-      this.submitting = true;
       this.ballotStatus = "submitting";
+
+      // UX timeout to indicate submission and processing
+      // while token and gateway is set
+      setTimeout(() => {
+        this.ballotStatus = "submitted";
+        this.waiting = true;
+      }, 3000);
 
       token = await this.netvote.getVoterToken(verificationCode, this.address);
 
@@ -122,8 +127,6 @@ export class CastBallotPage {
 
       const result: any = await this.netvote.submitVote(voteBase64, token.token);
 
-      this.ballotStatus = "submitted";
-
       const baseEthereumUrl = this.config.base.paths.ethereumBase;
 
       await this.ballotProvider.updateBallot(this.address, {
@@ -133,14 +136,12 @@ export class CastBallotPage {
         selections: selections
       });
 
-      this.waiting = true;
-
-      setTimeout(() => {
-        this.waiting = false;
-      }, 3000);
-
       const gatewayOb = this.gatewayProvider.getVoteObservable(result.collection, result.txId);
       gatewayOb.subscribe(async (vote) => {
+
+        if(vote.tx){
+          this.waiting = false;
+        }
 
         await this.ballotProvider.updateBallot(this.address, {
           tx: vote.tx,
