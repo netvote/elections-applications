@@ -23,7 +23,6 @@ export class BallotInfoModalPage {
   ionViewWillLoad() {
     
     this.ballotData = this.navParams.get('data');
-    console.log("BALLOT INFO: ", this.ballotData);
     
   }
 
@@ -31,7 +30,7 @@ export class BallotInfoModalPage {
     this.viewCtrl.dismiss();
   }
 
-  matchStatusClass(status, waiting){
+ matchStatusClass(status, waiting){
 
     if(status === 'submitted' && waiting){
       return 'is-positive'
@@ -52,7 +51,7 @@ export class BallotInfoModalPage {
       iabDoneText = values.IAB_DONE_BUTTON_TEXT;
     });
 
-    const iabOptions = "location=yes,clearcache=yes,transitionstyle=crossdissolve,closebuttoncolor=#5BC0BE,closebuttoncaption=" + iabDoneText;
+    const iabOptions = "location=yes,clearcache=yes,transitionstyle=crossdissolve,toolbarcolor=#071822,closebuttoncolor=#5BC0BE,closebuttoncaption=" + iabDoneText;
 
     const browser = this.iab.create(url, '_blank', iabOptions);
 
