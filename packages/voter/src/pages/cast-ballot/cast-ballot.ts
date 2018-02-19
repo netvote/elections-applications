@@ -1,6 +1,8 @@
 import {Component} from '@angular/core';
 import {IonicPage, NavController, NavParams, ViewController} from 'ionic-angular';
+import {TranslateService} from '@ngx-translate/core';
 import {BarcodeScanner} from '@ionic-native/barcode-scanner';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
 
 import {NetvoteProvider} from '../../providers/netvote/netvote';
 import {BallotProvider} from '../../providers/ballot/ballot';
@@ -34,7 +36,9 @@ export class CastBallotPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     public viewCtrl: ViewController,
+    public translateService: TranslateService,
     private barcodeScanner: BarcodeScanner,
+    private iab: InAppBrowser,
     private netvote: NetvoteProvider,
     private ballotProvider: BallotProvider,
     private gatewayProvider: GatewayProvider,
@@ -157,6 +161,22 @@ export class CastBallotPage {
   // Cancel and return to previous page
   async returnToBallot() {
     this.navCtrl.pop();
+  }
+
+  launchTxLink(url: string){
+
+    let iabDoneText: string;
+
+    this.translateService.get(['IAB_DONE_BUTTON_TEXT']).subscribe(values => {
+      iabDoneText = values.IAB_DONE_BUTTON_TEXT;
+    });
+
+    const iabOptions = "location=yes,clearcache=yes,transitionstyle=crossdissolve,toolbarcolor=#071822,closebuttoncolor=#5BC0BE,closebuttoncaption=" + iabDoneText;
+
+    const browser = this.iab.create(url, '_blank', iabOptions);
+
+    browser.show();
+
   }
   
 }

@@ -48,9 +48,13 @@
                   <ion-list class="nv-ballot__list  nv-ballot__section" *ngFor="let bSection of bGroup.ballotSections; let sectionIdx = index">
 
                     <ion-item *ngIf="bSection.sectionTitle" class="nv-ballot__section__head-item">
+
                       <div class="nv-ballot__section__head">{{bSection.sectionTitle}}
+
                         <small *ngIf="bSection.sectionNote">({{bSection.sectionNote}})</small>
+
                       </div>
+
                     </ion-item>
 
                     <ng-container *ngFor="let bItem of bSection.ballotItems; let itemIdx = index">
@@ -61,11 +65,13 @@
                         <div class="nv-ballot__choice__inner">
 
                           <div class="nv-ballot__choice__title">{{bItem.itemTitle}}</div>
+
                           <div class="nv-ballot__choice__desc">{{bItem.itemDescription}}</div>
 
                         </div>
 
                       </ion-item>
+
                     </ng-container>
 
                   </ion-list>
@@ -127,24 +133,25 @@
 
         <div class="wrap" *ngIf="ballotStatus === 'submitted'">
 
-          <div *ngIf="waiting">Waiting...</div>
-          <div *ngIf="!waiting">{{ballot.tx}}</div>
+          <div *ngIf="waiting">
+            Your votes are processing on the blockchain. This could take awhile. Feel free to wait or check back later to view your successful transaction.
+          </div>
 
-          <nv-spinner [spinnerState]=" 'is-successful' ">
+          <nv-spinner *ngIf="!waiting" [spinnerState]=" 'is-successful' ">
             
-              <div class="nv-spinner__text">Success! Your votes have been registered.
-                <br>
-                <a style="color: #60BEBD; font-size: 1.5rem;" href="{{ballot.url}}">View your votes on the blockchain</a>
-                <br>
-                <br>
-                <button ion-button color="attention" (tap)="viewResults()">View current results</button>
-                <br>
-                <br>
-                <div style="font-size: 1rem; text-align: left; color: rgba(255, 255, 255, 0.699);">
-                  <strong>Transaction ID:</strong>
-                  <br>{{ballot.tx}}
-                </div>
+            <div class="nv-spinner__text">
+              Success! Your votes have been registered.
+
+              <p><a style="color: #60BEBD; font-size: 1.5rem;" href="#" (click)="$event.preventDefault; launchTxLink(ballot.url);">View your votes on the blockchain</a></p>
+
+              <div style="font-size: 1rem; text-align: left; color: rgba(255, 255, 255, 0.699);">
+                <strong>Transaction ID:</strong>
+                <br>{{ballot.tx}}
               </div>
+
+              <p><button ion-button color="attention" (tap)="viewResults()">View current ballot results</button></p>
+              
+            </div>
 
           </nv-spinner>
 

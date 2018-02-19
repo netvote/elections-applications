@@ -30,7 +30,7 @@ export class BallotInfoModalPage {
     this.viewCtrl.dismiss();
   }
 
- matchStatusClass(status, waiting){
+  matchStatusClass(status, waiting){
 
     if(status === 'submitted' && waiting){
       return 'is-positive'
