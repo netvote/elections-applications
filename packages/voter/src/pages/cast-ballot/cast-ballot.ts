@@ -156,7 +156,6 @@ export class CastBallotPage {
     this.navCtrl.pop();
   }
 
-<<<<<<< HEAD
   launchTxLink(url: string){
 
     let iabDoneText: string;
@@ -173,6 +172,4 @@ export class CastBallotPage {
 
   }
   
-=======
->>>>>>> master
 }

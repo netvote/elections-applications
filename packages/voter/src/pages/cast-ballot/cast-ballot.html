@@ -134,7 +134,11 @@
         <div class="wrap" *ngIf="ballotStatus === 'submitted'">
 
           <div *ngIf="waiting">
-            Your votes are processing on the blockchain. This could take awhile. Feel free to wait or check back later to view your successful transaction.
+
+            <h2>Your votes are processing on the blockchain.</h2> 
+
+            <p>This could take awhile. Feel free to wait or check back later to view your successful transaction.</p>
+            
           </div>
 
           <nv-spinner *ngIf="!waiting" [spinnerState]=" 'is-successful' ">
@@ -142,7 +146,7 @@
             <div class="nv-spinner__text">
               Success! Your votes have been registered.
 
-              <p><a style="color: #60BEBD; font-size: 1.5rem;" href="#" (click)="$event.preventDefault; launchTxLink(ballot.url);">View your votes on the blockchain</a></p>
+              <p><a color="attention" href="#" (click)="$event.preventDefault; launchTxLink(ballot.url);"><small>View your votes on the blockchain</small></a></p>
 
               <div style="font-size: 1rem; text-align: left; color: rgba(255, 255, 255, 0.699);">
                 <strong>Transaction ID:</strong>
