@@ -138,6 +138,8 @@
             <h2>Your votes are processing on the blockchain.</h2> 
 
             <p>This could take awhile. Feel free to wait or check back later to view your successful transaction.</p>
+
+            <p><button ion-button color="attention" (tap)="backToBallotList()">Go to My Ballots</button></p>
             
           </div>
 
@@ -149,8 +151,11 @@
               <p><a color="attention" href="#" (click)="$event.preventDefault; launchTxLink(ballot.url);"><small>View your votes on the blockchain</small></a></p>
 
               <div style="font-size: 1rem; text-align: left; color: rgba(255, 255, 255, 0.699);">
+
                 <strong>Transaction ID:</strong>
+
                 <br>{{ballot.tx}}
+
               </div>
 
               <p><button ion-button color="attention" (tap)="viewResults()">View current ballot results</button></p>

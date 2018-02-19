@@ -78,6 +78,10 @@ export class CastBallotPage {
     this.navCtrl.push("ballot-results", {address: this.address});
   }
 
+  backToBallotList() {
+    this.navCtrl.setRoot('ballot-list');
+  }
+
   async scanVerificationQr(test: boolean, selections: any) {
 
     try {
@@ -131,11 +135,12 @@ export class CastBallotPage {
 
       this.waiting = true;
 
+      setTimeout(() => {
+        this.waiting = false;
+      }, 3000);
+
       const gatewayOb = this.gatewayProvider.getVoteObservable(result.collection, result.txId);
       gatewayOb.subscribe(async (vote) => {
-
-        if (vote.tx)
-          this.waiting = false;
 
         await this.ballotProvider.updateBallot(this.address, {
           tx: vote.tx,
