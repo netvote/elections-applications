@@ -2,9 +2,9 @@
       
     &__anim{
     position: relative;
-    border: 4px solid #0F374B;
-    height: 24px;
-    width: 24px;
+    border: 4px solid color($colors, primary);
+    height: 32px;
+    width: 32px;
     border-radius: 3px;
     transform: rotate(45deg) scale(1);
       
@@ -13,7 +13,7 @@
         position: absolute;
         top: 50%;
         left: 50%;
-        transform: translate(-50%, -50%) scale(1);
+        transform: translate3d(-50%, -50%, 0) scale(1);
         height: 4px;
         width: 4px;
         border-radius: 50%;
@@ -42,10 +42,10 @@
     &.is-successful{
       
         .#{$ns}spinner__anim{
-         border-color: #23D18B;
+         border-color: color($colors, positive);
          
          &:before, &:after{
-           background-color: darken(#23D18B, 8%);
+           background-color: darken(color($colors, positive), 8%);
          }
          
          &:before{
@@ -56,20 +56,17 @@
           &:after{
             border-radius: 0;
             width: 26px;
-            transform: translate(-10px, -15px) rotate(90deg);
+            transform: translate3d(-10px, -15px, 0) rotate(90deg);
           }
         }
       }
     
     &__anim, &__text{
-      // display: inline-block;
-      // vertical-align: middle;
       margin-left: auto;
       margin-right: auto;
     }
     
     &__text{
-      //margin-left: 0.5rem;
       margin-top: 1rem;
       font-size: 2rem;
     }  
@@ -82,7 +79,7 @@
     50%{
       transform: rotate(360deg) scale(0.7);
       border-radius: 50%;
-      border-color: #60BEBD;
+      border-color: color($colors, attention);
     }
     100%{
       transform: rotate(45deg) ;
@@ -92,21 +89,21 @@
   @keyframes nvSpinnerText {
     0%, 100%{
       opacity: 1;
-      color: #0F374B;
+      color: color($colors, primary);
     }
     50%{
       opacity: 0.5;
-      color: #60BEBD;
+      color: color($colors, attention);
     }
   }
   
   @keyframes nvSpinnerDot {
     0%, 100%{
       transform: translate(-50%, -50%) scale(1);
-      background-color: #0F374B;
+      background-color: color($colors, primary);
     }
     50%{
       transform: translate(-50%, -50%) scale(3);
-      background-color: #60BEBD;
+      background-color: color($colors, attention);
     }
   }
