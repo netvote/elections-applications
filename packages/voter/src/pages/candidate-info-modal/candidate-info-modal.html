@@ -1,0 +1,47 @@
+<ion-header>
+    <ion-navbar>
+      <ion-title>Candidate Profile</ion-title>
+      <ion-buttons end>
+        <button ion-button (tap)="closeCandidateInfoModal();"><ion-icon name="close"></ion-icon></button>
+      </ion-buttons>
+    </ion-navbar>
+  
+  </ion-header>
+  
+  <ion-content padding>
+  
+    <ion-grid>
+
+      <ion-row>
+
+        <ion-col col-4>
+
+          <img src="https://placehold.it/120">
+
+        </ion-col>
+
+        <ion-col col-8>
+
+          <div padding-left>
+              <h5>{{candidateMeta.itemTitle}}</h5>
+              <p>{{candidateMeta.itemDescription}}</p>
+          </div>
+          
+        </ion-col>
+
+      </ion-row>
+
+      <ion-row>
+
+          <ion-col>
+  
+            <p>Additional Information</p>
+  
+          </ion-col>
+  
+        </ion-row>
+
+    </ion-grid>
+
+  </ion-content>
+  
