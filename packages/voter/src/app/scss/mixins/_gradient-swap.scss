@@ -1,0 +1,27 @@
+
+
+@mixin x-gradient-swap($skipClass, $gradColors...){
+
+    @if $skipClass == true{
+        @each $gc in $gradColors {
+            background: linear-gradient(45deg, mix($black-color, color($colors, #{$gc}), 50%) 0%, mix($black-color, color($colors, #{$gc}), 30%) 50%, color($colors, #{$gc}) 100%);
+    
+            &:before{
+                background: linear-gradient(45deg, color($colors, #{$gc}) 0%, mix($black-color, color($colors, #{$gc}), 30%) 50%, mix($black-color, color($colors, #{$gc}), 50%) 100%);
+            }
+        }
+    }
+    @else{
+        
+        @each $gc in $gradColors {
+
+            &.is-#{$gc}{
+                background: linear-gradient(45deg, mix($black-color, color($colors, #{$gc}), 50%) 0%, mix($black-color, color($colors, #{$gc}), 30%) 50%, color($colors, #{$gc}) 100%);
+    
+                &:before{
+                    background: linear-gradient(45deg, color($colors, #{$gc}) 0%, mix($black-color, color($colors, #{$gc}), 30%) 50%, mix($black-color, color($colors, #{$gc}), 50%) 100%);
+                }
+            }
+        }
+    }
+}
