@@ -140,7 +140,7 @@ export class LoginPage {
     this.isOpenEntry = '';
   }
 
-  async login(passcode: string, enableTouchId: boolean) {
+  async login() {
 
     this.loginSubmitAttempt = true;
 
@@ -149,7 +149,7 @@ export class LoginPage {
       this.keyboard.close();
       await this.pause(500);
       try {
-        await this.authProvider.login(this.loginForm.value.passcode, enableTouchId, "Scan fingerprint to enable touch id");
+        await this.authProvider.login(this.loginForm.value.passcode, this.loginForm.value.touchId, "Scan fingerprint to enable touch id");
       } catch (error) {
         this.toastCtrl.create({
           message: "Invalid passcode",
