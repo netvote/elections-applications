@@ -22,7 +22,7 @@
     <preference name="SplashShowOnlyFirstTime" value="false" />
     <preference name="SplashScreen" value="screen" />
     <preference name="SplashScreenDelay" value="3000" />
-    <preference name="ShowSplashScreenSpinner" value="false"/>
+    <preference name="ShowSplashScreenSpinner" value="false" />
     <platform name="android">
         <allow-intent href="market:*" />
         <icon density="ldpi" src="resources/android/icon/drawable-ldpi-icon.png" />
@@ -103,6 +103,6 @@
     </feature>
     <preference name="CordovaWebViewEngine" value="CDVWKWebViewEngine" />
     <plugin name="cordova-plugin-inappbrowser" spec="^2.0.2" />
+    <engine name="android" spec="^6.2.3" />
     <engine name="ios" spec="~4.5.4" />
-    <engine name="android" spec="~6.4.0" />
 </widget>
