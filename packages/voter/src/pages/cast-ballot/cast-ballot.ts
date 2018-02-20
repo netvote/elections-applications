@@ -74,7 +74,7 @@ export class CastBallotPage {
   }
 
   viewResults() {
-    this.navCtrl.push("ballot-results", {address: this.address});
+    this.navCtrl.setRoot("ballot-results", {address: this.address});
   }
 
   backToBallotList() {
@@ -94,15 +94,10 @@ export class CastBallotPage {
         barcodeData = await this.barcodeScanner.scan();
         verificationCode = barcodeData.text;
       }
+      
+      this.viewCtrl.showBackButton(false);
 
       this.ballotStatus = "submitting";
-
-      // UX timeout to indicate submission and processing
-      // while token and gateway is set
-      setTimeout(() => {
-        this.ballotStatus = "submitted";
-        this.waiting = true;
-      }, 3000);
 
       token = await this.netvote.getVoterToken(verificationCode, this.address);
 
@@ -135,6 +130,9 @@ export class CastBallotPage {
         collection: result.collection,
         selections: selections
       });
+
+      this.ballotStatus = "submitted";
+      this.waiting = true;        
 
       const gatewayOb = this.gatewayProvider.getVoteObservable(result.collection, result.txId);
       gatewayOb.subscribe(async (vote) => {
