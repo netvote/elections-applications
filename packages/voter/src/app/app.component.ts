@@ -46,7 +46,7 @@ export class NetVoteApp {
   ];
 
   constructor(private translate: TranslateService,
-    private platform: Platform,
+    platform: Platform,
     settings: Settings,
     private config: Config,
     private statusBar: StatusBar,
