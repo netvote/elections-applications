@@ -103,4 +103,5 @@
     <preference name="CordovaWebViewEngine" value="CDVWKWebViewEngine" />
     <plugin name="cordova-plugin-inappbrowser" spec="^2.0.2" />
     <engine name="ios" spec="~4.5.4" />
+    <engine name="android" spec="~6.4.0" />
 </widget>
