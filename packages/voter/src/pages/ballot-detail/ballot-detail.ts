@@ -3,7 +3,6 @@ import {IonicPage, NavController, NavParams, Content, ModalController, ToastCont
 import {TranslateService} from '@ngx-translate/core';
 
 import {NetvoteProvider} from '../../providers/netvote/netvote';
-import {AuthProvider} from '../../providers/auth/auth';
 import {BallotProvider} from '../../providers/ballot/ballot';
 import {Ballot} from '../../models/ballot';
 
@@ -30,7 +29,6 @@ export class BallotDetailPage {
     public toastCtrl: ToastController,
     public translateService: TranslateService,
     private netvote: NetvoteProvider,
-    private auth: AuthProvider,
     private ballotProvider: BallotProvider) {
 
     // Address of the ballot contract  
@@ -95,21 +93,6 @@ export class BallotDetailPage {
     if (ballot.tx)
       window.open(ballot.url, "_system");
   }
-
-  async testRequest() {
-    const prompt = this.modalCtrl.create("get-passcode", {title: "Enter passcode to proceed", returnPasscode: true, allowCancel: true});
-    prompt.onDidDismiss(async (passcode) => {
-      if (passcode) {
-        try {
-          const wallet = await this.auth.getWalletAddress(passcode, this.address);
-        } catch (err) {
-          console.log("NV: Err", err.message);
-        }
-      }
-    });
-    prompt.present();
-  }
-
 
   // LEAVE THIS FOR NOW
   // Expandable Component
