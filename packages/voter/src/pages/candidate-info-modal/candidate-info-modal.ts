@@ -1,14 +1,13 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController, Platform } from 'ionic-angular';
 import {TranslateService} from '@ngx-translate/core';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 
-/**
- * Generated class for the CandidateInfoModalPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+export interface Slide {
+  title: string;
+  image: string;
+  blurb: string;
+}
 
 @IonicPage()
 @Component({
@@ -18,14 +17,45 @@ import { InAppBrowser } from '@ionic-native/in-app-browser';
 export class CandidateInfoModalPage {
 
   candidateMeta: any;
+  slides: Slide[];
+  dir: string = 'ltr';
 
   constructor(
+    private platform: Platform,
     private viewCtrl: ViewController,
     public navCtrl: NavController, 
     public navParams: NavParams,
     public translateService: TranslateService,
     private iab: InAppBrowser) {
+
+      this.dir = platform.dir();
+
+      this.slides = [
+        {
+          title: 'A temp title of the news article 1',
+          image: 'https://placehold.it/200',
+          blurb: 'a blurb from the news article'
+        },
+        {
+          title: 'A temp title of the news article 2',
+          image: 'https://placehold.it/200',
+          blurb: 'a blurb from the news article'
+        },
+        {
+          title: 'A temp title of the news article 3',
+          image: 'https://placehold.it/200',
+          blurb: 'a blurb from the news article'
+        },
+        {
+          title: 'A temp title of the news article 4',
+          image: 'https://placehold.it/200',
+          blurb: 'a blurb from the news article'
+        },
+        
+      ];
   }
+
+  
 
   ionViewWillLoad() {
     

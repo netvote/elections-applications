@@ -36,6 +36,14 @@
           <ion-col>
   
             <p>Additional Information</p>
+
+            <ion-slides pager="false" dir="{{dir}}" slidesPerView=1 spaceBetween=0 effect="coverflow">
+              <ion-slide *ngFor="let slide of slides; let i = index" [ngClass]="{'is-first' : i===0}">
+                  <img [src]="slide.image" />
+                  <h5 [innerHTML]="slide.title"></h5>
+                  <small [innerHTML]="slide.blurb"></small>
+              </ion-slide>
+            </ion-slides>
   
           </ion-col>
   
