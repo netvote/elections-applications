@@ -82,13 +82,13 @@ export class NetVoteApp {
 
   ionViewDidLoad() {
 
-      // Must be set for background colors to work in iOS
-      this.statusBar.overlaysWebView(false);
+    // Must be set for background colors to work in iOS
+    this.statusBar.overlaysWebView(false);
 
-      // Gives text in status bar white color
-      this.statusBar.styleLightContent();
+    // Gives text in status bar white color
+    this.statusBar.styleLightContent();
 
-      this.splashScreen.hide();
+    this.splashScreen.hide();
 
   }
 

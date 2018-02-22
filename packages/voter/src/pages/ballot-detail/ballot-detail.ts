@@ -25,7 +25,7 @@ export class BallotDetailPage {
 
   constructor(public navCtrl: NavController,
     private navParams: NavParams,
-    public modalCtrl: ModalController,
+    public modal: ModalController,
     public toastCtrl: ToastController,
     public translateService: TranslateService,
     private netvote: NetvoteProvider,
@@ -93,6 +93,35 @@ export class BallotDetailPage {
     if (ballot.tx)
       window.open(ballot.url, "_system");
   }
+
+  async candidateInfoModal(ballot: any, ev: Event) {
+    ev.stopPropagation();
+
+    // Modal with extra informatino such as status, transaction id, timestamp, etc.
+    const candidateInfoModal = this.modal.create('CandidateInfoModalPage', { data: ballot }, {
+      showBackdrop: false,
+      enableBackdropDismiss: false,
+      cssClass: "nv-modal  nv-modal--fullscreen"
+    });
+
+    // Open ballot info modal
+    candidateInfoModal.present();
+  }
+
+  async testRequest() {
+    const prompt = this.modal.create("get-passcode", {title: "Enter passcode to proceed", returnPasscode: true, allowCancel: true});
+    prompt.onDidDismiss(async (passcode) => {
+      if (passcode) {
+        try {
+          //const wallet = await this.auth.getWalletAddress(passcode, this.address);
+        } catch (err) {
+          console.log("NV: Err", err.message);
+        }
+      }
+    });
+    prompt.present();
+  }
+
 
   // LEAVE THIS FOR NOW
   // Expandable Component
