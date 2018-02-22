@@ -67,7 +67,6 @@ export class NetVoteApp {
     });
 
     this.initializeAuth();
-
     this.initTranslate();
 
   }

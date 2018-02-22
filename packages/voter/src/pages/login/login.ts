@@ -18,7 +18,6 @@ import { PasscodeValidation } from '../../validators/passcode';
 })
 
 export class LoginPage {
-
   account: any = {};
   touchId = false;
   isOpenEntry: any = '';

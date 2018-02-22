@@ -13,12 +13,14 @@ export declare var lightwallet: any;
 @Injectable()
 export class AuthProvider {
 
-  readonly STORAGE_KEY = "auth1.0";
-  readonly LOGIN_STATE_KEY = "state1.0";
-  readonly WALLLET_XREF_KEY = "walletxref";
-  readonly HASH_KEY = "hash1.0";
-  readonly KEYSTORE_KEY = "keystore";
-  readonly BIOMETRIC_KEY = "biometric";
+  readonly STORAGE_KEY = "auth_1";
+  readonly LOGIN_STATE_KEY = "state_1";
+  readonly WALLLET_XREF_KEY = "walletxref_1";
+  readonly HASH_KEY = "hash_1";
+  readonly KEYSTORE_KEY = "keystore_1";
+  readonly BIOMETRIC_KEY = "biometric_1";
+
+  readonly ENABLE_KEYSTORE = false;
 
   private theObservable: Observable<AuthStateChange>;
   private lastAuthState: AuthState = null;
@@ -119,9 +121,11 @@ export class AuthProvider {
         try {
           const storage = await this.getSecureStorage(this.STORAGE_KEY);
           await storage.set(this.HASH_KEY, hash);
-          const keystore = await this.createKeystore(passcode);
-          const serialized = keystore.serialize();
-          await storage.set(this.KEYSTORE_KEY, serialized);
+          if(this.ENABLE_KEYSTORE) {
+            const keystore = await this.createKeystore(passcode);
+            const serialized = keystore.serialize();
+            await storage.set(this.KEYSTORE_KEY, serialized);
+          }
           if (enableBiometric) {
             const check = await this.checkBiometric();
             if (check)
