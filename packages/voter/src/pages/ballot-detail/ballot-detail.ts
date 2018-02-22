@@ -94,7 +94,6 @@ export class BallotDetailPage {
       window.open(ballot.url, "_system");
   }
 
-<<<<<<< HEAD
   async candidateInfoModal(ballot: any, ev: Event) {
     ev.stopPropagation();
 
@@ -114,7 +113,7 @@ export class BallotDetailPage {
     prompt.onDidDismiss(async (passcode) => {
       if (passcode) {
         try {
-          const wallet = await this.auth.getWalletAddress(passcode, this.address);
+          //const wallet = await this.auth.getWalletAddress(passcode, this.address);
         } catch (err) {
           console.log("NV: Err", err.message);
         }
@@ -124,8 +123,6 @@ export class BallotDetailPage {
   }
 
 
-=======
->>>>>>> master
   // LEAVE THIS FOR NOW
   // Expandable Component
   // Show more info drop down
