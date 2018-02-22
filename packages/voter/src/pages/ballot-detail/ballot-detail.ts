@@ -3,7 +3,6 @@ import {IonicPage, NavController, NavParams, Content, ModalController, ToastCont
 import {TranslateService} from '@ngx-translate/core';
 
 import {NetvoteProvider} from '../../providers/netvote/netvote';
-import {AuthProvider} from '../../providers/auth/auth';
 import {BallotProvider} from '../../providers/ballot/ballot';
 import {Ballot} from '../../models/ballot';
 
@@ -30,7 +29,6 @@ export class BallotDetailPage {
     public toastCtrl: ToastController,
     public translateService: TranslateService,
     private netvote: NetvoteProvider,
-    private auth: AuthProvider,
     private ballotProvider: BallotProvider) {
 
     // Address of the ballot contract  
@@ -96,6 +94,7 @@ export class BallotDetailPage {
       window.open(ballot.url, "_system");
   }
 
+<<<<<<< HEAD
   async candidateInfoModal(ballot: any, ev: Event) {
     ev.stopPropagation();
 
@@ -125,6 +124,8 @@ export class BallotDetailPage {
   }
 
 
+=======
+>>>>>>> master
   // LEAVE THIS FOR NOW
   // Expandable Component
   // Show more info drop down

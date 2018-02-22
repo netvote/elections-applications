@@ -180,6 +180,9 @@ export class AuthProvider {
 
   public async lock(): Promise<boolean> {
     const storage = await this.getSecureStorage(this.STORAGE_KEY);
+    const state = await storage.get(this.LOGIN_STATE_KEY);
+    if (!state || AuthState[state] !== "LoggedIn")
+      return false;
     await storage.set(this.LOGIN_STATE_KEY, AuthState.Locked.toString());
     return true;
   }
