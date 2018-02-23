@@ -5,6 +5,9 @@
         padding: 0;
         font-size: 1.4rem;
     }
+    top: 0;
+    top: constant(safe-area-inset-top);
+    top: env(safe-area-inset-top);
 
     ion-icon{
         font-size: 5rem;

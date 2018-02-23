@@ -18,44 +18,44 @@ export class BallotInfoModalPage {
     public navParams: NavParams,
     public translateService: TranslateService,
     private iab: InAppBrowser) {
-  }
+    }
 
-  ionViewWillLoad() {
+    ionViewWillLoad() {
     
-    this.ballotData = this.navParams.get('data');
-    
-  }
-
-  async closeBallotInfoModal(){
-    this.viewCtrl.dismiss();
-  }
-
-  matchStatusClass(status, waiting){
-
-    if(status === 'submitted' && waiting){
-      return 'is-positive'
+      this.ballotData = this.navParams.get('data');
+      
     }
-    else if(status === 'submitted'){
-      return 'is-attention'
+
+    async closeBallotInfoModal(){
+      this.viewCtrl.dismiss();
     }
-    else{
-      return 'is-'+status;
+
+    matchStatusClass(status, waiting){
+
+      if(status === 'submitted' && waiting){
+        return 'is-positive'
+      }
+      else if(status === 'submitted'){
+        return 'is-attention'
+      }
+      else{
+        return 'is-'+status;
+      }
     }
-  }
 
-  launchTxLink(url: string){
+    launchTxLink(url: string){
 
-    let iabDoneText: string;
+      let iabDoneText: string;
 
-    this.translateService.get(['IAB_DONE_BUTTON_TEXT']).subscribe(values => {
-      iabDoneText = values.IAB_DONE_BUTTON_TEXT;
-    });
+      this.translateService.get(['IAB_DONE_BUTTON_TEXT']).subscribe(values => {
+        iabDoneText = values.IAB_DONE_BUTTON_TEXT;
+      });
 
-    const iabOptions = "location=yes,clearcache=yes,transitionstyle=crossdissolve,toolbarcolor=#071822,closebuttoncolor=#5BC0BE,closebuttoncaption=" + iabDoneText;
+      const iabOptions = "location=yes,clearcache=yes,transitionstyle=crossdissolve,toolbarcolor=#071822,closebuttoncolor=#5BC0BE,closebuttoncaption=" + iabDoneText;
 
-    const browser = this.iab.create(url, '_blank', iabOptions);
+      const browser = this.iab.create(url, '_blank', iabOptions);
 
-    browser.show();
+      browser.show();
 
-  }
+    }
 }

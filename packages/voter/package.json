@@ -41,6 +41,7 @@
     "@types/protobufjs": "^6.0.0",
     "angularfire2": "^5.0.0-rc.3",
     "cordova-android": "^6.2.3",
+    "cordova-ios": "4.5.4",
     "cordova-plugin-compat": "^1.2.0",
     "cordova-plugin-device": "^1.1.7",
     "cordova-plugin-inappbrowser": "^2.0.2",
@@ -64,8 +65,7 @@
     "rxjs": "^5.4.3",
     "sw-toolbox": "3.6.0",
     "web": "0.0.2",
-    "zone.js": "^0.8.18",
-    "cordova-ios": "~4.5.4"
+    "zone.js": "^0.8.18"
   },
   "devDependencies": {
     "@ionic/app-scripts": "3.1.8",
