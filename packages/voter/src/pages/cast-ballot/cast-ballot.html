@@ -86,11 +86,6 @@
 
           </div>
 
-          <p>
-            <button ion-button margin-right color="danger" (tap)="returnToBallot();">Cancel</button>
-            <button ion-button color="attention" (tap)="secureVotes();">Yes, these are my votes</button>
-          </p>
-
         </div>
 
         <div class="wrap" *ngIf="ballotStatus=== 'securing'">
@@ -176,3 +171,19 @@
   </div>
 
 </ion-content>
+
+<ion-footer color="dark">
+
+    <ion-grid no-padding>
+
+        <ion-row align-items-center>
+
+          <ion-col><button ion-button full no-margin color="danger" (tap)="returnToBallot();"><strong>Cancel</strong></button></ion-col>
+
+          <ion-col><button ion-button full no-margin color="attention" (tap)="secureVotes();"><strong>Yes, these are my votes</strong></button></ion-col>
+
+        </ion-row>
+
+      </ion-grid>
+
+</ion-footer>
