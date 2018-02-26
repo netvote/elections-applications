@@ -17,7 +17,19 @@ export class ResultsChartComponent {
 
   ngAfterViewInit(){
     
-    console.log("Result data", this.resultData);
+    const results = [];
+    let opacity = 1.00;
+    this.resultData.ballotItems.forEach((item, index) => {
+      results.push({
+        label: item.itemTitle,
+        backgroundColor: `rgba(95, 192, 189, ${opacity})`,
+        data: [item.result.counts]
+      });
+      opacity-=.3;
+
+    });
+
+    console.log(results);
 
     this.chart = new Chart(this.resultPieChart.nativeElement, {
 
@@ -37,23 +49,7 @@ export class ResultsChartComponent {
           //   ],
           //   borderWidth: 0
           // }]
-          datasets: [{
-            label: "Apples",
-            backgroundColor: "rgba(95, 192, 189, 1.00)",
-            data: [ (Math.random() * 100).toFixed(2) ]
-          },{
-            label: "Oranges",
-            backgroundColor: "rgba(95, 192, 189, 0.8)",
-            data: [ (Math.random() * 100).toFixed(2) ]
-          },{
-            label: "Mangos",
-            backgroundColor: "rgba(95, 192, 189, 0.6)",
-            data: [ (Math.random() * 100).toFixed(2) ]
-          },{
-            label: "Avocados",
-            backgroundColor: "rgba(95, 192, 189, 0.4)",
-            data: [ (Math.random() * 100).toFixed(2) ]
-          }]
+          datasets: results,
         },
         options: {
           layout: {

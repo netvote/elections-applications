@@ -20,16 +20,26 @@
 
 <ion-content no-bounce>
 
-  <div  *ngIf="ballot && ballot.meta">
+  <div  *ngIf="ballot && ballot.meta && tallied">
 
     <h4 padding>{{ballot.meta.ballotTitle}}</h4>
 
+    <ng-container *ngFor="let bGroup of ballot.meta.ballotGroups; let groupIdx = index">
+
+      <div *ngFor="let bSection of bGroup.ballotSections; let sectionIdx = index">
+
+        <results-chart #resultChart [resultData]="bSection"></results-chart>
+
+      </div>
+    
+    </ng-container>
+
     <!-- Repeat a chart for each set of results that need a grapgh -->
-    <div>
+    <!-- <div>
 
       <results-chart #resultChart [resultData]="ballot.meta.ballotTitle"></results-chart>
 
-    </div>
+    </div> -->
   
     <div padding>
   
