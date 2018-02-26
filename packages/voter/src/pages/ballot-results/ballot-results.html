@@ -18,22 +18,25 @@
 
 </ion-header>
 
-<ion-content no-bounce *ngIf="ballot && ballot.meta">
+<ion-content no-bounce>
 
-  <h4 padding>{{ballot.meta.ballotTitle}}</h4>
+  <div  *ngIf="ballot && ballot.meta">
 
-  <!-- create chart block for each section -->
-  <div>
+    <h4 padding>{{ballot.meta.ballotTitle}}</h4>
 
-    <canvas #resultPieChart></canvas>
+    <div>
 
-  </div>
-  
-  <div padding>
-
-    <p>
-      More info about the current state/results or not.
-    </p>
+        <canvas #resultPieChart></canvas>
+    
+      </div>
+      
+      <div padding>
+    
+        <p>
+          More info about the current state/results or not.
+        </p>
+    
+      </div>
 
   </div>
   
