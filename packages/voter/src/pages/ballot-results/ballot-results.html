@@ -24,19 +24,20 @@
 
     <h4 padding>{{ballot.meta.ballotTitle}}</h4>
 
+    <!-- Repeat a chart for each set of results that need a grapgh -->
     <div>
 
-        <canvas #resultPieChart></canvas>
-    
-      </div>
-      
-      <div padding>
-    
-        <p>
-          More info about the current state/results or not.
-        </p>
-    
-      </div>
+      <results-chart #resultChart [resultData]="ballot.meta.ballotTitle"></results-chart>
+
+    </div>
+  
+    <div padding>
+  
+      <p>
+        More info about the current state/results or not.
+      </p>
+  
+    </div>
 
   </div>
   
