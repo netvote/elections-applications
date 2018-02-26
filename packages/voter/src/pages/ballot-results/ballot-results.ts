@@ -40,6 +40,7 @@ export class BallotResultsPage {
   }
 
   async ionViewDidEnter() {
+    
     this.ballot = await this.ballotProvider.getBallot(this.address);
     if (!this.ballot)
       return;
@@ -55,7 +56,9 @@ export class BallotResultsPage {
 
     console.log(this.ballot.meta);
 
-    this.tallyIt();
+    await this.tallyIt();
+
+    this.createCharts();
 
   }
 
@@ -81,7 +84,7 @@ export class BallotResultsPage {
     
   }
 
-  ionViewDidLoad(){
+  createCharts(){
 
     this.barChart = new Chart(this.resultPieChart.nativeElement, {
 

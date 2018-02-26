@@ -18,7 +18,7 @@
 
 </ion-header>
 
-<ion-content no-bounce>
+<ion-content no-bounce *ngIf="ballot && ballot.meta">
 
   <h4 padding>{{ballot.meta.ballotTitle}}</h4>
 
