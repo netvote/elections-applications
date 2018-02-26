@@ -53,6 +53,8 @@ export class BallotResultsPage {
 
     this.ballot.meta = meta;
 
+    console.log(this.ballot.meta);
+
     this.tallyIt();
 
   }
