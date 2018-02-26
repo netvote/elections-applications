@@ -32,6 +32,11 @@ export class BallotListPage {
     this.getBallots();
   }
 
+  goToResults(ballot) {
+    this.navCtrl.setRoot("ballot-results", {address: ballot.address, ballot: ballot.ballot, selections: ballot.currentSelected});
+  }
+
+
   async getBallots() {
     const baseEthereumUrl = this.config.base.paths.ethereumBase;
 
