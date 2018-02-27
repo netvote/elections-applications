@@ -9,5 +9,9 @@ page-ballot-list {
         &__status{
             text-transform: capitalize;
         }
+
+        &__button{
+            color: white;
+        }
     }
 }

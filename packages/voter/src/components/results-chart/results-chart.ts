@@ -49,12 +49,12 @@ export class ResultsChartComponent {
           //   ],
           //   borderWidth: 0
           // }]
-          datasets: results,
+          datasets: results
         },
         options: {
           layout: {
             padding: {
-              left: 0,
+              left: 5,
               right: 20,
               top: 0,
               bottom: 0
@@ -86,6 +86,7 @@ export class ResultsChartComponent {
               }
             }],
             yAxes: [{
+              maxBarThickness: 20,
               scaleLabel: {
                 display: false
               },

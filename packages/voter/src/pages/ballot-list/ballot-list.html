@@ -59,11 +59,12 @@
         </ion-thumbnail>
 
         <h2>{{ballot.title}}</h2>
-        <button (click)="$event.stopPropagation(); goToResults(ballot)">results</button>
 
         <ion-badge *ngIf="ballot.status === 'submitted' && !ballot.tx" color="positive" no-margin class="nv-b-list__status">{{ballot.status}}{{ballot.waiting ? " (waiting...)": ""}}</ion-badge>
         
         <ion-badge *ngIf="ballot.tx" color="attention" no-margin class="nv-b-list__status">On Blockchain</ion-badge>
+
+        <button ion-button clear small class="nv-b-list__button" (click)="$event.stopPropagation(); goToResults(ballot)">results</button>
 
       </ion-item>
 

@@ -33,7 +33,7 @@ export class BallotListPage {
   }
 
   goToResults(ballot) {
-    this.navCtrl.setRoot("ballot-results", {address: ballot.address, ballot: ballot.ballot, selections: ballot.currentSelected});
+    this.navCtrl.push("ballot-results", {address: ballot.address, ballot: ballot.ballot, selections: ballot.currentSelected});
   }
 
 

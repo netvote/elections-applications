@@ -20,45 +20,26 @@
 
 <ion-content no-bounce>
 
-  <div  *ngIf="ballot && ballot.meta && tallied">
+  <div *ngIf="ballot && ballot.meta && tallied" class="nv-results">
 
-    <h4 padding>{{ballot.meta.ballotTitle}}</h4>
+    <div padding>
+        <small>Results:</small>
+        <h2 no-margin>{{ballot.meta.ballotTitle}}</h2>
+    </div>
+    
 
-    <ng-container *ngFor="let bGroup of ballot.meta.ballotGroups; let groupIdx = index">
+    <div *ngFor="let bGroup of ballot.meta.ballotGroups; let groupIdx = index; last as isLast" class="nv-results__group" [class.is-last-group]="isLast">
 
-      <div *ngFor="let bSection of bGroup.ballotSections; let sectionIdx = index">
+      <div *ngFor="let bSection of bGroup.ballotSections; let sectionIdx = index" class="nv-chart">
 
+        <h5 padding-horizontal>{{bSection.sectionTitle}}</h5>
+        
         <results-chart #resultChart [resultData]="bSection"></results-chart>
 
       </div>
     
-    </ng-container>
-
-    <!-- Repeat a chart for each set of results that need a grapgh -->
-    <!-- <div>
-
-      <results-chart #resultChart [resultData]="ballot.meta.ballotTitle"></results-chart>
-
-    </div> -->
-  
-    <div padding>
-  
-      <p>
-        More info about the current state/results or not.
-      </p>
-  
     </div>
 
   </div>
   
 </ion-content>
-
-<ion-footer no-border color="attention" text-center>
-
-  <ion-toolbar color="attention">
-
-    <ion-title>Share results</ion-title>
-
-  </ion-toolbar>
-
-</ion-footer>
