@@ -18,23 +18,15 @@
 
 </ion-header>
 
-<ion-content no-bounce>
+<ion-content no-bounce class="nv-results">
 
-  <ion-grid *ngIf="!tallied"  style="height: 100%">
-
-    <ion-row justify-content-center align-items-center style="height: 100%">
-
-      <nv-spinner  [spinnerState]=" 'is-animating' ">
-        
-        <div class="nv-spinner__text">Generating results</div>
+  <nv-spinner *ngIf="!tallied" text-center [spinnerState]=" 'is-animating' " class="nv-results__spinner">
       
-      </nv-spinner>
+    <div class="nv-spinner__text">Generating results</div>
+  
+  </nv-spinner>
 
-    </ion-row>
-
-  </ion-grid>
-
-  <div *ngIf="ballot && ballot.meta && tallied" class="nv-results">
+  <div *ngIf="ballot && ballot.meta && tallied">
 
     <div padding>
 
