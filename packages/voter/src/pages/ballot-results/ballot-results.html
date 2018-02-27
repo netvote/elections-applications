@@ -20,13 +20,29 @@
 
 <ion-content no-bounce>
 
+  <ion-grid *ngIf="!tallied"  style="height: 100%">
+
+    <ion-row justify-content-center align-items-center style="height: 100%">
+
+      <nv-spinner  [spinnerState]=" 'is-animating' ">
+        
+        <div class="nv-spinner__text">Generating results</div>
+      
+      </nv-spinner>
+
+    </ion-row>
+
+  </ion-grid>
+
   <div *ngIf="ballot && ballot.meta && tallied" class="nv-results">
 
     <div padding>
-        <small>Results:</small>
-        <h2 no-margin>{{ballot.meta.ballotTitle}}</h2>
-    </div>
-    
+
+      <small>Results:</small>
+      
+      <h2 no-margin>{{ballot.meta.ballotTitle}}</h2>
+
+    </div> 
 
     <div *ngFor="let bGroup of ballot.meta.ballotGroups; let groupIdx = index; last as isLast" class="nv-results__group" [class.is-last-group]="isLast">
 

@@ -32,7 +32,7 @@ import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {AngularFireModule} from "angularfire2";
 import {AngularFirestoreModule} from "angularfire2/firestore";
 
-//import {ComponentsModule} from '../components/components.module';
+// import {ComponentsModule} from '../components/components.module';
 
 import {AuthProvider} from '../providers/auth/auth';
 import {NetvoteProvider} from '../providers/netvote/netvote';
