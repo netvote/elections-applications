@@ -15,7 +15,7 @@ page-ballot-results {
 
     .#{$ns}chart{
         padding: 2rem 0 3rem 0;
-        border-bottom: 3px solid rgba(white, 0.2);
+        border-bottom: 1px solid rgba(white, 0.2);
 
         &:nth-child(odd){
             background-color: mix(black, color($colors, primary), 20%);
