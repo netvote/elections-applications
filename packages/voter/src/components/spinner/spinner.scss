@@ -88,12 +88,10 @@
   
   @keyframes nvSpinnerText {
     0%, 100%{
-      opacity: 1;
-      color: color($colors, primary);
+      color: rgba(color($colors, attention), 0.3);
     }
     50%{
-      opacity: 0.5;
-      color: color($colors, attention);
+      color: rgba(color($colors, attention), 1);
     }
   }
   
