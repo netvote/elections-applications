@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavParams, ViewController } from 'ionic-angular';
+import { IonicPage, NavParams, NavController, ViewController } from 'ionic-angular';
 import {TranslateService} from '@ngx-translate/core';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 
@@ -14,6 +14,7 @@ export class BallotInfoModalPage {
   ballotData: any;
 
   constructor(
+    public navCtrl: NavController,
     private viewCtrl: ViewController,
     public navParams: NavParams,
     public translateService: TranslateService,
@@ -23,12 +24,17 @@ export class BallotInfoModalPage {
     ionViewWillLoad() {
     
       this.ballotData = this.navParams.get('data');
-      
+
     }
 
     async closeBallotInfoModal(){
       this.viewCtrl.dismiss();
     }
+
+    // goToResults() {
+    //   this.viewCtrl.dismiss();
+    //   this.navCtrl.setRoot("ballot-results");
+    // }
 
     matchStatusClass(status, waiting){
 

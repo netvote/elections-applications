@@ -2,17 +2,16 @@ import {NgModule} from '@angular/core';
 import {IonicPageModule} from 'ionic-angular';
 import {CastBallotPage} from './cast-ballot';
 import {TranslateModule} from "@ngx-translate/core";
-import {SpinnerComponent} from "../../components/spinner/spinner";
-
+import {ComponentsModule} from '../../components/components.module';
 
 @NgModule({
   declarations: [
     CastBallotPage,
-    SpinnerComponent
   ],
   imports: [
     IonicPageModule.forChild(CastBallotPage),
     TranslateModule.forChild(),
+    ComponentsModule
   ],
 })
 export class CastBallotPageModule {
