@@ -3,118 +3,51 @@
   <ion-navbar>
 
     <button ion-button icon-only menuToggle>
+
       <ion-icon name="menu"></ion-icon>
+
     </button>
+
     <div class="nv-header__logo">
+
       <img src="assets/img/netvote-logo-mark-check.png">
+
     </div>
 
   </ion-navbar>
 
 </ion-header>
 
-<ion-content no-bounce>
+<ion-content no-bounce class="nv-results">
 
-  <div class="nv-ballot" *ngIf="ballot">
+  <nv-spinner *ngIf="!tallied" text-center [spinnerState]=" 'is-animating' " class="nv-results__spinner">
+      
+    <div class="nv-spinner__text">Generating results</div>
+  
+  </nv-spinner>
 
-    <div class="nv-ballot__cover" [class.is-editing]="canEditBallot"></div>
+  <div *ngIf="ballot && ballot.meta && tallied">
 
-    <ion-list class="nv-ballot__list" *ngIf="ballot.meta">
+    <div padding>
 
-      <ion-item-group>
+      <small>Results:</small>
+      
+      <h2 no-margin>{{ballot.meta.ballotTitle}}</h2>
 
-        <ion-item-divider>
+    </div> 
 
-          <img src="assets/img/roswell-ga.jpg">
+    <div *ngFor="let bGroup of ballot.meta.ballotGroups; let groupIdx = index; last as isLast" class="nv-results__group" [class.is-last-group]="isLast">
 
-          <div class="nv-ballot__info">
+      <div *ngFor="let bSection of bGroup.ballotSections; let sectionIdx = index" class="nv-chart">
 
-            <h4>{{ballot.meta.ballotTitle}}</h4>
+        <h5 padding-horizontal>{{bSection.sectionTitle}}</h5>
+        
+        <results-chart #resultChart [resultData]="bSection"></results-chart>
 
-            <h5>{{ballot.meta.ballotLocation}}</h5>
-
-            <small>{{ballot.meta.ballotDate}}</small>
-
-          </div>
-
-        </ion-item-divider>
-
-      </ion-item-group>
-
-      <!-- Groups of ballot items to vote on -->
-      <ion-item-group *ngFor="let bGroup of ballot.meta.ballotGroups; let groupIdx = index" class="nv-ballot__group">
-
-        <!-- Group title -->
-        <ion-item-divider color="light" sticky>
-
-          <div class="nv-ballot__group__head">{{bGroup.groupTitle}}</div>
-
-        </ion-item-divider>
-
-        <ion-item>
-
-          <!-- Section of a group -->
-          <ion-list class="nv-ballot__list  nv-ballot__section" *ngFor="let bSection of bGroup.ballotSections; let sectionIdx = index">
-
-            <ion-item *ngIf="bSection.sectionTitle" class="nv-ballot__section__head-item">
-              <div class="nv-ballot__section__head">{{bSection.sectionTitle}}
-                <small *ngIf="bSection.sectionNote">({{bSection.sectionNote}})</small>                
-              </div>
-            </ion-item>
-
-            <!-- Section items for user to choose as a vote -->
-            <ion-item *ngFor="let bItem of bSection.ballotItems; let itemIdx = index" (tap)="selectBallotItem(groupIdx, sectionIdx, itemIdx, bItem)" class="nv-ballot__choice"
-              [class.is-chosen]="itemIdx === currentSelected[groupIdx+'-'+sectionIdx]">
-
-              <div class="nv-ballot__choice__inner">
-
-                <div class="nv-ballot__choice__title">{{bItem.itemTitle}}</div> {{bItem.result}}
-                <div class="nv-ballot__choice__desc">{{bItem.itemDescription}}</div>
-
-              </div>
-
-            </ion-item>
-
-          </ion-list>
-
-        </ion-item>
-
-      </ion-item-group>
-
-    </ion-list>
-
-    <!-- </div> -->
+      </div>
+    
+    </div>
 
   </div>
-
-</ion-content>
-
-<ion-footer no-border color="attention" text-center *ngIf=" ballot && ballot.status !== 'confirmed' && canEditBallot">
-
-  <ion-toolbar color="attention" *ngIf=" ballot.status !== 'submitted' " (tap)=" enterCastFlow()">
-
-    <ion-title >Confirm Votes</ion-title>
-
-  </ion-toolbar>
   
-  <ion-toolbar color="attention" *ngIf=" ballot.status === 'submitted' ">
-
-    <ion-title style="padding: 0">
-
-      <ion-grid no-padding>
-
-          <ion-row align-items-center>
-
-            <ion-col><button ion-button full color="danger" (tap)="cancelBallotEdit()"><strong>Cancel</strong></button></ion-col>
-
-            <ion-col (tap)=" enterCastFlow();">Update Votes</ion-col>
-
-          </ion-row>
-
-        </ion-grid>
-
-    </ion-title>
-
-  </ion-toolbar>
-
-</ion-footer>
+</ion-content>

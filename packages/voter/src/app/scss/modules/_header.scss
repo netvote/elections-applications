@@ -16,6 +16,7 @@
     @at-root{
 
         .ios{
+
             .#{$ns}header{
                 
                 &__logo{
@@ -46,3 +47,17 @@
         border-bottom: none;
     }
 }
+
+// Header Bug Hack
+// When navigaton to a page from modal,
+// the header gets cut off. This is a hack until
+// there is a proper ionic fix.
+// https://github.com/ionic-team/ionic/issues/8151
+// .toolbar-ios {
+//     height: 44px + $cordova-ios-statusbar-padding;
+//     padding-top: $cordova-ios-statusbar-padding;
+// }
+
+// .toolbar-title-ios {
+//     padding-top: $cordova-ios-statusbar-padding;
+// }

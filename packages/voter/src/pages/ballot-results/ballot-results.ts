@@ -22,6 +22,7 @@ export class BallotResultsPage {
   currentSelected: any = {};
   address: string;
   canEditBallot: boolean = false;
+  tallied: boolean = false;
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
@@ -36,6 +37,7 @@ export class BallotResultsPage {
   }
 
   async ionViewDidEnter() {
+    
     this.ballot = await this.ballotProvider.getBallot(this.address);
     if (!this.ballot)
       return;
@@ -47,7 +49,8 @@ export class BallotResultsPage {
 
     this.ballot.meta = meta;
 
-    this.tallyIt();
+    await this.tallyIt();
+
   }
 
   async tallyIt() {
@@ -55,20 +58,25 @@ export class BallotResultsPage {
     const res = await this.netvote.getTally(this.ballot.address);
 
     const ballot = res.ballots[this.address];
-
+    
     if (ballot && ballot.results) {
-      const results = ballot.results.ALL;
+      const results = ballot.results.ALL;      
       let sectionIdx = 0;
       this.ballot.meta.ballotGroups.forEach((group, index) => {
         group.ballotSections.forEach((section, index) => {
           section.ballotItems.forEach((item, index) => {
-            item.result = results[sectionIdx][item.itemTitle];
+            item.result = {};
+            item.result.counts = results[sectionIdx][item.itemTitle];
+            item.result.group = group;
+            item.result.section = section;
           });
           sectionIdx++;
         })
 
       });
     }
+
+    this.tallied = true;
     
   }
 

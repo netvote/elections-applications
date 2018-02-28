@@ -64,6 +64,8 @@
         
         <ion-badge *ngIf="ballot.tx" color="attention" no-margin class="nv-b-list__status">On Blockchain</ion-badge>
 
+        <button ion-button clear small class="nv-b-list__button" (click)="$event.stopPropagation(); goToResults(ballot)">results</button>
+
       </ion-item>
 
       <ion-item-options>
