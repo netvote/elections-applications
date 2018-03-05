@@ -14,4 +14,36 @@ page-ballot-list {
             color: white;
         }
     }
+
+    .#{$ns}ballot-card{
+        position: relative;
+        width: 100%;
+        margin: 0 0 3rem 0;
+        background: white;
+        border-radius: 0;
+        box-shadow: none;
+
+        &__header{
+            position: relative;
+        }
+
+        &__content{
+            position: relative;
+            border-top: 4px solid color($colors, attention); 
+
+            &:before{
+                content: "On Blockchain";
+                position: absolute;
+                top: -1.125rem;
+                left: 14px;
+                height: 1rem;
+                padding: 0.5rem;
+                background-color: color($colors, attention); 
+                font-size: 12px;
+                font-weight: 600;
+                line-height: 1rem;
+            }
+        }
+
+    }
 }
