@@ -116,7 +116,7 @@ export class BallotListPage {
     ballotInfoModal.present();
 
     // Close the sliding list item when modal is opened
-    slidingItem.close();
+    //slidingItem.close();
   }
 
   // Expandable Component
