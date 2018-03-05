@@ -46,7 +46,66 @@
     {{ 'SEARCH_NO_BALLOTS_FOUND' | translate }}
   </div>
 
-  <ion-list margin-top class="nv-b-list" *ngIf="ballots != 0 && ballots !== 'undefined'">
+  <div *ngIf="ballots != 0 && ballots !== 'undefined'" margin-top>
+
+    <ion-card class="nv-ballot-card" *ngFor="let ballot of ballots; let ballotIdx = index" (click)="detail(ballot)">
+
+      <div class="nv-ballot-card__header">
+
+        <ion-fab center middle>
+          <button ion-fab mini>
+            <ion-icon name="lock"></ion-icon>
+          </button>
+        </ion-fab>
+
+        <img src="assets/img/roswell-ga.jpg">
+
+      </div>
+      
+      <ion-card-content class="nv-ballot-card__content">
+    
+        <ion-card-title>{{ballot.title}}</ion-card-title>
+    
+        <p *ngIf="ballot.description">{{ballot.description}}</p>
+
+        <p *ngIf="!ballot.description"><em>No description provided for this ballot.</em></p>
+    
+      </ion-card-content>
+    
+      <ion-row no-padding>
+        <ion-col>
+          <button ion-button clear small color="primary" icon-start (click)="$event.stopPropagation(); ballotInfoModal(ballot);">
+            <ion-icon name='more'></ion-icon>
+            {{ 'MORE' | translate }}
+          </button>
+        </ion-col>
+        <ion-col text-center>
+          <button ion-button clear small color="primary" icon-start (click)="$event.stopPropagation(); goToResults(ballot)">
+            <ion-icon name='stats'></ion-icon>
+            Results
+          </button>
+        </ion-col>
+        <ion-col text-right>
+          <button ion-button clear small color="danger" icon-start (click)="$event.stopPropagation(); delete(ballot)">
+            <ion-icon name='trash'></ion-icon>
+            {{ 'DELETE_BUTTON' | translate }}
+          </button>
+        </ion-col>
+      </ion-row>
+      
+    </ion-card>
+
+  </div>
+
+  <div padding-horizontal>
+
+    <p>Discover Public Ballots</p>
+
+  </div>
+  
+
+
+  <!-- <ion-list margin-top class="nv-b-list" *ngIf="ballots != 0 && ballots !== 'undefined'">
 
     <ion-item-sliding #slidingItem [revealSlideable]="ballotIdx === 0 && shouldAnimate" class="nv-b-list__item" *ngFor="let ballot of ballots; let ballotIdx = index">
       
@@ -83,6 +142,6 @@
 
     </ion-item-sliding>
 
-  </ion-list>
+  </ion-list> -->
 
 </ion-content>
