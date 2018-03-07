@@ -7,9 +7,9 @@ ion-input{
     &.has-validation{
     
         // When invalid dynamically add this modifier
-        &.is-invalid{
-            color: color($colors, danger);
-        }
+        // &.is-invalid{
+        //     color: color($colors, danger);
+        // }
     }
 }
 

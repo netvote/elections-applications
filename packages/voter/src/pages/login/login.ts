@@ -1,12 +1,12 @@
 import {Component} from '@angular/core';
 import {Keyboard} from '@ionic-native/keyboard';
-import {NavController, ToastController, IonicPage, LoadingController, Loading} from 'ionic-angular';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {NavController, ToastController, AlertController, IonicPage, LoadingController, Loading} from 'ionic-angular';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 import {TranslateService} from '@ngx-translate/core';
 import {AuthProvider} from "../../providers/auth/auth";
 import {NavParams} from 'ionic-angular/navigation/nav-params';
-import { PasscodeValidation } from '../../validators/passcode';
+import {PasscodeValidation} from '../../validators/passcode';
 
 @IonicPage({
   segment: "login",
@@ -37,6 +37,7 @@ export class LoginPage {
     public formBuilder: FormBuilder,
     public params: NavParams,
     public toastCtrl: ToastController,
+    private alertCtrl: AlertController,
     public translateService: TranslateService,
     private authProvider: AuthProvider,
     public loadingCtrl: LoadingController,
@@ -105,20 +106,36 @@ export class LoginPage {
 
     this.registerSubmitAttempt = true;
 
+    if(!this.registerForm.controls.passcode.valid){
+
+      console.log("NV: Registration passcode is not valid!");
+
+      this.presentPasscodeInvalidAlert();
+
+    }
+
+    if(this.registerForm.controls.passcode.valid && !this.registerForm.controls.verifyPasscode.valid){
+
+      let alert = this.alertCtrl.create({
+        subTitle: "The passcodes you entered don't match. <br><br> Please try again.",
+        buttons: ['OK'],
+        cssClass: 'nv-alert'
+      });
+      alert.present();
+
+    }
+
     if(this.registerForm.valid){
 
       this.keyboard.close();
       await this.pause(500);
 
       this.showLoading("Setting up your secure voting application...");
+
       const res = await this.authProvider.register(this.registerForm.value.passcode, this.registerForm.value.touchId);
       if (res.success) {
         this.hideLoading();
       }
-    }
-
-    if(!this.registerForm.valid){
-      console.log("NV: Registration form values are invalid!");
     }
   }
 
@@ -145,21 +162,47 @@ export class LoginPage {
 
     if(this.loginForm.valid){
 
+      this.showLoading('Authenticating');
+
       this.keyboard.close();
       await this.pause(500);
+
       try {
-        await this.authProvider.login(this.loginForm.value.passcode, this.loginForm.value.touchId, "Scan fingerprint to enable touch id");
-      } catch (error) {
-        this.toastCtrl.create({
-          message: "Invalid passcode",
-          duration: 3000,
-          position: 'top'
-        }).present();
+
+        const res = await this.authProvider.login(this.loginForm.value.passcode, this.loginForm.value.touchId, "Scan fingerprint to enable touch id");
+
+        this.hideLoading();
+
+        if(!res.success){
+
+          let alert = this.alertCtrl.create({
+            // title: '',
+            subTitle: 'The passcode you entered is incorrect. <br><br> Please try again.',
+            buttons: ['OK'],
+            cssClass: 'nv-alert'
+          });
+          alert.present();
+
+        }
+      } 
+      catch (error) {
+
+        let alert = this.alertCtrl.create({
+          // title: '',
+          subTitle: "Sorry, there seems to be an issue. Please try again.",
+          buttons: ['OK'],
+          cssClass: 'nv-alert'
+        });
+        alert.present();
+
       }
     }
 
     if(!this.loginForm.valid){
       console.log("NV: Login form values are invalid!");
+
+      this.presentPasscodeInvalidAlert();
+
     }
   }
 
@@ -183,5 +226,14 @@ export class LoginPage {
   hideLoading() {
     this.processing = false;
     this.loader.dismiss();
+  }
+
+  presentPasscodeInvalidAlert() {
+    let alert = this.alertCtrl.create({
+      subTitle: 'Passcodes must be 4-12 characters in length and only numbers. <br><br> Please try again.',
+      buttons: ['OK'],
+      cssClass: 'nv-alert'
+    });
+    alert.present();
   }
 }
