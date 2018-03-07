@@ -1,0 +1,14 @@
+// Ionic alert styling
+// Netvote class added via alert cssClass option
+
+.#{$ns}alert{
+
+    .alert-button{
+        background-color: color($colors, positive);
+        color: white;
+
+        &.activated{
+            background-color: mix(black, color($colors, positive), 5%);
+        }
+    }
+}
