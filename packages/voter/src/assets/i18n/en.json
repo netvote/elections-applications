@@ -61,5 +61,7 @@
 
   "TRANSACTION_ID": "Transaction ID",
 
-  "LAST_MODIFIED_TIMESTAMP": "Last Modified"
+  "LAST_MODIFIED_TIMESTAMP": "Last Modified",
+
+  "DEMO": "DEMO"
 }
