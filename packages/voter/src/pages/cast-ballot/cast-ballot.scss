@@ -43,7 +43,7 @@ page-cast-ballot {
                 font-size: 14px;
             }
 
-            &.list-ios, .list-md{
+            @include x-platformSelector('.list', '&'){
                 margin-bottom: 0;
             }
         }

@@ -20,7 +20,7 @@
             padding-left: 0;
         }
 
-        .item-md, .item-ios{
+        @include x-platformSelector('.item'){
             padding: 0;
 
             &.item-block{
@@ -28,7 +28,7 @@
                 .item-inner{
                     padding: 0;
                 }
-            } 
+            }
         }
     }
 
