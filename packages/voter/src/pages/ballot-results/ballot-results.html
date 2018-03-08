@@ -28,7 +28,7 @@
 
   <div *ngIf="ballot && ballot.meta && tallied">
 
-    <div padding>
+    <div padding (click)="detail(ballot)">
 
       <small>Results:</small>
       
