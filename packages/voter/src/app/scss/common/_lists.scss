@@ -1,7 +1,10 @@
 // Override and expand on Ionic ion-list styles
 
+<<<<<<< HEAD
 
 // Global List Related Styles/Overrides
+=======
+>>>>>>> master
 @include x-platformSelector('.list'){
 
     > .item-wrapper{
@@ -23,7 +26,7 @@
 
     &--clear{
 
-        .item-ios, .item-md{
+        @include x-platformSelector('.item'){
             background: none;
         }
 
