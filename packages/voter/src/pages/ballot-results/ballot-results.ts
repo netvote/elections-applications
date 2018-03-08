@@ -55,8 +55,10 @@ export class BallotResultsPage {
 
   async tallyIt() {
 
+    console.log(`NV: Tallying ${this.ballot.address}`);
     const res = await this.netvote.getTally(this.ballot.address);
-
+    console.log(`NV: Got tally for ${this.ballot.address}`);
+    
     const ballot = res.ballots[this.address];
     
     if (ballot && ballot.results) {

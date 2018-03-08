@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 import {IonicPage, NavController, NavParams, ViewController} from 'ionic-angular';
 import {TranslateService} from '@ngx-translate/core';
 import {BarcodeScanner} from '@ionic-native/barcode-scanner';
-import { InAppBrowser } from '@ionic-native/in-app-browser';
+import {InAppBrowser} from '@ionic-native/in-app-browser';
 
 import {NetvoteProvider} from '../../providers/netvote/netvote';
 import {BallotProvider} from '../../providers/ballot/ballot';
@@ -24,6 +24,7 @@ export class CastBallotPage {
 
   ballot: any;
   currentSelected: any;
+  token: string;
   ballotStatus: string;
   address: string;
   verificationCode: string;
@@ -48,6 +49,7 @@ export class CastBallotPage {
     this.address = this.navParams.get('address');
     this.ballot = this.navParams.get('ballot');
     this.currentSelected = this.navParams.get('selections');
+    this.token = this.navParams.get('token');
 
     this.voterKeys = ["c5d54403-fb33-40cb-813d-3fae551879ba",
       "88ff8a86-534f-4896-9c57-9ed63f0aff22",
@@ -70,7 +72,12 @@ export class CastBallotPage {
   }
 
   secureVotes() {
-    this.ballotStatus = "securing";
+    if(!this.token)
+      this.ballotStatus = "securing";
+    else{
+      this.ballotStatus = "submitting"
+      this.submitVote(this.token, this.currentSelected);
+    }
   }
 
   viewResults() {
@@ -79,6 +86,57 @@ export class CastBallotPage {
 
   backToBallotList() {
     this.navCtrl.setRoot('ballot-list');
+  }
+
+  async submitVote(token: string, selections: any) {
+
+    let vote = {
+      encryptionSeed: Math.floor(Math.random() * 9999999) + 1000000,
+      ballotVotes: [{choices: []}]
+    };
+
+    this.ballot.meta.ballotGroups.forEach((group, groupIndex) => {
+      group.ballotSections.forEach((section, sectionIndex) => {
+        const selection = selections[`${groupIndex}-${sectionIndex}`];
+        vote.ballotVotes[0].choices.push({selection: selection == null ? null : +selection});
+      });
+    });
+
+    const voteBase64 = await this.netvote.encodeVote(vote);
+    const result: any = await this.netvote.submitVote(voteBase64, token);
+    const baseEthereumUrl = this.config.base.paths.ethereumBase;
+
+    await this.ballotProvider.updateBallot(this.address, {
+      status: "submitted",
+      result: result.txId,
+      collection: result.collection,
+      selections: selections
+    });
+
+    this.ballotStatus = "submitted";
+    this.waiting = true;
+
+    console.log(`NV: Waiting on ${result.collection} for item ${result.txId}`);
+    
+    const gatewayOb = this.gatewayProvider.getVoteObservable(result.collection, result.txId);
+    gatewayOb.subscribe(async (vote) => {
+
+      console.log(`NV: Observer response`);
+
+      if (vote.tx) {
+        this.waiting = false;
+        console.log(`NV: Observer response with tx`);
+      }
+
+      await this.ballotProvider.updateBallot(this.address, {
+        tx: vote.tx,
+        voteId: vote.voteId,
+        url: `${baseEthereumUrl}/tx/${vote.tx}`
+      });
+      this.ballot.tx = vote.tx;
+      this.ballot.url = `${baseEthereumUrl}/tx/${vote.tx}`;
+    });
+
   }
 
   async scanVerificationQr(test: boolean, selections: any) {
@@ -94,61 +152,14 @@ export class CastBallotPage {
         barcodeData = await this.barcodeScanner.scan();
         verificationCode = barcodeData.text;
       }
-      
+
       this.viewCtrl.showBackButton(false);
 
       this.ballotStatus = "submitting";
 
       token = await this.netvote.getVoterToken(verificationCode, this.address);
 
-      let vote = {
-        encryptionSeed: Math.floor(Math.random() * 9999999) + 1000000,
-        ballotVotes: [
-          {
-            choices: []
-          }
-        ]
-      };
-
-      // Gather
-      this.ballot.meta.ballotGroups.forEach((group, groupIndex) => {
-        group.ballotSections.forEach((section, sectionIndex) => {
-          const selection = selections[`${groupIndex}-${sectionIndex}`];
-          vote.ballotVotes[0].choices.push({selection: selection == null ? null : +selection});
-        });
-      });
-
-      const voteBase64 = await this.netvote.encodeVote(vote);
-
-      const result: any = await this.netvote.submitVote(voteBase64, token.token);
-
-      const baseEthereumUrl = this.config.base.paths.ethereumBase;
-
-      await this.ballotProvider.updateBallot(this.address, {
-        status: "submitted",
-        result: result.txId,
-        collection: result.collection,
-        selections: selections
-      });
-
-      this.ballotStatus = "submitted";
-      this.waiting = true;        
-
-      const gatewayOb = this.gatewayProvider.getVoteObservable(result.collection, result.txId);
-      gatewayOb.subscribe(async (vote) => {
-
-        if(vote.tx){
-          this.waiting = false;
-        }
-
-        await this.ballotProvider.updateBallot(this.address, {
-          tx: vote.tx,
-          voteId: vote.voteId,
-          url: `${baseEthereumUrl}/tx/${vote.tx}`
-        });
-        this.ballot.tx = vote.tx;
-        this.ballot.url = `${baseEthereumUrl}/tx/${vote.tx}`;
-      });
+      await this.submitVote(token, selections);
 
     } catch (err) {
       console.log("NV: No scan, error: ", err);
@@ -160,7 +171,7 @@ export class CastBallotPage {
     this.navCtrl.pop();
   }
 
-  launchTxLink(url: string){
+  launchTxLink(url: string) {
 
     let iabDoneText: string;
 
@@ -173,6 +184,10 @@ export class CastBallotPage {
     const browser = this.iab.create(url, '_blank', iabOptions);
 
     browser.show();
+
+  }
+
+  onContentLoad() {
 
   }
   
