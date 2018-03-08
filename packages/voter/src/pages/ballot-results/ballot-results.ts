@@ -82,4 +82,8 @@ export class BallotResultsPage {
     
   }
 
+  async detail(ballot: Ballot) {
+    this.navCtrl.setRoot('ballot-list');
+  }
+
 }
