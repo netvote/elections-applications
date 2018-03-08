@@ -176,7 +176,6 @@ export class LoginPage {
         if(!res.success){
 
           let alert = this.alertCtrl.create({
-            // title: '',
             subTitle: 'The passcode you entered is incorrect. <br><br> Please try again.',
             buttons: ['OK'],
             cssClass: 'nv-alert'
@@ -188,7 +187,7 @@ export class LoginPage {
       catch (error) {
 
         let alert = this.alertCtrl.create({
-          // title: '',
+
           subTitle: "Sorry, there seems to be an issue. Please try again.",
           buttons: ['OK'],
           cssClass: 'nv-alert'
