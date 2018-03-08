@@ -40,6 +40,7 @@
     "@types/password-hash-and-salt": "^0.1.0",
     "@types/protobufjs": "^6.0.0",
     "angularfire2": "^5.0.0-rc.3",
+    "branch-cordova-sdk": "^2.6.23",
     "chart.js": "^2.7.1",
     "cordova-android": "^6.2.3",
     "cordova-ios": "4.5.4",
@@ -89,7 +90,8 @@
       },
       "cordova-plugin-statusbar": {},
       "cordova-plugin-ionic-webview": {},
-      "cordova-plugin-inappbrowser": {}
+      "cordova-plugin-inappbrowser": {},
+      "branch-cordova-sdk": {}
     },
     "platforms": [
       "android",

@@ -4,8 +4,10 @@
     <description>Tamper-proof Blockchain-based Voting for organizations, corporations and governments worldwide.</description>
     <author email="bhowerton@netvote.io" href="https://www.netvote.io/">Netvote</author>
     <content src="index.html" />
-    <access origin="*" />
+    <access launch-external="yes" origin="http://*" />
+    <access launch-external="yes" origin="https://*" />
     <allow-navigation href="http://ionic.local/*" />
+    <allow-navigation href="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
     <allow-intent href="tel:*" />
@@ -103,6 +105,13 @@
     </feature>
     <preference name="CordovaWebViewEngine" value="CDVWKWebViewEngine" />
     <plugin name="cordova-plugin-inappbrowser" spec="^2.0.2" />
+    <branch-config>
+        <branch-key value="key_live_oawI5Q5zK6HU9vCV58c1VpnjwvhqK1Ll" />
+        <uri-scheme value="netvote" />
+        <link-domain value="piv4.app.link" />
+        <ios-team-release value="N8K6XZ6YR2" />
+    </branch-config>
+    <plugin name="branch-cordova-sdk" spec="^2.6.23" />
     <engine name="android" spec="^6.2.3" />
     <engine name="ios" spec="4.5.4" />
 </widget>
