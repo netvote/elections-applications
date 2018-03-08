@@ -30,24 +30,6 @@
     }
 }
 
-// Global List Related Styles/Overrides
-.list-ios, .list-md{
-
-    > .item-wrapper{
-
-        &:last-child{
-            
-            .item-block{
-                border-bottom: none;
-            }
-        }
-    }
-
-    ion-item-options, .item-block .item-inner{
-        border-bottom: none;
-    }
-}
-
 // Header Bug Hack
 // When navigaton to a page from modal,
 // the header gets cut off. This is a hack until
