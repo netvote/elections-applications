@@ -34,11 +34,11 @@ export class NetVoteApp {
 
   @ViewChild(Nav) navCtrl: Nav;
   @ViewChild(Content) content: Content;
-  
+
   loader: any;
   rootPage: string;
   account: Account;
-  
+
   pages: any[] = [
     {title: 'My Ballots', component: "ballot-list"},
     {title: 'Scan a Ballot', component: "ballot-scan"},
@@ -59,17 +59,31 @@ export class NetVoteApp {
   ) {
 
     platform.ready().then(() => {
-      platform.resume.subscribe ((e) => {
-      });      
-      platform.pause.subscribe (async (e) => {
+      platform.resume.subscribe((e) => {
+        branchInit();
+      });
+      platform.pause.subscribe(async (e) => {
         await this.authProvider.lock();
       });
+      branchInit();
     });
+
+    const branchInit = () => {
+      if (!platform.is('cordova')) {return;}
+      const Branch = window['Branch'];
+      console.log("NV: Branch Initialized")
+      Branch.initSession((data) => {
+        //if (data['+clicked_branch_link']) {
+          console.log('NV: ' + JSON.stringify(data));
+       // }
+      });
+    }
 
     this.initializeAuth();
     this.initTranslate();
 
   }
+
 
   showLoading() {
 
@@ -132,7 +146,7 @@ export class NetVoteApp {
   }
 
   async logout() {
-    
+
     const bioType = await this.authProvider.getBiometricType();
 
     this.alertCtrl.create({
@@ -145,7 +159,7 @@ export class NetVoteApp {
         {
           text: 'Logout',
           handler: data => {
-            
+
             this.account = null;
             this.authProvider.logout(bioType === "face");
           }
