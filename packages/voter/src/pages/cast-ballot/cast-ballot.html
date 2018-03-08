@@ -26,7 +26,7 @@
           <div padding>
 
             <h1>Confirm your votes</h1>
-            <p>Please ensure all of your votes are correct.</p>            
+            <p>Please ensure all of your votes are correct.</p>
           </div>
 
           <div class="nv-ballot">
@@ -61,7 +61,7 @@
 
                       <!-- Section items for user to choose as a vote -->
                       <ion-item *ngIf="itemIdx === currentSelected[groupIdx+'-'+sectionIdx]" class="nv-ballot__choice">
-                          
+
                         <ion-icon name="arrow-round-forward" class="nv-ballot__choice__icon"></ion-icon>
 
                         <div class="nv-ballot__choice__inner">
@@ -100,7 +100,7 @@
 
           <p *ngIf="verifyBypass">
 
-            <button (tap)="scanVerificationQr(true, currentSelected)"  ion-button block color="attention">Test Verify</button>
+            <button (tap)="scanVerificationQr(true, currentSelected)" ion-button block color="attention">Test Verify</button>
 
           </p>
 
@@ -132,21 +132,29 @@
 
           <div *ngIf="waiting">
 
-            <h2>Your votes are processing on the blockchain.</h2> 
+            <h2>Your votes are processing on the blockchain.</h2>
 
             <p>This could take awhile. Feel free to wait or check back later to view your successful transaction.</p>
 
-            <p><button ion-button color="attention" (tap)="backToBallotList()">Go to My Ballots</button></p>
-            <p><button ion-button color="attention" (tap)="viewResults()">View current ballot results</button></p>
-            
+            <p>
+              <button ion-button color="attention" (tap)="backToBallotList()">Go to My Ballots</button>
+            </p>
+            <p>
+              <button ion-button color="attention" (tap)="viewResults()">View current ballot results</button>
+            </p>
+
           </div>
 
           <nv-spinner *ngIf="!waiting" [spinnerState]=" 'is-successful' ">
-            
+
             <div class="nv-spinner__text">
               Success! Your votes have been registered.
 
-              <p><a color="attention" href="#" (click)="$event.preventDefault; launchTxLink(ballot.url);"><small>View your votes on the blockchain</small></a></p>
+              <p>
+                <a color="attention" href="#" (click)="$event.preventDefault; launchTxLink(ballot.url);">
+                  <small>View your votes on the blockchain</small>
+                </a>
+              </p>
 
               <div style="font-size: 1rem; text-align: left; color: rgba(255, 255, 255, 0.699);">
 
@@ -156,8 +164,10 @@
 
               </div>
 
-              <p><button ion-button color="attention" (tap)="viewResults()">View current ballot results</button></p>
-              
+              <p>
+                <button ion-button color="attention" (tap)="viewResults()">View current ballot results</button>
+              </p>
+
             </div>
 
           </nv-spinner>
@@ -174,16 +184,24 @@
 
 <ion-footer color="dark">
 
-    <ion-grid no-padding>
+  <ion-grid no-padding>
 
-        <ion-row align-items-center>
+    <ion-row align-items-center>
 
-          <ion-col><button ion-button full no-margin color="danger" (tap)="returnToBallot();"><strong>Cancel</strong></button></ion-col>
+      <ion-col>
+        <button ion-button full no-margin color="danger" (tap)="returnToBallot();">
+          <strong>Cancel</strong>
+        </button>
+      </ion-col>
 
-          <ion-col><button ion-button full no-margin color="attention" (tap)="secureVotes();"><strong>Yes, these are my votes</strong></button></ion-col>
+      <ion-col>
+        <button ion-button full no-margin color="attention" (tap)="secureVotes();">
+          <strong>Yes, these are my votes</strong>
+        </button>
+      </ion-col>
 
-        </ion-row>
+    </ion-row>
 
-      </ion-grid>
+  </ion-grid>
 
 </ion-footer>

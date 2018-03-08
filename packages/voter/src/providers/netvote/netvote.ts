@@ -58,7 +58,7 @@ export class NetvoteProvider {
       })
       .map((res) => res.json())
       .subscribe((res) => {
-        return resolve(res);
+        return resolve(res.token);
       },
       (err) => {
         return reject(err);        
@@ -78,7 +78,6 @@ export class NetvoteProvider {
       headers.append('Authorization', 'Bearer ' + token);
       var body = {"vote": vote};
 
-      // TODO: Config
       this.http.post(`${baseUrl}/vote/cast`, body, {
         headers: headers,
       })
