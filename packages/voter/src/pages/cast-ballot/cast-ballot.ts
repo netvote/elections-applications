@@ -1,5 +1,5 @@
-import {Component} from '@angular/core';
-import {IonicPage, NavController, NavParams, ViewController} from 'ionic-angular';
+import {Component, ViewChild} from '@angular/core';
+import {IonicPage, NavController, NavParams, Content, ViewController} from 'ionic-angular';
 import {TranslateService} from '@ngx-translate/core';
 import {BarcodeScanner} from '@ionic-native/barcode-scanner';
 import {InAppBrowser} from '@ionic-native/in-app-browser';
@@ -19,6 +19,8 @@ import {ConfigurationProvider} from '../../providers/configuration/configuration
 })
 
 export class CastBallotPage {
+
+  @ViewChild(Content) content: Content;
 
   verifyBypass: boolean = false;
 
@@ -72,6 +74,10 @@ export class CastBallotPage {
   }
 
   secureVotes() {
+
+    // Resize content when footer not shown
+    this.content.resize();
+
     if(!this.token)
       this.ballotStatus = "securing";
     else{
@@ -184,10 +190,6 @@ export class CastBallotPage {
     const browser = this.iab.create(url, '_blank', iabOptions);
 
     browser.show();
-
-  }
-
-  onContentLoad() {
 
   }
   
