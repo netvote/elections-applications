@@ -73,7 +73,7 @@ export class BallotScanPage {
     if(ballot){
       await this.ballotProvider.removeBallot(address);
     }
-    ballot = new Ballot(address, data.ballotTitle, data.ipfs, data.type);
+    ballot = new Ballot(address, data.ballotTitle, data.ipfs, data.type, data.featuredImage);
     await this.ballotProvider.addBallot(ballot);    
     this.navCtrl.setRoot('ballot-detail', {meta: data, address: address, token: token});
   }

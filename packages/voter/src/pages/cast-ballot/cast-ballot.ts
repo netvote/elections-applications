@@ -53,16 +53,8 @@ export class CastBallotPage {
     this.currentSelected = this.navParams.get('selections');
     this.token = this.navParams.get('token');
 
-    this.voterKeys = ["c5d54403-fb33-40cb-813d-3fae551879ba",
-      "88ff8a86-534f-4896-9c57-9ed63f0aff22",
-      "1cf3ba80-d331-4390-8fd8-4856677c8088",
-      "484329d8-4468-419f-b180-e2cf5eab55b7",
-      "d6333011-b65b-4d2b-b135-48ae68d6b1c4",
-      "7cfbaddd-03a1-4b11-a6b3-60de150c99f1",
-      "0a1ed875-6e19-4612-acf2-9e6a9b71eded",
-      "cbbcb665-c655-4610-84f8-7c73712c13e0",
-      "0d850c17-bbc3-4d2a-a021-0eb8e8d2c5cf",
-      "72a18615-ce88-4ede-b9eb-5b000715edf0"];
+    // For demo verification
+    this.voterKeys = ["33d19c0d-7246-45ef-9caa-2d47635b6d59"];
 
     this.verificationCode = this.voterKeys[0];
 
