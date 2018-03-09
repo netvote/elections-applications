@@ -63,17 +63,18 @@ export class BallotScanPage {
   // Temporary to test in browser
   // Pretend scan was successful
   async testbypass() {
-    const address = "0x3e0e98b422261242519e4cba69c0afaa47da2d3f";
+    const address = "0x2781cb442c98bbecf37119b872913f1c39e0612d";
     this.importBallot(address, null);
   }
 
   async importBallot(address: string, token: string) {
-    const data = await this.netvote.getRemoteBallotMeta(address);
+    const data = await this.netvote.getRemoteBallotMeta(address);    
     let ballot = await this.ballotProvider.getBallot(address);
-    if(!ballot) {
-      ballot = new Ballot(address, data.ballotTitle, data.ipfs, data.type);
-      await this.ballotProvider.addBallot(ballot);
+    if(ballot){
+      await this.ballotProvider.removeBallot(address);
     }
+    ballot = new Ballot(address, data.ballotTitle, data.ipfs, data.type);
+    await this.ballotProvider.addBallot(ballot);    
     this.navCtrl.setRoot('ballot-detail', {meta: data, address: address, token: token});
   }
 
