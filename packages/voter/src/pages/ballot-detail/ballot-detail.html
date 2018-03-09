@@ -110,7 +110,7 @@
 
 <ion-footer no-border color="attention" text-center *ngIf="ballot && ballot.status !== 'confirmed' && canEditBallot">
 
-  <ion-toolbar color="attention" *ngIf="ballot.status !== 'submitted' " (tap)=" enterCastFlow()">
+  <ion-toolbar color="attention" *ngIf="ballot.status !== 'submitted' ">
 
     <ion-title style="padding: 0">
 
@@ -118,7 +118,7 @@
   
           <ion-row align-items-center>
   
-            <ion-col><button ion-button full no-margin color="attention" [disabled]="!finished"><strong>Confirm Votes</strong></button></ion-col>
+            <ion-col><button ion-button full no-margin color="attention" [disabled]="!finished" (tap)=" enterCastFlow()"><strong>Confirm Votes</strong></button></ion-col>
   
           </ion-row>
   
