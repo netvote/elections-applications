@@ -88,6 +88,7 @@ export class CastBallotPage {
 
   async submitVote(token: string, selections: any) {
 
+    // TODO: Refactor this behemoth
     let vote = {
       encryptionSeed: Math.floor(Math.random() * 9999999) + 1000000,
       ballotVotes: [{choices: []}]
@@ -99,6 +100,10 @@ export class CastBallotPage {
         vote.ballotVotes[0].choices.push({selection: selection == null ? null : +selection});
       });
     });
+
+    setTimeout(()=>{
+      this.waiting = true;
+    }, 4000);
 
     const voteBase64 = await this.netvote.encodeVote(vote);
     const result: any = await this.netvote.submitVote(voteBase64, token);
