@@ -4,7 +4,7 @@
         "ethereumBase": "https://ropsten.etherscan.io",
         "infuraBase": "https://ropsten.infura.io"        
     },
-    "ballotScanBypass": false,
-    "ballotVerifyBypass": false
+    "ballotScanBypass": true,
+    "ballotVerifyBypass": true
 
 }
