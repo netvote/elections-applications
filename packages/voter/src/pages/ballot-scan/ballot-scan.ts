@@ -68,13 +68,13 @@ export class BallotScanPage {
   }
 
   async importBallot(address: string, token: string) {
-    const data = await this.netvote.getRemoteBallotMeta(address);
-    console.log("NV: ", data);
+    const data = await this.netvote.getRemoteBallotMeta(address);    
     let ballot = await this.ballotProvider.getBallot(address);
-    if(!ballot) {
-      ballot = new Ballot(address, data.ballotTitle, data.ipfs, data.type);
-      await this.ballotProvider.addBallot(ballot);
+    if(ballot){
+      await this.ballotProvider.removeBallot(address);
     }
+    ballot = new Ballot(address, data.ballotTitle, data.ipfs, data.type);
+    await this.ballotProvider.addBallot(ballot);    
     this.navCtrl.setRoot('ballot-detail', {meta: data, address: address, token: token});
   }
 
