@@ -63,11 +63,13 @@ export class BallotDetailPage {
   // Ballot item selection
   selectBallotItem(groupIndex, sectionIndex, itemIndex, ballotItem) {
     this.currentSelected[`${groupIndex}-${sectionIndex}`] = itemIndex;
+    console.log(this.currentSelected);
   }
 
   // Remove all selected choices in ballot
   clearSelectedBallots(groupIndex, sectionIndex) {
-    this.currentSelected[`${groupIndex}-${sectionIndex}`] = null;
+    delete this.currentSelected[`${groupIndex}-${sectionIndex}`];
+    //this.currentSelected[`${groupIndex}-${sectionIndex}`] = null;
   }
 
   // Send vote selections to cast ballot page to confirm and send
@@ -75,6 +77,11 @@ export class BallotDetailPage {
     this.navCtrl.push("cast-ballot", {address: this.address, ballot: this.ballot, selections: this.currentSelected, token: this.token});
   }
 
+  get finished(): boolean {
+    console.log("checking finished");
+    return Object.keys(this.currentSelected).length === 3;
+  }
+  
   // Cancel editing and return to list
   cancelBallotEdit() {
     this.canEditBallot = false;
