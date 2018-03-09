@@ -4,6 +4,7 @@ export class Ballot {
         public title: string,
         public ipfs: string,
         public type: string,
+        public featuredImage: string,
         public waiting?: boolean,
         public status?: string,        
         public description?: string,

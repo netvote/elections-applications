@@ -14,6 +14,7 @@ export interface Ballot {
   type: string;
   pins: string[];
   history: string[];
+  featuredImage: string;
 }
 
 export interface Transaction {
