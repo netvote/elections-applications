@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {IonicPage, NavController, NavParams} from 'ionic-angular';
+import {IonicPage, NavController, NavParams, AlertController} from 'ionic-angular';
 
 import {BarcodeScanner} from '@ionic-native/barcode-scanner';
 
@@ -27,7 +27,8 @@ export class BallotScanPage {
     private netvote: NetvoteProvider,
     private ballotProvider: BallotProvider,
     private auth: AuthProvider,
-    public config: ConfigurationProvider) {
+    public config: ConfigurationProvider,
+    private alertCtrl: AlertController) {
 
       this.scanBypass = config.base.ballotScanBypass;
 
@@ -43,6 +44,14 @@ export class BallotScanPage {
   ionViewDidLoad() {
   }
 
+  alert(title: string, message: string, buttons: string[]) {
+    this.alertCtrl.create({
+      title: title,
+      subTitle: message,
+      buttons: buttons
+    }).present();        
+  }
+
   async scanBallotQr() {
 
     try {
@@ -51,13 +60,18 @@ export class BallotScanPage {
       
       const input = JSON.parse(barcodeData.text);
       const address = input.address;
+      if(!address){
+        this.alert('There was a Problem', 'This is not a valid Netvote QR code', ['Dismiss']);
+        return;
+      }
+        
       const token = input.token;
-
       this.importBallot(address, token);
+      
     } catch (err) {
+      this.alert('There was a Problem', 'This is not a valid Netvote QR code', ['Dismiss']);
       console.log("NV: No scan, error: ", err);
     }
-
   }
 
   // Temporary to test in browser
