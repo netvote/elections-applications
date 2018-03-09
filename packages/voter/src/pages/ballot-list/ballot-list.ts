@@ -56,6 +56,7 @@ export class BallotListPage {
           });
           ballot.tx = vote.tx;
           ballot.url = `${baseEthereumUrl}/tx/${vote.tx}`;
+          
         });
       } else {
         ballot.waiting = false;
