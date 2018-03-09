@@ -74,7 +74,8 @@ export class BallotDetailPage {
 
   // Send vote selections to cast ballot page to confirm and send
   enterCastFlow() {
-    this.navCtrl.push("cast-ballot", {address: this.address, ballot: this.ballot, selections: this.currentSelected, token: this.token});
+    if(this.finished)
+      this.navCtrl.push("cast-ballot", {address: this.address, ballot: this.ballot, selections: this.currentSelected, token: this.token});
   }
 
   get finished(): boolean {
