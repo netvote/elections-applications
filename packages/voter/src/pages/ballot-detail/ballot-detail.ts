@@ -78,7 +78,6 @@ export class BallotDetailPage {
   }
 
   get finished(): boolean {
-    console.log("checking finished");
     return Object.keys(this.currentSelected).length === 3;
   }
   
