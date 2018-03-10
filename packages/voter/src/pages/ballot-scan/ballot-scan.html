@@ -37,7 +37,7 @@
         <button (tap)="scanBallotQr()" ion-button block color="attention">{{ 'SCAN_BALLOT_QR' | translate }}</button>
         <div text-center><small>Go to https://netvote.io/demo to obtain ballot QR code</small></div>
 
-         <!-- <button *ngIf="scanBypass" (tap)="testbypass()" ion-button block color="attention">Demo Scan</button> -->
+         <button *ngIf="scanBypass" (tap)="testbypass()" ion-button block color="attention">Demo Scan</button>
 
       </ion-col>
       
