@@ -3,7 +3,7 @@ const Web3 = require("web3");
 const protobuf = require("protobufjs");
 const crypto = require('crypto');
 const IPFS = require('ipfs-mini');
-const abiDecoder = require('abi-decoder');
+//const abiDecoder = require('abi-decoder');
 const ipfs = new IPFS({ host: 'gateway.ipfs.io', port: 443, protocol: 'https' });
 
 Array.prototype.pushArray = function(arr) {
@@ -22,8 +22,8 @@ let BaseBallot = contract(require('./node_modules/@netvote/elections-solidity/bu
 let BasePool = contract(require('./node_modules/@netvote/elections-solidity/build/contracts/BasePool.json'));
 let BaseElection = contract(require('./node_modules/@netvote/elections-solidity/build/contracts/BaseElection.json'));
 
-const poolAbi = require('./node_modules/@netvote/elections-solidity/build/contracts/BasePool.json').abi
-abiDecoder.addABI(poolAbi);
+//const poolAbi = require('./node_modules/@netvote/elections-solidity/build/contracts/BasePool.json').abi
+//abiDecoder.addABI(poolAbi);
 
 /**
  * Wrapper function that tallies results for a ballot
@@ -128,17 +128,17 @@ const tallyTieredElection = async (params) => {
 
 const extractVoteFromTx = (txId) => {
     return new Promise(async (resolve, reject) => {
-
-        web3.eth.getTransaction(txId,
-            (err, res) => {
-                let txObj = abiDecoder.decodeMethod(res.input);
-                resolve( {
-                    pool: res.to,
-                    voteId: txObj.params[0].value,
-                    vote: txObj.params[1].value,
-                    passphrase: txObj.params[2].value
-                });
-            });
+        resolve({});
+        // web3.eth.getTransaction(txId,
+        //     (err, res) => {
+        //         let txObj = abiDecoder.decodeMethod(res.input);
+        //         resolve( {
+        //             pool: res.to,
+        //             voteId: txObj.params[0].value,
+        //             vote: txObj.params[1].value,
+        //             passphrase: txObj.params[2].value
+        //         });
+        //     });
     });
 }
 
