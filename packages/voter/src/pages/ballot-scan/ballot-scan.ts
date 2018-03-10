@@ -8,6 +8,7 @@ import {AuthProvider} from '../../providers/auth/auth';
 import {BallotProvider} from '../../providers/ballot/ballot';
 import {Ballot} from '../../models/ballot';
 import {ConfigurationProvider} from '../../providers/configuration/configuration';
+import {InAppBrowser} from '@ionic-native/in-app-browser';
 
 @IonicPage({
   segment: "ballot-scan",
@@ -28,7 +29,8 @@ export class BallotScanPage {
     private ballotProvider: BallotProvider,
     private auth: AuthProvider,
     public config: ConfigurationProvider,
-    private alertCtrl: AlertController) {
+    private alertCtrl: AlertController,
+    private iab: InAppBrowser) {
 
       this.scanBypass = config.base.ballotScanBypass;
 
@@ -94,6 +96,11 @@ export class BallotScanPage {
 
   async lockApp() {
     await this.auth.lock();
+  }
+
+  goDemoUrl() {
+    const browser = this.iab.create('https://netvote.io/demo','_system',{location:'no'}); 
+    browser.show();
   }
 
 }
