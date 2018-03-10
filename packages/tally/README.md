@@ -78,9 +78,7 @@ finalResults = {
                     {
                         "John Doe": 1001,
                         "Sally Thomas": 2231,
-                        "writeIn": {
-                            "SARAH WILLIAMS": 4
-                        }
+                        "WRITEIN-SARAH WILLIAMS": 4
                     }
                 ]
             }
@@ -101,4 +99,4 @@ Contributing
 
 License
 -------
-All code is released under GPL v3.
+All code is released under the <a href='https://www.gnu.org/licenses/gpl-3.0.en.html'>GNU General Public License v3.0</a>.

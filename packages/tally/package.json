@@ -1,6 +1,6 @@
 {
   "name": "@netvote/elections-tally",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Tally Netvote Elections",
   "main": "index.js",
   "scripts": {
@@ -11,14 +11,15 @@
     "type": "git",
     "url": "git+https://github.com/netvote/elections-tally.git"
   },
-  "author": "Netvote",
+  "author": "steven@netvote.io",
   "license": "GPL-3.0",
   "bugs": {
     "url": "https://github.com/netvote/elections-tally/issues"
   },
   "homepage": "https://github.com/netvote/elections-tally#readme",
   "dependencies": {
-    "@netvote/elections-solidity": "^1.0.4",
+    "@netvote/elections-solidity": "^1.0.14",
+    "abi-decoder": "^1.0.9",
     "commander": "^2.12.1",
     "crypto": "^1.0.1",
     "ipfs-mini": "^1.1.2",
