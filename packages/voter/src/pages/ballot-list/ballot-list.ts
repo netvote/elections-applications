@@ -33,7 +33,7 @@ export class BallotListPage {
   }
 
   goToResults(ballot) {
-    this.navCtrl.push("ballot-results", {address: ballot.address, ballot: ballot.ballot, selections: ballot.currentSelected});
+    this.navCtrl.push("ballot-results", {address: ballot.address, id: ballot.id, ballot: ballot.ballot, selections: ballot.currentSelected});
   }
 
 
@@ -49,7 +49,7 @@ export class BallotListPage {
         gatewayOb.subscribe(async (vote) => {
           if(vote.tx)
             ballot.waiting = false;
-          await this.ballotProvider.updateBallot(ballot.address, {
+          await this.ballotProvider.updateBallot(ballot.address, ballot.id, {
             tx: vote.tx,
             voteId: vote.voteId,
             url: `${baseEthereumUrl}/tx/${vote.tx}`
@@ -66,12 +66,13 @@ export class BallotListPage {
   }
 
   async delete(ballot: Ballot) {
-    this.ballots = await this.ballotProvider.removeBallot(ballot.address);
+    this.ballots = await this.ballotProvider.removeBallot(ballot.address, ballot.id);
   }
 
   async detail(ballot: Ballot) {
     this.navCtrl.push('ballot-detail', {
-      'address': ballot.address
+      address: ballot.address,
+      id: ballot.id
     })
   }
 

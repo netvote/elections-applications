@@ -33,6 +33,10 @@
     </ion-item>
 
     <ion-item margin-bottom>
+      <strong>Voter Id: </strong><br><span *ngIf="ballotData.id === null"><em>Voter ID not available</em></span>{{ballotData.id}}
+    </ion-item>
+
+    <ion-item margin-bottom>
         <strong>{{ 'LAST_MODIFIED_TIMESTAMP' | translate }}: </strong><br>{{ballotData.timestamp}} 
     </ion-item>
 

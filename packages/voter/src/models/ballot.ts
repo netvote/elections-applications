@@ -1,6 +1,7 @@
 export class Ballot {
     constructor(
         public address: string,
+        public id: string,
         public title: string,
         public ipfs: string,
         public type: string,
