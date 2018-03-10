@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="io.netvote.voter" version="0.0.9" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="io.netvote.voter" version="0.0.10" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Netvote</name>
     <description>Tamper-proof Blockchain-based Voting for organizations, corporations and governments worldwide.</description>
-    <author email="bhowerton@netvote.io" href="https://www.netvote.io/">Netvote</author>
+    <author email="ben@netvote.io" href="https://netvote.io/">Netvote</author>
     <content src="index.html" />
     <access launch-external="yes" origin="http://*" />
     <access launch-external="yes" origin="https://*" />
@@ -109,9 +109,9 @@
         <branch-key value="key_live_oawI5Q5zK6HU9vCV58c1VpnjwvhqK1Ll" />
         <uri-scheme value="netvote" />
         <link-domain value="piv4.app.link" />
-        <ios-team-release value="N8K6XZ6YR2" />
+        <ios-team-release value="BRNZ55LM85" />
     </branch-config>
     <plugin name="branch-cordova-sdk" spec="^2.6.23" />
     <engine name="android" spec="^6.2.3" />
-    <engine name="ios" spec="4.5.4" />
+    <engine name="ios" spec="~4.5.4" />
 </widget>

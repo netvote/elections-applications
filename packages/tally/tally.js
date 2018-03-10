@@ -3,7 +3,11 @@ const Web3 = require("web3");
 const protobuf = require("protobufjs");
 const crypto = require('crypto');
 const IPFS = require('ipfs-mini');
+<<<<<<< HEAD
 const abiDecoder = require('abi-decoder');
+=======
+//const abiDecoder = require('abi-decoder');
+>>>>>>> 89f5062809622d3452ec9f9357a60b661bc9817d
 const ipfs = new IPFS({ host: 'gateway.ipfs.io', port: 443, protocol: 'https' });
 
 Array.prototype.pushArray = function(arr) {
@@ -22,8 +26,13 @@ let BaseBallot = contract(require('./node_modules/@netvote/elections-solidity/bu
 let BasePool = contract(require('./node_modules/@netvote/elections-solidity/build/contracts/BasePool.json'));
 let BaseElection = contract(require('./node_modules/@netvote/elections-solidity/build/contracts/BaseElection.json'));
 
+<<<<<<< HEAD
 const poolAbi = require('./node_modules/@netvote/elections-solidity/build/contracts/BasePool.json').abi
 abiDecoder.addABI(poolAbi);
+=======
+//const poolAbi = require('./node_modules/@netvote/elections-solidity/build/contracts/BasePool.json').abi
+//abiDecoder.addABI(poolAbi);
+>>>>>>> 89f5062809622d3452ec9f9357a60b661bc9817d
 
 /**
  * Wrapper function that tallies results for a ballot
@@ -128,6 +137,7 @@ const tallyTieredElection = async (params) => {
 
 const extractVoteFromTx = (txId) => {
     return new Promise(async (resolve, reject) => {
+<<<<<<< HEAD
 
         web3.eth.getTransaction(txId,
             (err, res) => {
@@ -139,6 +149,19 @@ const extractVoteFromTx = (txId) => {
                     passphrase: txObj.params[2].value
                 });
             });
+=======
+        resolve({});
+        // web3.eth.getTransaction(txId,
+        //     (err, res) => {
+        //         let txObj = abiDecoder.decodeMethod(res.input);
+        //         resolve( {
+        //             pool: res.to,
+        //             voteId: txObj.params[0].value,
+        //             vote: txObj.params[1].value,
+        //             passphrase: txObj.params[2].value
+        //         });
+        //     });
+>>>>>>> 89f5062809622d3452ec9f9357a60b661bc9817d
     });
 }
 
