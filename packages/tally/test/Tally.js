@@ -95,20 +95,16 @@ contract('Basic Tally', function (accounts) {
             {
                 "John Smith": 0,
                 "Sally Gutierrez": 1,
-                "Tyrone Williams": 1,
-                "writeIn": {}
+                "Tyrone Williams": 1
             },
             {
                 "Yes": 0,
-                "No": 2,
-                "writeIn": {}
+                "No": 2
             },
             {
                 "Doug Hall": 1,
                 "Emily Washington": 0,
-                "writeIn": {
-                    "JOHN DOE": 1
-                }
+                "WRITEIN-JOHN DOE": 1
             }
         ])
     })
