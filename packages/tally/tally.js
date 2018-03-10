@@ -155,12 +155,13 @@ const tallyTxVote = async (params) => {
         throw "Vote is encrypted until Election Close";
     }
 
+    let voteObj = await extractVoteFromTx(txId);
+
     let results = {
         election: params.electionAddress,
-        ballots: {}
+        ballots: {},
+        passphrase: voteObj.passphrase
     };
-
-    let voteObj = await extractVoteFromTx(txId);
 
     const pool = BasePool.at(voteObj.pool);
 
