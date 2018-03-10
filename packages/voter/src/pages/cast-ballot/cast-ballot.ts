@@ -27,6 +27,7 @@ export class CastBallotPage {
   ballot: any;
   currentSelected: any;
   token: string;
+  id: string;
   ballotStatus: string;
   address: string;
   verificationCode: string;
@@ -52,6 +53,7 @@ export class CastBallotPage {
     this.ballot = this.navParams.get('ballot');
     this.currentSelected = this.navParams.get('selections');
     this.token = this.navParams.get('token');
+    this.id = this.navParams.get('id');
 
     // For demo verification
     this.voterKeys = ["33d19c0d-7246-45ef-9caa-2d47635b6d59"];
@@ -79,7 +81,7 @@ export class CastBallotPage {
   }
 
   viewResults() {
-    this.navCtrl.setRoot("ballot-results", {address: this.address});
+    this.navCtrl.setRoot("ballot-results", {address: this.address, id: this.id});
   }
 
   backToBallotList() {
@@ -109,7 +111,7 @@ export class CastBallotPage {
     const result: any = await this.netvote.submitVote(voteBase64, token);
     const baseEthereumUrl = this.config.base.paths.ethereumBase;
 
-    await this.ballotProvider.updateBallot(this.address, {
+    await this.ballotProvider.updateBallot(this.address, this.id, {
       status: "submitted",
       result: result.txId,
       collection: result.collection,
@@ -131,7 +133,7 @@ export class CastBallotPage {
         console.log(`NV: Observer response with tx`);
       }
 
-      await this.ballotProvider.updateBallot(this.address, {
+      await this.ballotProvider.updateBallot(this.address, this.id, {
         tx: vote.tx,
         voteId: vote.voteId,
         url: `${baseEthereumUrl}/tx/${vote.tx}`

@@ -22,6 +22,7 @@ export class BallotDetailPage {
   currentSelected: any = {};
   address: string;
   token: string;
+  id: string;
   canEditBallot: boolean = false;
 
   constructor(public navCtrl: NavController,
@@ -34,12 +35,13 @@ export class BallotDetailPage {
 
     // Address of the ballot contract  
     this.address = navParams.get("address");
+    this.id = navParams.get("id");
     this.token = navParams.get("token");
   }
 
   async ionViewDidEnter() {
     
-    this.ballot = await this.ballotProvider.getBallot(this.address);
+    this.ballot = await this.ballotProvider.getBallot(this.address, this.id);
     if (!this.ballot)
       return;
 
@@ -62,8 +64,7 @@ export class BallotDetailPage {
 
   // Ballot item selection
   selectBallotItem(groupIndex, sectionIndex, itemIndex, ballotItem) {
-    this.currentSelected[`${groupIndex}-${sectionIndex}`] = itemIndex;
-    console.log(this.currentSelected);
+    this.currentSelected[`${groupIndex}-${sectionIndex}`] = itemIndex;    
   }
 
   // Remove all selected choices in ballot
@@ -75,7 +76,7 @@ export class BallotDetailPage {
   // Send vote selections to cast ballot page to confirm and send
   enterCastFlow() {
     if(this.finished)
-      this.navCtrl.push("cast-ballot", {address: this.address, ballot: this.ballot, selections: this.currentSelected, token: this.token});
+      this.navCtrl.push("cast-ballot", {address: this.address, id: this.id, ballot: this.ballot, selections: this.currentSelected, token: this.token});
   }
 
   get finished(): boolean {

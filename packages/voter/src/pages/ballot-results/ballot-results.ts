@@ -21,6 +21,7 @@ export class BallotResultsPage {
   ballot: Ballot;
   currentSelected: any = {};
   address: string;
+  id: string;
   canEditBallot: boolean = false;
   tallied: boolean = false;
 
@@ -34,11 +35,12 @@ export class BallotResultsPage {
 
     // Address of the ballot contract  
     this.address = this.navParams.get("address");
+    this.id = this.navParams.get("id");
   }
 
   async ionViewDidEnter() {
     
-    this.ballot = await this.ballotProvider.getBallot(this.address);
+    this.ballot = await this.ballotProvider.getBallot(this.address, this.id);
     if (!this.ballot)
       return;
 
