@@ -2,6 +2,7 @@ import {Component} from '@angular/core';
 import {IonicPage, NavParams, NavController, ViewController} from 'ionic-angular';
 import {TranslateService} from '@ngx-translate/core';
 import {InAppBrowser} from '@ionic-native/in-app-browser';
+import {NetvoteProvider} from '../../providers/netvote/netvote';
 
 @IonicPage()
 @Component({
@@ -18,13 +19,23 @@ export class BallotInfoModalPage {
     private viewCtrl: ViewController,
     public navParams: NavParams,
     public translateService: TranslateService,
-    private iab: InAppBrowser) {
+    private iab: InAppBrowser,
+    private netvote: NetvoteProvider,) {
   }
 
   ionViewWillLoad() {
 
     this.ballotData = this.navParams.get('data');
+    if(this.ballotData.tx){      
+      this.getVote();
+    }
+      
 
+  }
+
+  async getVote() {
+    const vote = await this.netvote.getVote(this.ballotData.address, this.ballotData.tx);
+    console.log(JSON.stringify(vote));
   }
 
   async closeBallotInfoModal() {

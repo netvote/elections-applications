@@ -130,6 +130,20 @@ export class NetvoteProvider {
 
   }
 
+  public getVote(address: string, txId: string): Promise<any> {
+
+    console.log(`NV: getting vote for address: ${address} and tx: ${txId}`);
+    const baseUrl = this.config.base.paths.infuraBase;
+
+    return tally.tallyTxVote({
+      electionAddress: address,
+      provider: baseUrl,
+      protoPath: 'assets/proto/vote.proto',
+      txId: txId
+    });
+
+  }
+
   // TODO: Implement
   public verifyVote() {
 

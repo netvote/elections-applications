@@ -37,9 +37,6 @@ const tallyElection = async (params) => {
     initTally(params);
     let election = TieredElection.at(params.electionAddress);
     let electionType = await election.electionType();
-    if(params.protoPath){
-        protoPath = params.protoPath
-    }
     switch(electionType){
         case "TIERED":
             return tallyTieredElection(params);
@@ -327,6 +324,9 @@ const tallyVote = (choices, ballot, group, result, metadata) => {
 };
 
 const initTally = (params) => {
+
+    protoPath = params.protoPath || protoPath;
+
     if (!params.provider) {
         throw new Error("param.provider is required")
     }
