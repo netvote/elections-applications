@@ -3,10 +3,13 @@ import {Http, Headers} from '@angular/http';
 import 'rxjs/add/operator/map';
 import * as protobuf from 'protobufjs';
 import * as tally from '@netvote/elections-tally';
+import * as jwtdecode from 'jwt-decode'
 
 import {SecureStorage, SecureStorageObject} from "@ionic-native/secure-storage";
 import {BallotFactory, BlockchainConnection} from '@netvote/core';
 import {ConfigurationProvider} from '../configuration/configuration';
+import {BallotProvider} from '../../providers/ballot/ballot';
+import {Ballot} from '../../models/ballot';
 
 export declare var lightwallet: any;
 
@@ -17,9 +20,26 @@ export class NetvoteProvider {
 
   constructor(
     public config: ConfigurationProvider,
+    private ballotProvider: BallotProvider,
     public http: Http,
     private secureStorage: SecureStorage) {
     this.blockchain = new BlockchainConnection();
+  }
+
+  public async importBallot(address: string, jwt: string): Promise<any> {
+    let id: string = null;
+    if (jwt) {
+      const decoded: any = jwtdecode(jwt);  
+      id = decoded.sub;    
+    }
+    const meta = await this.getRemoteBallotMeta(address);
+    let ballot = await this.ballotProvider.getBallot(address, id);
+    if (ballot) {
+      await this.ballotProvider.removeBallot(address, id);
+    }
+    ballot = new Ballot(address, id, meta.ballotTitle, meta.ipfs, meta.type, meta.featuredImage);
+    await this.ballotProvider.addBallot(ballot);
+    return {meta: meta, id: id};
   }
 
   // Using ipfs address, get ballot meta
@@ -56,13 +76,13 @@ export class NetvoteProvider {
       this.http.post(`${baseUrl}/vote/auth`, body, {
         headers: headers,
       })
-      .map((res) => res.json())
-      .subscribe((res) => {
-        return resolve(res.token);
-      },
-      (err) => {
-        return reject(err);        
-      });
+        .map((res) => res.json())
+        .subscribe((res) => {
+          return resolve(res.token);
+        },
+          (err) => {
+            return reject(err);
+          });
 
     });
 
@@ -81,13 +101,13 @@ export class NetvoteProvider {
       this.http.post(`${baseUrl}/vote/cast`, body, {
         headers: headers,
       })
-      .map((res) => res.json())
-      .subscribe((res) => {
-        return resolve(res);
-      },
-      (err) => {
-        return reject(err);        
-      });
+        .map((res) => res.json())
+        .subscribe((res) => {
+          return resolve(res);
+        },
+          (err) => {
+            return reject(err);
+          });
 
     });
   }
@@ -114,9 +134,9 @@ export class NetvoteProvider {
   public verifyVote() {
 
   }
-  
+
   public async encodeVote(payload: any): Promise<string> {
-    
+
     const root = await protobuf.load("assets/proto/vote.proto");
     const Vote = root.lookupType("netvote.Vote");
 

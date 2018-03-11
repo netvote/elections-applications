@@ -19,10 +19,10 @@ export class BallotProvider {
     return this._ballots;
   }
 
-  async getBallot(address: string): Promise<Ballot> {
+  async getBallot(address: string, id: string): Promise<Ballot> {
     await this._loadBallots();
     return this._ballots.find((ballot: Ballot) => {
-      return ballot.address === address;
+      return ballot.address === address && ballot.id === id;
     });
   }
 
@@ -34,23 +34,23 @@ export class BallotProvider {
     return ballot;
   }
 
-  async removeBallot(address: string): Promise<Ballot[]> {
+  async removeBallot(address: string, id: string): Promise<Ballot[]> {
     await this._loadBallots();
     this._ballots = this._ballots.filter((ballot: Ballot) => {
-      return ballot.address !== address;
+      return ballot.address !== address && ballot.id !== id;
     });
     await this._save();
     return this._ballots;
   }
 
   // TODO: Whitelist input attributes
-  async updateBallot(address: string, update: any): Promise<Ballot> {
+  async updateBallot(address: string, id: string, update: any): Promise<Ballot> {
     await this._loadBallots();
-    let ballot = await this.getBallot(address);
+    let ballot = await this.getBallot(address, id);
     if(ballot){
       const merged = {...ballot, ...update};
       merged.timestamp = new Date();
-      await this.removeBallot(address);
+      await this.removeBallot(address, id);
       await this.addBallot(merged);
       ballot = merged;
     }

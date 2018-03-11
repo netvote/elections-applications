@@ -32,7 +32,7 @@ export class TutorialComponent {
       "TUTORIAL_SLIDE5_DESCRIPTION",
     ]).subscribe(
       (values) => {
-        //console.log('Loaded values', values);
+        
         this.slides = [
           {
             title: values.TUTORIAL_SLIDE1_TITLE,

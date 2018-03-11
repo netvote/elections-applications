@@ -5,8 +5,6 @@ import {BarcodeScanner} from '@ionic-native/barcode-scanner';
 
 import {NetvoteProvider} from '../../providers/netvote/netvote';
 import {AuthProvider} from '../../providers/auth/auth';
-import {BallotProvider} from '../../providers/ballot/ballot';
-import {Ballot} from '../../models/ballot';
 import {ConfigurationProvider} from '../../providers/configuration/configuration';
 import {InAppBrowser} from '@ionic-native/in-app-browser';
 
@@ -26,7 +24,6 @@ export class BallotScanPage {
     public navParams: NavParams,
     private barcodeScanner: BarcodeScanner,
     private netvote: NetvoteProvider,
-    private ballotProvider: BallotProvider,
     private auth: AuthProvider,
     public config: ConfigurationProvider,
     private alertCtrl: AlertController,
@@ -84,14 +81,8 @@ export class BallotScanPage {
   }
 
   async importBallot(address: string, token: string) {
-    const data = await this.netvote.getRemoteBallotMeta(address);    
-    let ballot = await this.ballotProvider.getBallot(address);
-    if(ballot){
-      await this.ballotProvider.removeBallot(address);
-    }
-    ballot = new Ballot(address, data.ballotTitle, data.ipfs, data.type, data.featuredImage);
-    await this.ballotProvider.addBallot(ballot);    
-    this.navCtrl.setRoot('ballot-detail', {meta: data, address: address, token: token});
+    const res = await this.netvote.importBallot(address, token);  
+    this.navCtrl.setRoot('ballot-detail', {meta: res.meta, address: address, id: res.id, token: token});
   }
 
   async lockApp() {

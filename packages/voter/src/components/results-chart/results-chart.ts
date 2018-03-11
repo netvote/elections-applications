@@ -29,8 +29,6 @@ export class ResultsChartComponent {
 
     });
 
-    console.log(results);
-
     this.chart = new Chart(this.resultPieChart.nativeElement, {
 
       type: 'horizontalBar',

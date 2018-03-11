@@ -19,6 +19,10 @@
   "homepage": "https://github.com/netvote/elections-tally#readme",
   "dependencies": {
     "@netvote/elections-solidity": "^1.0.14",
+<<<<<<< HEAD
+=======
+    "abi-decoder": "^1.0.9",
+>>>>>>> 1c003ce7deb115a0ac50c29e0ad83b157cf65eeb
     "commander": "^2.12.1",
     "crypto": "^1.0.1",
     "ipfs-mini": "^1.1.2",
