@@ -1,6 +1,7 @@
 <header class="nv-login__header">
 
-  <img src="assets/img/netvote-logo-mark-check.png">
+  <img src="assets/img/netvote-logo-mark-check.png" *ngIf=" isOpenEntry !== 'signup' ">
+  <img src="assets/img/netvote-logo-mark-check-w.png" *ngIf=" isOpenEntry === 'signup' ">
 
 </header>
 
