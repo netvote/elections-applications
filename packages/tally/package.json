@@ -20,13 +20,11 @@
   "dependencies": {
     "@netvote/elections-solidity": "^1.0.14",
     "abi-decoder": "^1.0.9",
-    "ajv": "^6.2.1",
     "commander": "^2.12.1",
     "crypto": "^1.0.1",
     "ipfs-mini": "^1.1.2",
     "protobufjs": "^6.8.3",
-    "truffle-contract": "^3.0.1",
-    "webpack": "^4.1.1"
+    "truffle-contract": "^3.0.1"
   },
   "devDependencies": {
     "run-with-testrpc": "^0.3.0",
