@@ -61,6 +61,7 @@
     "ionicons": "3.0.0",
     "ipfs-mini": "^1.1.2",
     "jwt-decode": "^2.2.0",
+    "moment": "^2.21.0",
     "password-hash-and-salt": "^0.1.4",
     "phonegap-plugin-barcodescanner": "^6.0.8",
     "promise-polyfill": "^6.0.2",
