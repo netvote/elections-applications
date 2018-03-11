@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {Storage} from '@ionic/storage';
 import {Ballot} from '../../models/ballot';
 
+// TODO: Refactor storage completely
 @Injectable()
 export class BallotProvider {
 
@@ -37,7 +38,7 @@ export class BallotProvider {
   async removeBallot(address: string, id: string): Promise<Ballot[]> {
     await this._loadBallots();
     this._ballots = this._ballots.filter((ballot: Ballot) => {
-      return ballot.address !== address && ballot.id !== id;
+      return ballot.address !== address || ballot.id !== id;
     });
     await this._save();
     return this._ballots;
