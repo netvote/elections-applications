@@ -33,11 +33,6 @@ export class BallotInfoModalPage {
     this.viewCtrl.dismiss();
   }
 
-  // goToResults() {
-  //   this.viewCtrl.dismiss();
-  //   this.navCtrl.setRoot("ballot-results");
-  // }
-
   matchStatusClass(status, waiting) {
 
     if (status === 'submitted' && waiting) {
