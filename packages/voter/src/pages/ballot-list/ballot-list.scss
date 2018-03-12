@@ -104,7 +104,7 @@ page-ballot-list {
                 box-shadow: 0 -10px 30px rgba(color($colors, benign), 0.3);
 
                 &:before{
-                    content: "Draft";
+                    content: "Ready";
                     background-color: color($colors, benign); 
                 }
             }

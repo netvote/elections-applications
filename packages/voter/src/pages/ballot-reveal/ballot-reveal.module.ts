@@ -1,15 +1,15 @@
 import {NgModule} from '@angular/core';
 import {IonicPageModule} from 'ionic-angular';
-import {BallotInfoModalPage} from './ballot-info-modal';
+import {BallotRevealPage} from './ballot-reveal';
 import {TranslateModule} from "@ngx-translate/core";
 
 @NgModule({
   declarations: [
-    BallotInfoModalPage,
+    BallotRevealPage,
   ],
   imports: [
-    IonicPageModule.forChild(BallotInfoModalPage),
+    IonicPageModule.forChild(BallotRevealPage),
     TranslateModule.forChild()
   ],
 })
-export class BallotInfoModalPageModule {}
+export class BallotRevealPageModule {}

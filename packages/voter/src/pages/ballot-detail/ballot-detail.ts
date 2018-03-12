@@ -65,7 +65,7 @@ export class BallotDetailPage {
 
   // Ballot item selection
   selectBallotItem(groupIndex, sectionIndex, itemIndex, ballotItem) {
-    this.currentSelected[`${groupIndex}-${sectionIndex}`] = itemIndex;    
+    this.currentSelected[`${groupIndex}-${sectionIndex}`] = itemIndex;
   }
 
   // Remove all selected choices in ballot

@@ -1,6 +1,6 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>{{ballotData.title}}</ion-title>
+    <ion-title>{{ballot.title}}</ion-title>
     <ion-buttons end>
       <button ion-button (tap)="closeBallotInfoModal();"><ion-icon name="close"></ion-icon></button>
     </ion-buttons>
@@ -8,19 +8,19 @@
 
 </ion-header>
 
-<ion-content padding class="nv-modal__gradient" [ngClass]="matchStatusClass(ballotData.status, ballotData.waiting)">
+<ion-content padding class="nv-modal__gradient" [ngClass]="matchStatusClass(ballot.status, ballot.waiting)">
 
   <p padding class="nv-island--trans">
 
-    <span *ngIf="ballotData.status === 'initial'">
+    <span *ngIf="ballot.status === 'initial'">
         This ballot has not yet been cast and is not yet on the blockchain.
     </span>
 
-    <span *ngIf="ballotData.status === 'submitted' && waiting">
+    <span *ngIf="ballot.status === 'submitted' && waiting">
         This ballot has been successfully submitted and is pending activation on the blockchain.
     </span>
 
-    <span *ngIf="ballotData.status === 'submitted' && !waiting">
+    <span *ngIf="ballot.status === 'submitted' && !waiting">
         This ballot has been successfully submitted and is active on the blockchain.
     </span>
 
@@ -29,15 +29,19 @@
   <ion-list class="nv-list  nv-list--clear">
 
     <ion-item margin-bottom>
-        <strong>{{ 'TRANSACTION_ID' | translate }}: </strong><br><span *ngIf="ballotData.tx === undefined"><em>Transaction ID not available</em></span><a href="#" (click)='$event.preventDefault(); launchTxLink(ballotData.url);' *ngIf="ballotData.tx">{{ballotData.tx}}</a>
+        <strong>{{ 'TRANSACTION_ID' | translate }}: </strong><br><span *ngIf="ballot.tx === undefined"><em>Transaction ID not available</em></span><a href="#" (click)='$event.preventDefault(); launchTxLink(ballot.url);' *ngIf="ballot.tx">{{ballot.tx}}</a>
     </ion-item>
 
     <ion-item margin-bottom>
-      <strong>Voter Id: </strong><br><span *ngIf="ballotData.id === null"><em>Voter ID not available</em></span>{{ballotData.id}}
+      <strong>Voter Id: </strong><br><span *ngIf="ballot.id === null"><em>Voter ID not available</em></span>{{ballot.id}}
     </ion-item>
 
     <ion-item margin-bottom>
-        <strong>{{ 'LAST_MODIFIED_TIMESTAMP' | translate }}: </strong><br>{{ballotData.timestamp}} 
+        <strong>{{ 'LAST_MODIFIED_TIMESTAMP' | translate }}: </strong><br>{{ballot.timestamp}} 
+    </ion-item>
+
+    <ion-item margin-bottom>
+        <button ion-button (tap)="reveal()">Reveal your Blockchain Vote</button>    
     </ion-item>
 
   </ion-list>

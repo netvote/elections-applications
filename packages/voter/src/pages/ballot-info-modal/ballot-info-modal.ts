@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 import {IonicPage, NavParams, NavController, ViewController} from 'ionic-angular';
 import {TranslateService} from '@ngx-translate/core';
 import {InAppBrowser} from '@ionic-native/in-app-browser';
-import {NetvoteProvider} from '../../providers/netvote/netvote';
+import {Ballot} from '../../models/ballot';
 
 @IonicPage()
 @Component({
@@ -12,32 +12,20 @@ import {NetvoteProvider} from '../../providers/netvote/netvote';
 
 export class BallotInfoModalPage {
 
-  ballotData: any;
+  ballot: Ballot;
 
   constructor(
     public navCtrl: NavController,
     private viewCtrl: ViewController,
     public navParams: NavParams,
     public translateService: TranslateService,
-    private iab: InAppBrowser,
-    private netvote: NetvoteProvider,) {
+    private iab: InAppBrowser) {
   }
 
   ionViewWillLoad() {
 
-    this.ballotData = this.navParams.get('data');
-    if(this.ballotData.tx){      
-      this.getVote();
-    }
+    this.ballot = this.navParams.get('data');
       
-
-  }
-
-  async getVote() {
-    const vote = await this.netvote.getVote(this.ballotData.address, this.ballotData.tx);
-    console.log("NV: vote; ", vote);
-    //const res = await this.netvote.getTally(this.ballotData.address);
-    //console.log("NV: tally; ", res);
   }
 
   async closeBallotInfoModal() {
@@ -76,5 +64,12 @@ export class BallotInfoModalPage {
 
     browser.show();
 
+  }
+
+  reveal() {
+    if(this.ballot.tx) {
+      this.viewCtrl.dismiss();
+      this.navCtrl.setRoot("ballot-reveal", {address: this.ballot.address, tx: this.ballot.tx});
+    }
   }
 }
