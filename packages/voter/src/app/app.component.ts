@@ -38,6 +38,7 @@ export class NetVoteApp {
   loader: any;
   rootPage: string;
   account: Account;
+  unlocking: boolean;
 
   pages: any[] = [
     {title: 'My Ballots', component: "ballot-list"},
@@ -131,13 +132,13 @@ export class NetVoteApp {
     this.authProvider.getAuthStateObservable().subscribe((auth: AuthStateChange) => {
 
       const active = this.navCtrl.getActive();
-      const view = (active === undefined) ? "" : active.name;
 
       if (auth.current === AuthState.LoggedIn) {
         if (active === undefined || auth.prior !== AuthState.Locked)
           this.navCtrl.setRoot('ballot-list')
-      } else if (auth.current === AuthState.Locked && view !== "PasscodePage") {
-        this.modalCtrl.create("get-passcode", {title: "Enter passcode to unlock", allowBiometric: true}).present();
+      } else if (auth.current === AuthState.Locked && !this.unlocking) {
+        this.unlocking = true;        
+        this.modalCtrl.create("get-passcode", {title: "Enter passcode to unlock", allowBiometric: true}).present().then(()=>{this.unlocking = false;});
       } else if (auth.current === AuthState.NotSetUp) {
         this.navCtrl.setRoot('login', {initial: "initial"});
       } else {
