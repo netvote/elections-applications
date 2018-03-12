@@ -61,8 +61,6 @@ export class BallotListPage {
       } else {
         ballot.waiting = false;
       }
-
-      console.log("status" ,ballot.status);
     }
   }
 
