@@ -35,7 +35,9 @@ export class BallotInfoModalPage {
 
   async getVote() {
     const vote = await this.netvote.getVote(this.ballotData.address, this.ballotData.tx);
-    console.log(JSON.stringify(vote));
+    console.log("NV: vote; ", vote);
+    //const res = await this.netvote.getTally(this.ballotData.address);
+    //console.log("NV: tally; ", res);
   }
 
   async closeBallotInfoModal() {

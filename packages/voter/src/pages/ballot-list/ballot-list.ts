@@ -94,7 +94,8 @@ export class BallotListPage {
   async detail(ballot: Ballot) {
     this.navCtrl.push('ballot-detail', {
       address: ballot.address,
-      id: ballot.id
+      id: ballot.id,
+      token: ballot.token
     })
   }
 

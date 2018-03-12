@@ -37,6 +37,7 @@ export class BallotDetailPage {
     this.address = navParams.get("address");
     this.id = navParams.get("id");
     this.token = navParams.get("token");
+
   }
 
   async ionViewDidEnter() {

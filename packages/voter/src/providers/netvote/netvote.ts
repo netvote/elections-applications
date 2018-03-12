@@ -38,6 +38,7 @@ export class NetvoteProvider {
       await this.ballotProvider.removeBallot(address, id);
     }
     ballot = new Ballot(address, id, meta.ballotTitle, meta.ipfs, meta.type, meta.featuredImage);
+    ballot.token = jwt;
     await this.ballotProvider.addBallot(ballot);
     return {meta: meta, id: id};
   }
