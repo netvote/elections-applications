@@ -113,6 +113,29 @@ export class NetvoteProvider {
     });
   }
 
+  public postWithAuth(token: string, url: string) {
+
+    const baseUrl = this.config.base.paths.gatewayBase;
+
+    return new Promise((resolve, reject) => {
+
+      const headers = new Headers();
+      headers.append('Authorization', 'Bearer ' + token);
+
+      this.http.post(url, null, {
+        headers: headers,
+      })
+        .map((res) => res.json())
+        .subscribe((res) => {
+          return resolve(res);
+        },
+          (err) => {
+            return reject(err);
+          });
+
+    });
+  }
+
   public async getTransaction(tx: string) {
     return this.blockchain.getTransaction(tx);
   }

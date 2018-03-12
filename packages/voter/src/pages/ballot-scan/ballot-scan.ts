@@ -65,7 +65,11 @@ export class BallotScanPage {
       }
         
       const token = input.token;
+      const url = input.url;
+
       this.importBallot(address, token);
+      if(token && url)
+        await this.netvote.postWithAuth(token, url);
       
     } catch (err) {
       this.alert('There was a Problem', 'This is not a valid Netvote QR code', ['Dismiss']);
