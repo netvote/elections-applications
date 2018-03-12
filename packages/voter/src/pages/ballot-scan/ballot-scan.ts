@@ -65,7 +65,7 @@ export class BallotScanPage {
       }
         
       const token = input.token;
-      const url = input.url;
+      const url = input.callback;
 
       this.importBallot(address, token);
       if(token && url)
