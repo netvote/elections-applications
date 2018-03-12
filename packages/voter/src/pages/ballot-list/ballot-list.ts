@@ -37,7 +37,6 @@ export class BallotListPage {
     this.navCtrl.push("ballot-results", {address: ballot.address, id: ballot.id, ballot: ballot.ballot, selections: ballot.currentSelected});
   }
 
-
   async getBallots() {
     const baseEthereumUrl = this.config.base.paths.ethereumBase;
 
@@ -63,7 +62,7 @@ export class BallotListPage {
         ballot.waiting = false;
       }
 
-      console.log(ballot.status);
+      console.log("status" ,ballot.status);
     }
   }
 
@@ -77,7 +76,7 @@ export class BallotListPage {
       subTitle: "Do you really want to remove this ballot?",
       buttons: [
         {
-          text: 'Cancel',
+          text: 'No, cancel',
           role: 'cancel',
           cssClass: 'alert-button--cancel'
         },
