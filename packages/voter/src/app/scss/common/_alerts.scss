@@ -10,5 +10,9 @@
         &.activated{
             background-color: mix(black, color($colors, positive), 5%);
         }
+
+        &--cancel{
+            background-color: color($colors, danger);
+        }
     }
 }

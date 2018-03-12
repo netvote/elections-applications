@@ -15,11 +15,14 @@ page-ballot-list {
         }
     }
 
+    // .#{$ns}ballot-cards{
+        
+    // }
+
     .#{$ns}ballot-card{
         position: relative;
         width: 100%;
         margin: 0 0 3rem 0;
-        background: white;
         border-radius: 0;
         box-shadow: none;
 
@@ -29,21 +32,82 @@ page-ballot-list {
 
         &__content{
             position: relative;
-            border-top: 4px solid color($colors, attention); 
+            margin: -3rem 1.5rem 0;
+            padding: 0;
+            background: white;
 
             &:before{
-                content: "On Blockchain";
                 position: absolute;
                 top: -1.125rem;
                 left: 14px;
+                z-index: 2;
                 height: 1rem;
                 padding: 0.5rem;
-                background-color: color($colors, attention); 
                 font-size: 12px;
                 font-weight: 600;
                 line-height: 1rem;
             }
-        }
 
+            &.is-on-chain{
+                border-top: 4px solid color($colors, attention);
+                box-shadow: 0 -10px 30px rgba(color($colors, attention), 0.3);
+
+                &:before{
+                    content: "On Blockchain";
+                    background-color: color($colors, attention); 
+                }
+            }
+
+            &.is-processing{
+                border-top: 4px solid color($colors, warning);
+                box-shadow: 0 -10px 30px rgba(color($colors, warning), 0.3);
+
+                &:before{
+                    content: "Processing";
+                    background-color: color($colors, warning);
+                }
+
+                &:after{
+                    content: '';
+                    position: absolute;
+                    top: -4px;
+                    z-index: 1;
+                    height: 4px;
+                    width: 24px;
+                    border-radius: 50%;
+                    background-color: mix(white, color($colors, warning), 20%);
+                    box-shadow: 0 0 20px 5px rgba(color($colors, warning), 0.3);
+                    animation: quasar 2s infinite linear;
+                }
+
+                @at-root{
+
+                    @keyframes quasar{
+
+                        0%{
+                            left: 1rem;
+                            transform: scale3d(0, 0, 0);
+                        }
+                        50%{
+                            transform: scale3d(1.2, 1.2, 1.2);
+                        }
+                        100%{
+                            left: calc(100% - 1.5rem);
+                            transform: scale3d(0, 0, 0);
+                        }
+                    }
+                }
+            }
+
+            &.is-draft{
+                border-top: 4px solid color($colors, benign);
+                box-shadow: 0 -10px 30px rgba(color($colors, benign), 0.3);
+
+                &:before{
+                    content: "Draft";
+                    background-color: color($colors, benign); 
+                }
+            }
+        }
     }
 }

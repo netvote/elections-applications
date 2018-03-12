@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {IonicPage, NavController, NavParams, ModalController, ItemSliding } from 'ionic-angular';
+import {IonicPage, NavController, NavParams, ModalController, AlertController, ItemSliding } from 'ionic-angular';
 import {BallotProvider} from '../../providers/ballot/ballot';
 import {Ballot} from '../../models/ballot';
 import {GatewayProvider} from '../../providers/gateway/gateway';
@@ -23,6 +23,7 @@ export class BallotListPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     private modal: ModalController,
+    private alertCtrl: AlertController,
     private ballotProvider: BallotProvider,
     private gatewayProvider: GatewayProvider,
     public config: ConfigurationProvider) {
@@ -61,12 +62,36 @@ export class BallotListPage {
       } else {
         ballot.waiting = false;
       }
-    }
 
+      console.log(ballot.status);
+    }
+  }
+
+  async deleteBallot(ballot) {
+    this.ballots = await this.ballotProvider.removeBallot(ballot.address, ballot.id);
   }
 
   async delete(ballot: Ballot) {
-    this.ballots = await this.ballotProvider.removeBallot(ballot.address, ballot.id);
+
+    let alert = this.alertCtrl.create({
+      subTitle: "Do you really want to remove this ballot?",
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'alert-button--cancel'
+        },
+        {
+          text: 'Yes, remove it',
+          handler: () => {
+            this.deleteBallot(ballot)
+          }
+        }
+      ],
+      cssClass: 'nv-alert'
+    });
+    alert.present();
+
   }
 
   async detail(ballot: Ballot) {

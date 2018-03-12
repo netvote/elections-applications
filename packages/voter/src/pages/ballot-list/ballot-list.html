@@ -26,13 +26,13 @@
 
   <div padding>
 
-    <h1>{{ 'MY_BALLOTS' | translate }}</h1>
+    <h1 no-margin>{{ 'MY_BALLOTS' | translate }}</h1>
 
-    <p no-margin *ngIf="ballots != 0 && ballots !== 'undefined'">{{ 'MY_BALLOTS_DESC' | translate }}</p>
+    <!-- <p no-margin *ngIf="ballots != 0 && ballots !== 'undefined'">{{ 'MY_BALLOTS_DESC' | translate }}</p> -->
 
   </div>
 
-  <ion-searchbar (ionInput)="filterBallots($event)" *ngIf="ballots != 0 && ballots !== 'undefined'"></ion-searchbar>
+  <!-- <ion-searchbar (ionInput)="filterBallots($event)" *ngIf="ballots != 0 && ballots !== 'undefined'"></ion-searchbar> -->
 
   <div text-center *ngIf="ballots == 0 || ballots === 'undefined'">
 
@@ -50,7 +50,7 @@
     {{ 'SEARCH_NO_BALLOTS_FOUND' | translate }}
   </div>
 
-  <div *ngIf="ballots != 0 && ballots !== 'undefined'" margin-top>
+  <div *ngIf="ballots != 0 && ballots !== 'undefined'" class="nv-ballot-cards">
 
     <ion-card class="nv-ballot-card" *ngFor="let ballot of ballots; let ballotIdx = index" (click)="detail(ballot)">
 
@@ -66,37 +66,54 @@
 
       </div>
       
-      <ion-card-content class="nv-ballot-card__content">
-    
-        <ion-card-title>{{ballot.title}}</ion-card-title>
-    
-        <p *ngIf="ballot.description">{{ballot.description}}</p>
+      <ion-card-content class="nv-ballot-card__content" [class.is-on-chain]="ballot.status === 'submitted' ">
 
-        <p *ngIf="!ballot.description"><em>No description provided for this ballot.</em></p>
+        <div padding>
+
+            <ion-card-title>{{ballot.title}}</ion-card-title>
     
+            <p *ngIf="ballot.description">{{ballot.description}}</p>
+    
+            <p *ngIf="!ballot.description"><em>No description provided for this ballot.</em></p>
+
+        </div>
+    
+        <ion-row no-padding nowrap>
+
+          <ion-col>
+
+            <button ion-button clear small color="primary" icon-start (click)="$event.stopPropagation(); ballotInfoModal(ballot);">
+              
+              <ion-icon name='more'></ion-icon>
+              {{ 'MORE' | translate }}
+            </button>
+
+          </ion-col>
+
+          <ion-col text-center>
+
+            <button ion-button clear small color="primary" icon-start (click)="$event.stopPropagation(); goToResults(ballot)">
+
+              <ion-icon name='stats'></ion-icon>
+              Results
+            </button>
+
+          </ion-col>
+
+          <ion-col text-right>
+
+            <button ion-button clear small color="danger" icon-start (click)="$event.stopPropagation(); delete(ballot)">
+
+              <ion-icon name='trash'></ion-icon>
+              {{ 'DELETE_BUTTON' | translate }}
+            </button>
+
+          </ion-col>
+
+        </ion-row>
+        
       </ion-card-content>
-    
-      <ion-row no-padding>
-        <ion-col>
-          <button ion-button clear small color="primary" icon-start (click)="$event.stopPropagation(); ballotInfoModal(ballot);">
-            <ion-icon name='more'></ion-icon>
-            {{ 'MORE' | translate }}
-          </button>
-        </ion-col>
-        <ion-col text-center>
-          <button ion-button clear small color="primary" icon-start (click)="$event.stopPropagation(); goToResults(ballot)">
-            <ion-icon name='stats'></ion-icon>
-            Results
-          </button>
-        </ion-col>
-        <ion-col text-right>
-          <button ion-button clear small color="danger" icon-start (click)="$event.stopPropagation(); delete(ballot)">
-            <ion-icon name='trash'></ion-icon>
-            {{ 'DELETE_BUTTON' | translate }}
-          </button>
-        </ion-col>
-      </ion-row>
-      
+
     </ion-card>
 
   </div>
