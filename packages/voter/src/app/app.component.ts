@@ -125,16 +125,18 @@ export class NetVoteApp {
     this.navCtrl.setRoot(page.component);
   }
 
-  initializeAuth() {
 
+  initializeAuth() {
+    
     this.authProvider.getAuthStateObservable().subscribe((auth: AuthStateChange) => {
 
       const active = this.navCtrl.getActive();
+      const view = (active === undefined) ? "" : active.name;
 
       if (auth.current === AuthState.LoggedIn) {
         if (active === undefined || auth.prior !== AuthState.Locked)
           this.navCtrl.setRoot('ballot-list')
-      } else if (auth.current === AuthState.Locked) {
+      } else if (auth.current === AuthState.Locked && view !== "PasscodePage") {
         this.modalCtrl.create("get-passcode", {title: "Enter passcode to unlock", allowBiometric: true}).present();
       } else if (auth.current === AuthState.NotSetUp) {
         this.navCtrl.setRoot('login', {initial: "initial"});
@@ -143,6 +145,7 @@ export class NetVoteApp {
       }
 
     });
+
   }
 
   async logout() {
