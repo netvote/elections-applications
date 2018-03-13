@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {IonicPage, NavParams, NavController, ViewController} from 'ionic-angular';
+import {App, IonicPage, NavParams, NavController, ViewController} from 'ionic-angular';
 import {TranslateService} from '@ngx-translate/core';
 import {InAppBrowser} from '@ionic-native/in-app-browser';
 import {Ballot} from '../../models/ballot';
@@ -15,6 +15,7 @@ export class BallotInfoModalPage {
   ballot: Ballot;
 
   constructor(
+    private app: App,
     public navCtrl: NavController,
     private viewCtrl: ViewController,
     public navParams: NavParams,
@@ -31,11 +32,6 @@ export class BallotInfoModalPage {
   async closeBallotInfoModal() {
     this.viewCtrl.dismiss();
   }
-
-  // goToResults() {
-  //   this.viewCtrl.dismiss();
-  //   this.navCtrl.setRoot("ballot-results");
-  // }
 
   matchStatusClass(status, waiting) {
 
@@ -68,8 +64,10 @@ export class BallotInfoModalPage {
 
   reveal() {
     if(this.ballot.tx) {
-      this.viewCtrl.dismiss();
-      this.navCtrl.setRoot("ballot-reveal", {address: this.ballot.address, tx: this.ballot.tx});
+
+      this.viewCtrl.dismiss().then(() => {
+        this.app.getRootNav().setRoot("ballot-reveal", {address: this.ballot.address, tx: this.ballot.tx});
+      });
     }
   }
 }
