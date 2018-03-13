@@ -80,7 +80,7 @@ export class BallotScanPage {
   // Temporary to test in browser
   // Pretend scan was successful
   async testbypass() {
-    const address = "0x2781cb442c98bbecf37119b872913f1c39e0612d";
+    const address = "0x2bb74b777b913502112ee8e52a198fc9dc798524";
     this.importBallot(address, null);
   }
 
