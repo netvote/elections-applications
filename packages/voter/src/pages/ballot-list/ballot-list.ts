@@ -144,6 +144,13 @@ export class BallotListPage {
     //slidingItem.close();
   }
 
+  reveal(ballot) {
+    
+    if(ballot.tx) {
+      this.navCtrl.setRoot("ballot-reveal", {address: ballot.address, tx: ballot.tx});
+    }
+  }
+
   // Expandable Component
   // Show more info drop down
   expandItem(bItem) {

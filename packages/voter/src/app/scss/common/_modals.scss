@@ -9,8 +9,11 @@
     top: constant(safe-area-inset-top);
     top: env(safe-area-inset-top);
 
-    ion-icon{
-        font-size: 5rem;
+    .toolbar{
+
+        .icon{
+            font-size: 5rem;
+        }
     }
 
     ion-label{

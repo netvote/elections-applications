@@ -56,11 +56,7 @@
 
       <div class="nv-ballot-card__header">
 
-        <!-- <ion-fab center middle>
-          <button ion-fab mini>
-            <ion-icon name="lock"></ion-icon>
-          </button>
-        </ion-fab> -->
+        <button ion-button round icon-left class="nv-ballot-card__reveal-btn" *ngIf="ballot.tx" (click)="reveal(ballot); $event.stopPropagation();"><ion-icon name="eye"></ion-icon> View Votes</button>
 
         <img [src]="ballot.featuredImage">
 

@@ -30,6 +30,24 @@ page-ballot-list {
             position: relative;
         }
 
+        &__reveal-btn{
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: color($colors, dark);
+            background-color: rgba(white, 0.8);
+            font-size: 1.4rem;
+
+            &.activated{
+                background-color: rgba(white, 1);
+            }
+
+            .icon{
+                font-size: 2.4rem;
+            }
+        }
+
         &__content{
             position: relative;
             margin: -3rem 1.5rem 0;
@@ -76,7 +94,7 @@ page-ballot-list {
                     width: 24px;
                     border-radius: 50%;
                     background-color: mix(white, color($colors, warning), 20%);
-                    box-shadow: 0 0 20px 5px rgba(color($colors, warning), 0.3);
+                    box-shadow: 0 0 20px 5px rgba(color($colors, warning), 0.5);
                     animation: quasar 2s infinite linear;
                 }
 

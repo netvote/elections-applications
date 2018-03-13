@@ -66,4 +66,7 @@ export class BallotRevealPage {
     console.log("NV: vote; ", vote);
   }
 
+  returnToList() {
+    this.navCtrl.setRoot('ballot-list');
+  }
 }

@@ -41,7 +41,11 @@
     </ion-item>
 
     <ion-item margin-bottom>
-        <button ion-button (tap)="reveal()">Reveal your Blockchain Vote</button>    
+
+        <button ion-button icon-left padding class="nv-ballot-card__reveal-btn" *ngIf="ballot.tx" (tap)="reveal()"><ion-icon name="eye"></ion-icon> View Blockchain Votes</button>
+
+        <!-- <button ion-button (tap)="reveal()">Reveal your Blockchain Vote</button> -->
+
     </ion-item>
 
   </ion-list>
