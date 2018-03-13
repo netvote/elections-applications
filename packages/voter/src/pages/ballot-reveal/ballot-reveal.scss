@@ -1,4 +1,13 @@
 page-ballot-reveal {
+
+    .#{$ns}reveal{
+
+        &__spinner{
+            display: block;
+            margin-top: 50%;
+        }
+    }
+    
     @include x-platformSelector('.item'){
         background-color: color($colors, dark);
     }

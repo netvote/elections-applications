@@ -20,82 +20,81 @@
 
 <ion-content>
 
-  <div *ngIf="loading">
-
-      <div>Getting your vote from the blockchain...</div>
-
-  </div>
-
   <div padding>
 
-    <div class="sending" no-border text-center>
+    <div class="sending" no-border>
 
-      <div>
+      <nv-spinner *ngIf="loading" text-center [spinnerState]=" 'is-animating' " class="nv-reveal__spinner">
+    
+        <div class="nv-spinner__text">Retrieving your votes from the blockchain...</div>
+      
+      </nv-spinner>
 
-        <div *ngIf="ballot && ballot.ballotGroups">
+      <div *ngIf="ballot && ballot.ballotGroups">
 
-          <div padding>
+        <div padding>
 
-            <h1>Here is your vote!</h1>
+          <h1 text-center>Here are your votes!</h1>
 
-          </div>
+          <div padding-top>Ballot:</div>
+          <div (tap)="returnToList();"><strong>{{ballot.ballotTitle}}</strong></div>
 
-          <div class="nv-ballot">
+        </div>
 
-            <ion-list class="nv-ballot__list">
+        <div class="nv-ballot">
 
-              <ion-item-group *ngFor="let bGroup of ballot.ballotGroups; let groupIdx = index" class="nv-ballot__group">
+          <ion-list class="nv-ballot__list">
 
-                <!-- Group title -->
-                <ion-item-divider color="light" sticky>
+            <ion-item-group *ngFor="let bGroup of ballot.ballotGroups; let groupIdx = index" class="nv-ballot__group">
 
-                  <div class="nv-ballot__group__head">{{bGroup.groupTitle}}</div>
+              <!-- Group title -->
+              <ion-item-divider color="light" sticky>
 
-                </ion-item-divider>
+                <div class="nv-ballot__group__head">{{bGroup.groupTitle}}</div>
 
-                <ion-item>
+              </ion-item-divider>
 
-                  <!-- Section of a group -->
-                  <ion-list class="nv-ballot__list  nv-ballot__section" *ngFor="let bSection of bGroup.ballotSections; let sectionIdx = index">
+              <ion-item>
 
-                    <ion-item *ngIf="bSection.sectionTitle" class="nv-ballot__section__head-item">
+                <!-- Section of a group -->
+                <ion-list class="nv-ballot__list  nv-ballot__section" *ngFor="let bSection of bGroup.ballotSections; let sectionIdx = index">
 
-                      <div class="nv-ballot__section__head">{{bSection.sectionTitle}}
+                  <ion-item *ngIf="bSection.sectionTitle" class="nv-ballot__section__head-item">
 
-                        <small *ngIf="bSection.sectionNote">({{bSection.sectionNote}})</small>
+                    <div class="nv-ballot__section__head">{{bSection.sectionTitle}}
+
+                      <small *ngIf="bSection.sectionNote">({{bSection.sectionNote}})</small>
+
+                    </div>
+
+                  </ion-item>
+
+                  <ng-container *ngFor="let bItem of bSection.ballotItems; let itemIdx = index">
+
+                    <!-- Section items for user to choose as a vote -->
+                    <ion-item *ngIf="itemIdx === currentSelected[groupIdx+'-'+sectionIdx]" class="nv-ballot__choice">
+
+                      <ion-icon name="arrow-round-forward" class="nv-ballot__choice__icon"></ion-icon>
+
+                      <div class="nv-ballot__choice__inner">
+
+                        <div class="nv-ballot__choice__title">{{bItem.itemTitle}}</div>
+
+                        <div class="nv-ballot__choice__desc">{{bItem.itemDescription}}</div>
 
                       </div>
 
                     </ion-item>
 
-                    <ng-container *ngFor="let bItem of bSection.ballotItems; let itemIdx = index">
+                  </ng-container>
 
-                      <!-- Section items for user to choose as a vote -->
-                      <ion-item *ngIf="itemIdx === currentSelected[groupIdx+'-'+sectionIdx]" class="nv-ballot__choice">
+                </ion-list>
 
-                        <ion-icon name="arrow-round-forward" class="nv-ballot__choice__icon"></ion-icon>
+              </ion-item>
 
-                        <div class="nv-ballot__choice__inner">
+            </ion-item-group>
 
-                          <div class="nv-ballot__choice__title">{{bItem.itemTitle}}</div>
-
-                          <div class="nv-ballot__choice__desc">{{bItem.itemDescription}}</div>
-
-                        </div>
-
-                      </ion-item>
-
-                    </ng-container>
-
-                  </ion-list>
-
-                </ion-item>
-
-              </ion-item-group>
-
-            </ion-list>
-
-          </div>
+          </ion-list>
 
         </div>
 
