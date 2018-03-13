@@ -17,7 +17,7 @@ export class BallotProvider {
     await this._loadBallots();
     if (!predicate && !iteratee)
       return this._ballots;
-    return this._ballots;
+    return this._ballots.sort((b1: Ballot, b2: Ballot) => {return b1.timestamp.getTime() - b2.timestamp.getTime()});
   }
 
   async getBallot(address: string, id: string): Promise<Ballot> {
@@ -65,6 +65,9 @@ export class BallotProvider {
   private _clean(ballots: any): Ballot[] {
     if (!Array.isArray(ballots))
       return [];
+    for (let ballot of ballots) {
+      ballot.timestamp = new Date(ballot.timestamp);
+    }
     return ballots;
   }
 
