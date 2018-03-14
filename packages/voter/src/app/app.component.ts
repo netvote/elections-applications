@@ -8,6 +8,8 @@ import {Settings} from '../providers/providers';
 import {TranslateService} from '@ngx-translate/core'
 import {Account} from "../models/account";
 import {AuthProvider, AuthState, AuthStateChange} from "../providers/auth/auth";
+import {NetvoteProvider} from "../providers/netvote/netvote";
+
 import {ModalController} from 'ionic-angular/components/modal/modal-controller';
 
 
@@ -39,7 +41,7 @@ export class NetVoteApp {
   rootPage: string;
   account: Account;
   unlocking: boolean;
-
+  
   pages: any[] = [
     {title: 'My Ballots', component: "ballot-list"},
     {title: 'Scan a Ballot', component: "ballot-scan"},
@@ -56,7 +58,8 @@ export class NetVoteApp {
     public alertCtrl: AlertController,
     public loadingCtrl: LoadingController,
     private authProvider: AuthProvider,
-    private modalCtrl: ModalController
+    private modalCtrl: ModalController,
+    private netvote: NetvoteProvider,
   ) {
 
     platform.ready().then(() => {
@@ -72,10 +75,11 @@ export class NetVoteApp {
     const branchInit = () => {
       if (!platform.is('cordova')) {return;}
       const Branch = window['Branch'];
-      Branch.initSession((data) => {
-        //if (data['+clicked_branch_link']) {
-          console.log('NV: ' + JSON.stringify(data));
-       // }
+      Branch.initSession( async (data) => {
+        const res: any = await this.netvote.ImportBallotByUrl(data['+non_branch_link']);
+        if(res.address){
+          this.navCtrl.setRoot('ballot-detail', {meta: res.meta, address: res.address, id: res.id, token: res.token});
+        }
       });
     }
 

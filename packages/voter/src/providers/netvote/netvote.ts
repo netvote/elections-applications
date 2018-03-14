@@ -4,6 +4,7 @@ import 'rxjs/add/operator/map';
 import * as protobuf from 'protobufjs';
 import * as tally from '@netvote/elections-tally';
 import * as jwtdecode from 'jwt-decode'
+import * as  URL  from 'url-parse';
 
 import {SecureStorage, SecureStorageObject} from "@ionic-native/secure-storage";
 import {BallotFactory, BlockchainConnection} from '@netvote/core';
@@ -26,6 +27,17 @@ export class NetvoteProvider {
     this.blockchain = new BlockchainConnection();
   }
 
+  public async ImportBallotByUrl(url: string): Promise<any> {
+    try {
+      const u = new URL(url);
+      if(u.protocol === "netvote:") {
+        const res = await this.importBallot(u.hostname, u.pathname.substring(1));
+        return res;
+      } else return {};
+    } catch (error) {     
+    }
+  }
+
   public async importBallot(address: string, jwt: string): Promise<any> {
     let id: string = null;
     if (jwt) {
@@ -41,7 +53,7 @@ export class NetvoteProvider {
     ballot.description = meta.description;
     ballot.token = jwt;
     await this.ballotProvider.addBallot(ballot);
-    return {meta: meta, id: id};
+    return {meta: meta, id: id, address: address, token: jwt};
   }
 
   // Using ipfs address, get ballot meta
