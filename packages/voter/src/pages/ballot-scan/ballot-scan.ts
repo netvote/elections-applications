@@ -56,7 +56,7 @@ export class BallotScanPage {
     try {
 
       const barcodeData = await this.barcodeScanner.scan();
-      
+        
       const input = JSON.parse(barcodeData.text);    
       const address = input.address;
       if(!address){
@@ -72,7 +72,6 @@ export class BallotScanPage {
         await this.netvote.postWithAuth(token, url);
       
     } catch (err) {
-      this.alert('There was a Problem', 'This is not a valid Netvote QR code', ['Dismiss']);
       console.log("NV: No scan, error: ", err);
     }
   }

@@ -64,7 +64,7 @@ export class NetVoteApp {
         branchInit();
       });
       platform.pause.subscribe(async (e) => {
-        await this.authProvider.lock();
+        //await this.authProvider.lock();
       });
       branchInit();
     });
@@ -72,7 +72,6 @@ export class NetVoteApp {
     const branchInit = () => {
       if (!platform.is('cordova')) {return;}
       const Branch = window['Branch'];
-      console.log("NV: Branch Initialized")
       Branch.initSession((data) => {
         //if (data['+clicked_branch_link']) {
           console.log('NV: ' + JSON.stringify(data));
