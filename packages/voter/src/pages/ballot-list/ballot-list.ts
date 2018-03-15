@@ -147,7 +147,7 @@ export class BallotListPage {
   reveal(ballot) {
     
     if(ballot.tx) {
-      this.navCtrl.setRoot("ballot-reveal", {address: ballot.address, tx: ballot.tx});
+      this.navCtrl.push("ballot-reveal", {address: ballot.address, tx: ballot.tx});
     }
   }
 

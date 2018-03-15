@@ -24,9 +24,7 @@ export class BallotInfoModalPage {
   }
 
   ionViewWillLoad() {
-
     this.ballot = this.navParams.get('data');
-      
   }
 
   async closeBallotInfoModal() {
@@ -64,9 +62,8 @@ export class BallotInfoModalPage {
 
   reveal() {
     if(this.ballot.tx) {
-
       this.viewCtrl.dismiss().then(() => {
-        this.app.getRootNav().setRoot("ballot-reveal", {address: this.ballot.address, tx: this.ballot.tx});
+        this.app.getRootNav().push("ballot-reveal", {address: this.ballot.address, tx: this.ballot.tx});
       });
     }
   }
