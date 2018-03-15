@@ -21,6 +21,7 @@ import {SettingsPage} from '../pages/settings/settings';
 import {Settings} from '../providers/settings';
 
 import {Camera} from '@ionic-native/camera';
+import {ScreenOrientation} from '@ionic-native/screen-orientation';
 
 import {SplashScreen} from '@ionic-native/splash-screen';
 import {StatusBar} from '@ionic-native/status-bar';
@@ -108,6 +109,7 @@ export function provideSettings(storage: Storage) {
   providers: [
     TouchID,
     Camera,
+    ScreenOrientation,
     Keyboard,
     InAppBrowser,
     SplashScreen,
