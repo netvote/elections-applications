@@ -168,7 +168,7 @@ export class NetVoteApp {
           handler: data => {
 
             this.account = null;
-            this.authProvider.logout(bioType === "face");
+            const res = this.authProvider.logout(bioType === "face");
           }
         }
       ]

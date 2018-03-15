@@ -7,6 +7,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {AuthProvider} from "../../providers/auth/auth";
 import {NavParams} from 'ionic-angular/navigation/nav-params';
 import {PasscodeValidation} from '../../validators/passcode';
+import {BallotProvider} from '../../providers/ballot/ballot';
 
 @IonicPage({
   segment: "login",
@@ -40,12 +41,13 @@ export class LoginPage {
     private alertCtrl: AlertController,
     public translateService: TranslateService,
     private authProvider: AuthProvider,
+    private ballotProvider: BallotProvider,
     public loadingCtrl: LoadingController,
     private keyboard: Keyboard) {
 
     const initial = this.params.get("initial");
-    
-    if (initial){
+
+    if (initial) {
       this.isOpenEntry = initial;
     }
 
@@ -77,15 +79,15 @@ export class LoginPage {
 
       if (deviceCan) {
         const bioType = await this.authProvider.getBiometricType();
-        switch(bioType){
-          case "face":{
+        switch (bioType) {
+          case "face": {
             this.biometricPrompt = "Enable Face ID";
             break;
-          }          
+          }
           case "touch": {
             this.biometricPrompt = "Enable Touch ID";
             break;
-          } 
+          }
         }
         this.touchId = true;
         if (userHas) {
@@ -106,7 +108,7 @@ export class LoginPage {
 
     this.registerSubmitAttempt = true;
 
-    if(!this.registerForm.controls.passcode.valid){
+    if (!this.registerForm.controls.passcode.valid) {
 
       console.log("NV: Registration passcode is not valid!");
 
@@ -114,7 +116,7 @@ export class LoginPage {
 
     }
 
-    if(this.registerForm.controls.passcode.valid && !this.registerForm.controls.verifyPasscode.valid){
+    if (this.registerForm.controls.passcode.valid && !this.registerForm.controls.verifyPasscode.valid) {
 
       let alert = this.alertCtrl.create({
         subTitle: "The passcodes you entered don't match. <br><br> Please try again.",
@@ -125,13 +127,13 @@ export class LoginPage {
 
     }
 
-    if(this.registerForm.valid){
+    if (this.registerForm.valid) {
 
       this.keyboard.close();
       await this.pause(500);
 
       this.showLoading("Setting up your secure voting application...");
-
+      await this.ballotProvider.clear();
       const res = await this.authProvider.register(this.registerForm.value.passcode, this.registerForm.value.touchId);
       if (res.success) {
         this.hideLoading();
@@ -160,7 +162,7 @@ export class LoginPage {
 
     this.loginSubmitAttempt = true;
 
-    if(this.loginForm.valid){
+    if (this.loginForm.valid) {
 
       this.showLoading('Authenticating');
 
@@ -173,17 +175,24 @@ export class LoginPage {
 
         this.hideLoading();
 
-        if(!res.success){
-
-          let alert = this.alertCtrl.create({
-            subTitle: 'The passcode you entered is incorrect. <br><br> Please try again.',
-            buttons: ['OK'],
-            cssClass: 'nv-alert'
-          });
-          alert.present();
-
+        if (!res.success) {
+          if (res.was_reset) {
+            let alert = this.alertCtrl.create({
+              subTitle: 'This device has been reset. <br><br> Proceeding to Setup.',
+              buttons: ['OK'],
+              cssClass: 'nv-alert'
+            });
+            alert.present();
+          } else {
+            let alert = this.alertCtrl.create({
+              subTitle: 'The passcode you entered is incorrect. <br><br> Please try again.',
+              buttons: ['OK'],
+              cssClass: 'nv-alert'
+            });
+            alert.present();
+          }
         }
-      } 
+      }
       catch (error) {
 
         let alert = this.alertCtrl.create({
@@ -197,7 +206,7 @@ export class LoginPage {
       }
     }
 
-    if(!this.loginForm.valid){
+    if (!this.loginForm.valid) {
       console.log("NV: Login form values are invalid!");
 
       this.presentPasscodeInvalidAlert();

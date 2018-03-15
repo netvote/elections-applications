@@ -11,7 +11,7 @@ import {
 } from 'ionic-angular';
 import {Storage, IonicStorageModule} from '@ionic/storage';
 import {Keyboard} from '@ionic-native/keyboard';
-import { InAppBrowser } from '@ionic-native/in-app-browser';
+import {InAppBrowser} from '@ionic-native/in-app-browser';
 
 
 import {NetVoteApp} from './app.component';
@@ -42,6 +42,7 @@ import {TouchID} from '@ionic-native/touch-id';
 import {BallotProvider} from '../providers/ballot/ballot';
 import {GatewayProvider} from '../providers/gateway/gateway';
 import {ConfigurationProvider} from '../providers/configuration/configuration';
+import {Issuehandler} from '../providers/issuehandler/issuehandler';
 
 // The translate loader needs to know where to load i18n files
 // in Ionic's static asset pipeline.
@@ -115,7 +116,7 @@ export function provideSettings(storage: Storage) {
     SecureStorage,
     {provide: Settings, useFactory: provideSettings, deps: [Storage]},
     // Keep this to enable Ionic's runtime error handling during development
-    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    {provide: ErrorHandler, useClass: Issuehandler},
     AuthProvider,
     InAppBrowser,
     NetvoteProvider,

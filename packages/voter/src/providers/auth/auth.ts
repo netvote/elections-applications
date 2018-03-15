@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {Http} from '@angular/http';
 import 'rxjs/add/operator/map';
 
-import {SecureStorage} from "@ionic-native/secure-storage";
+import {SecureStorage, SecureStorageObject} from "@ionic-native/secure-storage";
 import {TouchID} from '@ionic-native/touch-id';
 import {Observable} from 'rxjs/Observable';
 
@@ -24,6 +24,9 @@ export class AuthProvider {
 
   private theObservable: Observable<AuthStateChange>;
   private lastAuthState: AuthState = null;
+
+  private secureStorageObject: SecureStorageObject;
+  private secureStorageProxy: HorriblyInsecureSecureStorageProxy;
 
   constructor(public http: Http,
     private secureStorage: SecureStorage,
@@ -62,7 +65,7 @@ export class AuthProvider {
           case "Verifying":
             return resolve(AuthState.Verifying);
           default:
-            return resolve(AuthState.NotSetUp);  
+            return resolve(AuthState.NotSetUp);
         }
       } catch (err) {
         return resolve(AuthState.NotSetUp);
@@ -118,10 +121,11 @@ export class AuthProvider {
     return new Promise<AuthResponse>((resolve, reject) => {
       pwHashSalt(passcode).hash(async (err, hash) => {
         if (err) return reject(err);
-        try {
+        try {          
           const storage = await this.getSecureStorage(this.STORAGE_KEY);
+          await storage.clear();
           await storage.set(this.HASH_KEY, hash);
-          if(this.ENABLE_KEYSTORE) {
+          if (this.ENABLE_KEYSTORE) {
             const keystore = await this.createKeystore(passcode);
             const serialized = keystore.serialize();
             await storage.set(this.KEYSTORE_KEY, serialized);
@@ -168,15 +172,30 @@ export class AuthProvider {
     return new Promise<AuthResponse>(async (resolve, reject) => {
       try {
         const storage = await this.getSecureStorage(this.STORAGE_KEY);
-        const hash = await storage.get(this.HASH_KEY);
-        pwHashSalt(passcode).verifyAgainst(hash, async (err, verified) => {
-          if (err) {
-            return resolve(new AuthResponse(false, err));
-          }
-          if (!verified) return resolve(new AuthResponse(false));
-          return resolve(new AuthResponse(true));
+        storage.get(this.HASH_KEY).then(async(hash) => {
+          pwHashSalt(passcode).verifyAgainst(hash, (err, verified) => {
+            if (err) {
+              return resolve(new AuthResponse(false, err));
+            }
+            if (!verified) return resolve(new AuthResponse(false));
+            return resolve(new AuthResponse(true));
+          });
+        }, async (error) => {
+          await storage.clear();          
+          return resolve(new AuthResponse(false, undefined, undefined, true));
         });
-      } catch (err) {
+
+        // const hash = await storage.get(this.HASH_KEY);
+        // console.log("NV: Auth hash: ", hash);
+        // pwHashSalt(passcode).verifyAgainst(hash, async (err, verified) => {
+        //   if (err) {
+        //     console.log("NV: Err: ", JSON.stringify(err));
+        //     return resolve(new AuthResponse(false, err));
+        //   }
+        //   if (!verified) return resolve(new AuthResponse(false));
+        //   return resolve(new AuthResponse(true));
+        // });
+      } catch (error) {
         return resolve(new AuthResponse(false));
       }
     });
@@ -285,22 +304,23 @@ export class AuthProvider {
 
   private async getSecureStorage(name: string) {
     if (!!window["cordova"]) {
-      return await this.secureStorage.create(name);
+      if (!this.secureStorageObject) {
+        this.secureStorageObject = await this.secureStorage.create(name);
+      }
+      return this.secureStorageObject;
     } else {
-      return new HorriblyInsecureSecureStorageProxy(name);
+      if (!this.secureStorageProxy) {
+        this.secureStorageProxy = new HorriblyInsecureSecureStorageProxy(name);
+      }
+      return this.secureStorageProxy;
     }
   }
 
   public async reset(passcode: string) {
     const check = await this.checkLogin(passcode);
-    if (check) {      
-      if (!!window["cordova"]) {
-        const ss = await this.secureStorage.create(this.STORAGE_KEY);
+    if (check) {
+        const ss = await this.getSecureStorage(this.STORAGE_KEY);
         return ss.clear();
-      } else {
-        const ss = new HorriblyInsecureSecureStorageProxy(this.STORAGE_KEY);
-        return ss.clear();
-      }
     } else {
       return false;
     }
@@ -320,7 +340,7 @@ export class AuthStateChange {
 }
 
 export class AuthResponse {
-  constructor(public success: boolean = false, public message?: string, public passcode?: string) {}
+  constructor(public success: boolean = false, public message?: string, public passcode?: string, public was_reset?: boolean) {}
 }
 
 class HorriblyInsecureSecureStorageProxy {
