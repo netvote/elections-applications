@@ -184,17 +184,6 @@ export class AuthProvider {
           await storage.clear();          
           return resolve(new AuthResponse(false, undefined, undefined, true));
         });
-
-        // const hash = await storage.get(this.HASH_KEY);
-        // console.log("NV: Auth hash: ", hash);
-        // pwHashSalt(passcode).verifyAgainst(hash, async (err, verified) => {
-        //   if (err) {
-        //     console.log("NV: Err: ", JSON.stringify(err));
-        //     return resolve(new AuthResponse(false, err));
-        //   }
-        //   if (!verified) return resolve(new AuthResponse(false));
-        //   return resolve(new AuthResponse(true));
-        // });
       } catch (error) {
         return resolve(new AuthResponse(false));
       }
