@@ -69,7 +69,7 @@ export class BallotScanPage {
 
       this.importBallot(address, token);
       if(token && url)
-        await this.netvote.postWithAuth(token, url);
+        this.netvote.postWithAuth(token, url).then(()=>{});
       
     } catch (err) {
       console.log("NV: No scan, error: ", err);

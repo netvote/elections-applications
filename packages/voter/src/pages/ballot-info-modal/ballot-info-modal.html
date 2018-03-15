@@ -16,21 +16,17 @@
         Your vote has not yet been cast.
     </span>
 
-    <span *ngIf="ballot.status === 'submitted' && waiting">
-        Your vote has been successfully cast and is pending on the blockchain.
+    <span *ngIf="ballot.status === 'submitted' && ballot.waiting">
+        Your votes have been cast and are pending on the blockchain.
     </span>
 
-    <span *ngIf="ballot.status === 'submitted' && !waiting">
-        Your vote has been successfully cast and has been written to the blockchain.
+    <span *ngIf="ballot.status === 'submitted' && !ballot.waiting">
+        Your votes have been cast and have been written to the blockchain.
     </span>
 
   </p>
 
   <ion-list class="nv-list  nv-list--clear">
-
-    <ion-item margin-bottom *ngIf="ballot.tx">
-        <strong>Blockchain {{ 'TRANSACTION_ID' | translate }}: </strong><br><a href="#" (click)='$event.preventDefault(); launchTxLink(ballot.url);' *ngIf="ballot.tx">{{ballot.tx}}</a>
-    </ion-item>
 
     <ion-item margin-bottom>
         <span *ngIf="ballot.status === 'initial'"><strong>Scanned: </strong></span>
@@ -39,10 +35,12 @@
     </ion-item>
 
     <ion-item margin-bottom>
-
-        <button ion-button icon-left padding class="nv-ballot-card__reveal-btn" *ngIf="ballot.tx" (tap)="reveal()"><ion-icon name="eye"></ion-icon> View Blockchain Votes</button>
-
+        <button ion-button icon-left padding class="nv-ballot-card__reveal-btn" *ngIf="ballot.tx" (tap)="reveal()"><ion-icon name="eye"></ion-icon> View Your Blockchain Votes</button>
     </ion-item>
+
+    <ion-item margin-bottom *ngIf="ballot.tx">
+      <strong>Blockchain {{ 'TRANSACTION_ID' | translate }}: </strong><br><a href="#" (click)='$event.preventDefault(); launchTxLink(ballot.url);' *ngIf="ballot.tx">{{ballot.tx}}</a>
+  </ion-item>
 
   </ion-list>
 
