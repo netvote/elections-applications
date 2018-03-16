@@ -3,6 +3,7 @@ import {Platform, Nav, Config, Content, LoadingController, AlertController} from
 
 import {StatusBar} from '@ionic-native/status-bar';
 import {SplashScreen} from '@ionic-native/splash-screen';
+import {ScreenOrientation} from '@ionic-native/screen-orientation';
 import {SettingsPage} from '../pages/settings/settings';
 import {Settings} from '../providers/providers';
 import {TranslateService} from '@ngx-translate/core'
@@ -41,7 +42,7 @@ export class NetVoteApp {
   rootPage: string;
   account: Account;
   unlocking: boolean;
-  
+
   pages: any[] = [
     {title: 'My Ballots', component: "ballot-list"},
     {title: 'Scan a Ballot', component: "ballot-scan"},
@@ -55,12 +56,15 @@ export class NetVoteApp {
     private statusBar: StatusBar,
     private splashScreen: SplashScreen,
     public zone: NgZone,
+    private screenOrientation: ScreenOrientation,
     public alertCtrl: AlertController,
     public loadingCtrl: LoadingController,
     private authProvider: AuthProvider,
     private modalCtrl: ModalController,
     private netvote: NetvoteProvider,
   ) {
+
+    this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT);
 
     platform.ready().then(() => {
       platform.resume.subscribe((e) => {
@@ -75,9 +79,9 @@ export class NetVoteApp {
     const branchInit = () => {
       if (!platform.is('cordova')) {return;}
       const Branch = window['Branch'];
-      Branch.initSession( async (data) => {
+      Branch.initSession(async (data) => {
         const res: any = await this.netvote.ImportBallotByUrl(data['+non_branch_link']);
-        if(res.address){
+        if (res.address) {
           this.navCtrl.setRoot('ballot-detail', {meta: res.meta, address: res.address, id: res.id, token: res.token});
         }
       });
@@ -131,7 +135,7 @@ export class NetVoteApp {
 
 
   initializeAuth() {
-    
+
     this.authProvider.getAuthStateObservable().subscribe((auth: AuthStateChange) => {
 
       const active = this.navCtrl.getActive();
@@ -140,8 +144,8 @@ export class NetVoteApp {
         if (active === undefined || auth.prior !== AuthState.Locked)
           this.navCtrl.setRoot('ballot-list')
       } else if (auth.current === AuthState.Locked && !this.unlocking) {
-        this.unlocking = true;        
-        this.modalCtrl.create("get-passcode", {title: "Enter passcode to unlock", allowBiometric: true}).present().then(()=>{this.unlocking = false;});
+        this.unlocking = true;
+        this.modalCtrl.create("get-passcode", {title: "Enter passcode to unlock", allowBiometric: true}).present().then(() => {this.unlocking = false;});
       } else if (auth.current === AuthState.NotSetUp) {
         this.navCtrl.setRoot('login', {initial: "initial"});
       } else {
@@ -168,8 +172,8 @@ export class NetVoteApp {
           handler: data => {
 
             this.account = null;
-            this.authProvider.logout(bioType === "face").then(()=>{
-              
+            this.authProvider.logout(bioType === "face").then(() => {
+
             });
           }
         }

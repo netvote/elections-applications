@@ -15,9 +15,7 @@ export class BallotProvider {
 
   async getBallots(predicate?: (ballot: Ballot) => void, iteratee?: (ballot: Ballot) => void): Promise<Ballot[]> {
     await this._loadBallots();
-    if (!predicate && !iteratee)
-      return this._ballots;
-    return this._ballots.sort((b1: Ballot, b2: Ballot) => {return b1.timestamp.getTime() - b2.timestamp.getTime()});
+    return this._ballots.sort((b1: Ballot, b2: Ballot) => {return b2.timestamp.getTime() - b1.timestamp.getTime()});
   }
 
   async getBallot(address: string, id: string): Promise<Ballot> {
