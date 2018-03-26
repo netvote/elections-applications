@@ -95,8 +95,7 @@ export class BallotScanPage {
   }
 
   goDemoUrl() {
-    const browser = this.iab.create('https://netvote.io/demo', '_system', {location: 'no'});
-    browser.show();
+    this.iab.create('https://netvote.io/demo', '_system', {location: 'no'});
   }
 
 }
