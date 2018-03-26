@@ -29,7 +29,7 @@ export class BallotScanPage {
     private alertCtrl: AlertController,
     private iab: InAppBrowser) {
 
-      this.scanBypass = config.base.ballotScanBypass;
+    this.scanBypass = config.base.ballotScanBypass;
 
   }
 
@@ -48,7 +48,7 @@ export class BallotScanPage {
       title: title,
       subTitle: message,
       buttons: buttons
-    }).present();        
+    }).present();
   }
 
   async scanBallotQr() {
@@ -56,23 +56,25 @@ export class BallotScanPage {
     try {
 
       const barcodeData = await this.barcodeScanner.scan();
-        
-      const input = JSON.parse(barcodeData.text);    
+
+      const input = JSON.parse(barcodeData.text);
       const address = input.address;
-      if(!address){
+      if (!address) {
         this.alert('There was a Problem', 'This is not a valid Netvote QR code', ['Dismiss']);
         return;
       }
-        
+
       const token = input.token;
       const url = input.callback;
 
       this.importBallot(address, token);
-      if(token && url)
-        this.netvote.postWithAuth(token, url).then(()=>{});
-      
+      if (token && url)
+        this.netvote.postWithAuth(token, url).then(() => {});
+
     } catch (err) {
-      console.log("NV: No scan, error: ", err);
+      if (typeof err === "string")
+        alert(err);
+      console.log("NV: No scan, error: ", JSON.stringify(err));
     }
   }
 
@@ -84,7 +86,7 @@ export class BallotScanPage {
   }
 
   async importBallot(address: string, token: string) {
-    const res = await this.netvote.importBallot(address, token);  
+    const res = await this.netvote.importBallot(address, token);
     this.navCtrl.setRoot('ballot-detail', {meta: res.meta, address: address, id: res.id, token: token});
   }
 
@@ -93,7 +95,7 @@ export class BallotScanPage {
   }
 
   goDemoUrl() {
-    const browser = this.iab.create('https://netvote.io/demo','_system',{location:'no'}); 
+    const browser = this.iab.create('https://netvote.io/demo', '_system', {location: 'no'});
     browser.show();
   }
 

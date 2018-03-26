@@ -1,37 +1,37 @@
 <ion-header class="nv-header" no-border>
-  
-    <ion-navbar>
-      <button ion-button icon-only menuToggle>
-        <ion-icon name="menu"></ion-icon>
-      </button>
 
-      <div class="nv-header__logo">
-        <img src="assets/img/netvote-logo-mark-check.png">
-      </div>
+  <ion-navbar>
+    <button ion-button icon-only menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
 
-      <ion-buttons end>
-        <ion-badge color="warning">{{ 'DEMO' | translate }}</ion-badge>
-      </ion-buttons>
+    <div class="nv-header__logo">
+      <img src="assets/img/netvote-logo-mark-check.png">
+    </div>
 
-    </ion-navbar>
-  
-  </ion-header>
+    <ion-buttons end>
+      <ion-badge color="warning">{{ 'DEMO' | translate }}</ion-badge>
+    </ion-buttons>
+
+  </ion-navbar>
+
+</ion-header>
 
 <ion-content>
 
-  <form [formGroup]="form" *ngIf="settingsReady">
-    <ion-list *ngIf="page == 'main'">
-      <ion-item>
-        <button ion-button color="attention" (click)="resetDevice()">Reset Device</button>
-      </ion-item>
-    </ion-list>
-
-    <ion-list *ngIf="page == 'profile'">
-      <!-- <ion-item>
-        <ion-label>{{ 'SETTINGS_OPTION4' | translate }}</ion-label>
-        <ion-input formControlName="option4"></ion-input>
-      </ion-item> -->
-    </ion-list>
-  </form>
+  <div padding>
+    <ion-row align-items-center>
+      <ion-col>
+        <button (tap)="resetDevice()" ion-button block color="attention">Reset Application</button>
+      </ion-col>
+    </ion-row>
+    <ion-row align-items-center>
+      <ion-col>
+        <div>
+          <small>Version: {{versionString}}</small>
+        </div>
+      </ion-col>
+    </ion-row>
+  </div>
 
 </ion-content>

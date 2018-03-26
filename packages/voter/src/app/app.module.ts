@@ -1,5 +1,6 @@
 import {NgModule, ErrorHandler} from '@angular/core';
 import {RollbarModule, RollbarService} from 'angular-rollbar'
+import {AppVersion} from '@ionic-native/app-version';
 import {BrowserModule} from '@angular/platform-browser';
 import {HttpModule, Http} from '@angular/http';
 import {
@@ -111,6 +112,7 @@ export function provideSettings(storage: Storage) {
     SettingsPage
   ],
   providers: [
+    AppVersion,
     TouchID,
     Camera,
     ScreenOrientation,
