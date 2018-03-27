@@ -43,6 +43,7 @@ export class BallotDetailPage {
   async ionViewDidEnter() {
     
     this.ballot = await this.ballotProvider.getBallot(this.address, this.id);
+    
     if (!this.ballot)
       return;
 
@@ -58,6 +59,7 @@ export class BallotDetailPage {
     if (this.ballot.status !== 'submitted') {
 
       this.canEditBallot = true;
+      
       // Resize content when footer not shown
       this.content.resize();
     }
@@ -78,6 +80,7 @@ export class BallotDetailPage {
   enterCastFlow() {
     if(this.finished)
       this.navCtrl.push("cast-ballot", {address: this.address, id: this.id, ballot: this.ballot, selections: this.currentSelected, token: this.token});
+      this.content.scrollToTop();
   }
 
   get finished(): boolean {
