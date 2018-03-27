@@ -2,6 +2,7 @@ import {NgModule} from '@angular/core';
 import {IonicPageModule} from 'ionic-angular';
 import {BallotDetailPage} from './ballot-detail';
 import {TranslateModule} from "@ngx-translate/core";
+import {ComponentsModule} from '../../components/components.module';
 
 @NgModule({
   declarations: [
@@ -9,7 +10,8 @@ import {TranslateModule} from "@ngx-translate/core";
   ],
   imports: [
     IonicPageModule.forChild(BallotDetailPage),
-    TranslateModule.forChild()
+    TranslateModule.forChild(),
+    ComponentsModule
   ],
 })
 export class BallotDetailPageModule {

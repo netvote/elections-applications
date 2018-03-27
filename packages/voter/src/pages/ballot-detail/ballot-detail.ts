@@ -39,14 +39,18 @@ export class BallotDetailPage {
     this.token = navParams.get("token");
 
   }
-
-  async ionViewDidEnter() {
+  
+  async ionViewWillEnter() {
     
     this.ballot = await this.ballotProvider.getBallot(this.address, this.id);
-    
-    if (!this.ballot)
-      return;
 
+    if (!this.ballot) {
+      return;
+    }
+    else {
+      this.ballotLoaded = true;
+    }
+      
     if (this.ballot.selections)
       this.currentSelected = this.ballot.selections;
 
