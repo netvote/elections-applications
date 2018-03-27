@@ -183,7 +183,6 @@ export class FadeTransition extends PageTransition {
 
     // setup leaving view
     if (leavingView && backDirection) {
-      console.log("SHOUD BE ANIMATING", leavingView);
       // leaving content
       this.duration(200);
       const leavingPage = new Animation(plt, leavingView.pageRef());
