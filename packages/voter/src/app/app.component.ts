@@ -64,8 +64,6 @@ export class NetVoteApp {
     private netvote: NetvoteProvider,
   ) {
 
-    this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT);
-
     platform.ready().then(() => {
       platform.resume.subscribe((e) => {
         branchInit();
@@ -73,6 +71,7 @@ export class NetVoteApp {
       platform.pause.subscribe(async (e) => {
         //await this.authProvider.lock();
       });
+      this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT);
       branchInit();
     });
 

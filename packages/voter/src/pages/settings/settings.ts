@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {NavController, NavParams, ModalController} from 'ionic-angular';
+import {AppVersion} from '@ionic-native/app-version';
 
 import {Settings} from '../../providers/settings';
 import {TranslateService} from '@ngx-translate/core';
@@ -27,17 +28,19 @@ export class SettingsPage {
   page: string = 'main';
   pageTitleKey: string = 'SETTINGS_TITLE';
   pageTitle: string;
+  versionString: string;
 
   subSettings: any = SettingsPage;
 
-  constructor(public navCtrl: NavController,
+  constructor(private appVersion: AppVersion,
+    public navCtrl: NavController,
     public settings: Settings,
     public formBuilder: FormBuilder,
     public navParams: NavParams,
     public translate: TranslateService,
     private authProvider: AuthProvider,
     private ballotProvider: BallotProvider,
-    public modalCtrl: ModalController) {
+    public modalCtrl: ModalController) {      
   }
 
   _buildForm() {
@@ -67,7 +70,10 @@ export class SettingsPage {
     this.form = this.formBuilder.group({});
   }
 
-  ionViewWillEnter() {
+  async ionViewWillEnter() {
+
+    this.versionString = `${await this.appVersion.getVersionNumber()}`;
+
     this.form = this.formBuilder.group({});
 
     this.page = this.navParams.get('page') || this.page;
