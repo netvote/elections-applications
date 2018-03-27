@@ -47,9 +47,6 @@ export class BallotDetailPage {
     if (!this.ballot) {
       return;
     }
-    else {
-      this.ballotLoaded = true;
-    }
       
     if (this.ballot.selections)
       this.currentSelected = this.ballot.selections;
@@ -67,6 +64,8 @@ export class BallotDetailPage {
       // Resize content when footer not shown
       this.content.resize();
     }
+
+    this.content.scrollToTop();
   }
 
   // Ballot item selection
@@ -84,7 +83,6 @@ export class BallotDetailPage {
   enterCastFlow() {
     if(this.finished)
       this.navCtrl.push("cast-ballot", {address: this.address, id: this.id, ballot: this.ballot, selections: this.currentSelected, token: this.token});
-      this.content.scrollToTop();
   }
 
   get finished(): boolean {
