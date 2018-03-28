@@ -76,7 +76,7 @@
     "mapCoverage": true
   },
   "devDependencies": {
-    "@netvote/elections-solidity": "1.0.13",
+    "@netvote/elections-solidity": "1.0.15",
     "@types/jest": "^22.1.4",
     "@types/lodash": "^4.14.99",
     "@types/node": "^9.4.6",
