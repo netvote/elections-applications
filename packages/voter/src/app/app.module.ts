@@ -99,8 +99,8 @@ export function provideSettings(storage: Storage) {
     IonicStorageModule.forRoot(),
     IonicModule.forRoot(NetVoteApp, {
       pageTransition: 'fade',
-      backButtonText: '',
-      backButtonIcon: ''
+      backButtonText: 'Back',
+      backButtonIcon: 'arrow-back'
     },
     ),
     AngularFireModule.initializeApp(firebaseConfig),
