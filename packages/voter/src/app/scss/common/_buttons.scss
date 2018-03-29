@@ -1,0 +1,11 @@
+
+.#{$ns}btn{
+     
+    &--in-footer{
+
+        &.button-md{
+            box-shadow: none;
+            height: $toolbar-md-height;
+        }
+    }
+}
