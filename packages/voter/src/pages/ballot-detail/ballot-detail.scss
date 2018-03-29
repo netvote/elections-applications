@@ -142,4 +142,11 @@ page-ballot-detail {
             border-top: 1px solid rgba(white, 0.1);
         }
     }
+
+    ion-footer{
+        
+        .toolbar-md, .toolbar-title-md{
+            padding: 0;
+        }
+    }
 }

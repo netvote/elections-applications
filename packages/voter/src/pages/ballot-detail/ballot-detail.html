@@ -112,13 +112,13 @@
 
   <ion-toolbar color="attention" *ngIf="ballot.status !== 'submitted' ">
 
-    <ion-title style="padding: 0">
+    <ion-title>
 
       <ion-grid no-padding>
   
           <ion-row align-items-center>
   
-            <ion-col><button ion-button full no-margin color="attention" [disabled]="!finished" (tap)=" enterCastFlow()"><strong>Confirm Votes</strong></button></ion-col>
+            <ion-col><button ion-button full block no-margin no-padding class="nv-btn--in-footer" color="attention" [disabled]="!finished" (tap)=" enterCastFlow()"><strong>Confirm Votes</strong></button></ion-col>
   
           </ion-row>
   
@@ -136,9 +136,9 @@
 
           <ion-row align-items-center>
 
-            <ion-col><button ion-button full no-margin color="danger" (tap)="cancelBallotEdit()"><strong>Cancel</strong></button></ion-col>
+            <ion-col><button ion-button full no-margin class="nv-btn--in-footer" color="danger" (tap)="cancelBallotEdit()"><strong>Cancel</strong></button></ion-col>
 
-            <ion-col><button ion-button full no-margin color="attention" (tap)="$event.preventDefault(); enterCastFlow();"><strong>Update Votes</strong></button></ion-col>
+            <ion-col><button ion-button full no-margin class="nv-btn--in-footer" color="attention" (tap)="$event.preventDefault(); enterCastFlow();"><strong>Update Votes</strong></button></ion-col>
 
           </ion-row>
 

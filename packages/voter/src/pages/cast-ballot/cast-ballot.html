@@ -189,7 +189,7 @@
 
 <ion-footer no-border color="dark" *ngIf="ballotStatus === 'confirming'">
 
-  <ion-toolbar color="dark">
+  <ion-toolbar no-padding color="dark">
 
     <ion-title style="padding: 0">
 
@@ -198,13 +198,13 @@
         <ion-row align-items-center>
     
           <ion-col>
-            <button ion-button full no-margin color="danger" (tap)="returnToBallot();">
+            <button ion-button full no-margin class="nv-btn--in-footer" color="danger" (tap)="returnToBallot();">
               <strong>Cancel</strong>
             </button>
           </ion-col>
     
           <ion-col>
-            <button ion-button full no-margin color="attention" (tap)="secureVotes();">
+            <button ion-button full no-margin class="nv-btn--in-footer" color="attention" (tap)="secureVotes();">
               <strong>Yes, these are my votes</strong>
             </button>
           </ion-col>
