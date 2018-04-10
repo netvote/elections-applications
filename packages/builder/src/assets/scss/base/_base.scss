@@ -1,0 +1,18 @@
+// Base/Global Styles
+
+html, body{
+    height: 100%;
+ }
+ 
+ input.ng-invalid.ng-touched{
+     border: 1px solid red;
+ }
+ 
+ p.help-block{
+     color: red;
+ }
+ 
+ h1{
+     font-size: 1.5rem;
+ }
+ 

@@ -1,0 +1,88 @@
+@import '../../../assets/scss/variables';
+
+.#{$ns}page-wrap{
+	padding-top: 3.5rem;
+}
+
+.sidebar{
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	z-index: 1000;
+	padding: 20px 0;
+	overflow-x: hidden;
+	overflow-y: auto;
+	background: linear-gradient(to bottom, rgba(30, 83, 109,1) 0%,rgba(30, 83, 109,1) 40%,rgba(11,37,50,1) 100%);
+
+	.nav-link{
+		transform-origin: left center;
+		transition: all 0.2s;
+		color: rgba(255, 255, 255, 0.8);
+
+			&:hover{
+				transform: scale(1.05);
+				padding-left: 1.25rem;
+				color: white;
+				background-color: rgba(255,255,255, 0.05);
+			}
+	}
+}
+
+.nv-logo{
+    position: relative;
+    display: block;
+    text-align: center;
+    margin-bottom: 3rem;
+
+    &:before{
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        z-index: -1;
+        transform: translate(-50%);
+        transition: all 0.2s ease-out;
+        box-shadow: 0 -10px 77px 57px rgba(255, 255, 255, 0.15);
+    }
+
+    &:hover{
+
+        &:before{
+            box-shadow: 0 -10px 77px 57px rgba(255, 255, 255, 0.2);
+        }
+    }
+}
+
+
+// NV Nav
+
+.nv-nav{
+    margin-top: 1rem;
+    color: white;
+
+    &--callout{
+        padding: 1rem;
+        background-color: rgba(255, 255, 255, 0.1); 
+    }
+
+    &--sub{
+        font-size: 12px;
+        color: rgba(white, 0.7);
+    }
+
+    &__item{
+
+    }
+
+    &__header{
+        margin-bottom: 0.5rem;
+    }
+
+    &--has-sub{
+
+        .nv-nav--sub{
+            margin-left: 2rem;
+        }
+    }
+}
