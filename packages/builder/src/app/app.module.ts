@@ -40,7 +40,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MainLayoutComponent} from './layouts/main-layout/main-layout.component';
 import {LoginLayoutComponent} from './layouts/login-layout/login-layout.component';
 import {QRCodeModule} from 'angular2-qrcode';
-import {SpinnerModule} from 'angular-spinners';
+//import {SpinnerModule} from 'angular-spinners';
 
 const appRoutes: Routes = [
 
@@ -126,8 +126,7 @@ const appRoutes: Routes = [
     QRCodeModule,
     ReactiveFormsModule,
     DynamicFormsCoreModule.forRoot(),
-    DynamicFormsBootstrapUIModule,
-    SpinnerModule
+    DynamicFormsBootstrapUIModule
   ],
   providers: [AuthService, AuthGuard, {provide: ToastOptions, useClass: CustomToastOption}],
   bootstrap: [AppComponent]
