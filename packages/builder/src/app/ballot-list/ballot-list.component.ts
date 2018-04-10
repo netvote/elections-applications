@@ -4,7 +4,7 @@ import {Ballot} from '@netvote/core';
 import {Observable} from 'rxjs/Observable';
 import {ToastService} from '../services/toast.service';
 
-//import { SpinnerService } from 'angular-spinners';
+import { SpinnerService } from '@chevtek/angular-spinners';
 
 @Component({
   selector: 'app-ballot-list',
@@ -19,7 +19,7 @@ export class BallotListComponent implements OnInit {
   //manager: BallotManager;
 
   constructor(
-    //public spinnerService: SpinnerService,
+    public spinnerService: SpinnerService,
     private ballotService: BallotService,
     private elementRef: ElementRef,
     private toast: ToastService) {

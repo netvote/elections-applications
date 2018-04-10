@@ -3,7 +3,7 @@ import {Router, ActivatedRoute} from '@angular/router';
 import {AuthService} from '../services/auth.service';
 import swal from 'sweetalert2/dist/sweetalert2.all.min.js';
 import {ToastService} from '../services/toast.service';
-//import { SpinnerService } from 'angular-spinners';
+import { SpinnerService } from '@chevtek/angular-spinners';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
