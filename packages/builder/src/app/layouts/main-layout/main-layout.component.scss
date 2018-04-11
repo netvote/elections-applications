@@ -13,7 +13,7 @@
 	padding: 20px 0;
 	overflow-x: hidden;
 	overflow-y: auto;
-	background: linear-gradient(to bottom, rgba(30, 83, 109,1) 0%,rgba(30, 83, 109,1) 40%,rgba(11,37,50,1) 100%);
+	background: linear-gradient(to bottom, rgba(#184054, 1) 0%,rgba(11,37,50,1) 100%);
 
 	.nav-link{
 		transform-origin: left center;
@@ -43,13 +43,13 @@
         z-index: -1;
         transform: translate(-50%);
         transition: all 0.2s ease-out;
-        box-shadow: 0 -10px 77px 57px rgba(255, 255, 255, 0.15);
+        box-shadow: 0 -10px 77px 57px rgba(255, 255, 255, 0.1);
     }
 
     &:hover{
 
         &:before{
-            box-shadow: 0 -10px 77px 57px rgba(255, 255, 255, 0.2);
+            box-shadow: 0 -10px 77px 57px rgba(255, 255, 255, 0.15);
         }
     }
 }
