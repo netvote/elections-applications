@@ -13,6 +13,85 @@
     right: 5rem;
 }
 
+.#{$ns}builder__group-rail{
+    border-right: 2px solid #eee;
+}
+
+// Accordion
+.#{$ns}builder-acc{
+
+    &__header{
+        border: 1px solid  mix(white, black, 80%);
+    }
+
+    &__identifier{
+        width: 80px;
+        text-align: center;
+        color: #333;
+
+        > div{
+            flex: 1;
+        }
+
+        &--group{
+            background-color: mix(white, black, 65%);
+        }
+
+        &--section{
+            background-color: mix(white, black, 75%);
+        }
+
+        &--item{
+            background-color: mix(white, black, 90%);
+        }
+    }
+
+    &__field{
+        flex: 1;
+
+        > .form-control{ // input
+            border: none;
+            border-radius: 0;
+
+            &:focus{
+                box-shadow: none;
+                background: mix(white, $app-color-pri, 90%);
+            }
+        }
+    }
+
+    &__identifier, &__field > input{
+        padding: 0.5rem;
+    }
+
+    &__items{
+        margin-left: 80px;
+    }
+
+    &__toggle{
+        display: flex;
+        align-items: center;
+        padding: 0 1rem;
+    }
+
+    &__delete-section{
+        position: absolute;
+        right: 0;
+        top: 0;
+        left: 100%;
+        border-radius: 0;
+        height: 42px;
+    }
+
+    &__new-item{
+        border: 1px dashed #ccc;
+        margin-top: 6px;
+        margin-bottom: 8px;
+        padding: 8px;
+        text-align: center;
+    }
+}
+
 // Mock area
 .nv-mock{
     position: relative;

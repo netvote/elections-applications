@@ -13,7 +13,7 @@ import {
   DynamicSelectModel,
   //DynamicDatePickerModel
 } from '@ng-dynamic-forms/core';
-import {FormGroup, FormArray} from '@angular/forms';
+import {FormBuilder, FormGroup, FormArray} from '@angular/forms';
 
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
@@ -22,12 +22,67 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {Ballot} from '@netvote/core';
 import {ToastService} from '../services/toast.service';
 
+import {NgbPanelChangeEvent} from '@ng-bootstrap/ng-bootstrap';
+
 @Component({
   selector: 'ballot-builder',
   templateUrl: './ballot-builder.component.html',
   styleUrls: ['./ballot-builder.component.scss']
 })
 export class BallotBuilderComponent implements OnInit {
+
+  // Watch for accordion events
+  public beforeChange($event: NgbPanelChangeEvent) {
+
+    // Stop panel toggle
+    if ($event.panelId === 'sectionPanel-1') {
+      //$event.preventDefault();
+    }
+  };
+
+  public testinput(e){
+    console.log(e);
+    e.stopPropagation();
+
+    e.preventDefault();
+    return false;
+  }
+  public togglePanel(e, j) {
+    console.log("whwhwhwh", j);
+    // Stop panel toggle
+    // if ($event.panelId === 'sectionPanel-1') {
+    //   $event.preventDefault();
+    // }
+
+  };
+     
+  // TEST MODEL
+  data = {
+    bMeta: {
+      bName: '',
+      bDescription: '',
+      bStartTime: ''
+    },
+    bGroups: [
+      {
+        bGroup: "example group",
+        sections: [
+          {
+            sectionName: "example section",
+            items: [
+              {
+                itemName: "example item"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+
+  myForm: FormGroup
+
+  // -- BELOW IS ORIGINAL
 
   formModel: DynamicFormControlModel[];
   formGroup: FormGroup;
@@ -44,13 +99,120 @@ export class BallotBuilderComponent implements OnInit {
   ballotGroupsModel: DynamicFormArrayModel;
 
   constructor(
+    private fb: FormBuilder,
+
     private formService: DynamicFormService,
     private ballotService: BallotService,
     private route: ActivatedRoute,
     private router: Router,
     private toast: ToastService) {
 
+    this.myForm = this.fb.group({
+      bName: this.data.bMeta.bName,
+      bGroups: this.fb.array([])
+    })
+  
+    this.setBgroups();
+
   }
+
+
+  addNewbGroup() {
+    let control = <FormArray>this.myForm.controls.bGroups;
+    control.push(
+      this.fb.group({
+        bGroup: [''],
+        sections: this.fb.array([ this.createSection() ])
+      })
+    )
+  }
+
+  createSection(): FormGroup {
+    return this.fb.group({
+      sectionName: 'adadsf',
+      items: this.fb.array([ this.createItem() ])
+    });
+  }
+
+  createItem(): FormGroup {
+    return this.fb.group({
+      itemName: 'zzz'
+    });
+  }
+
+  deleteBgroup(index) {
+    let control = <FormArray>this.myForm.controls.bGroups;
+    control.removeAt(index)
+  }
+
+  addNewSection(control) {
+    control.push(
+      this.fb.group({
+        sectionName: [''],
+        items: this.fb.array([ this.createItem() ])
+      }))
+  }
+
+  addNewItem(control) {
+    control.push(
+      this.fb.group({
+        itemName: ['newbie'],
+        items: this.fb.array([])
+      }))
+  }
+
+  deleteBallotPart(control, index) {
+
+    if(!control){
+      let control = <FormArray>this.myForm.controls.bGroups;
+      control.removeAt(index)
+    }
+    else{
+      control.removeAt(index)
+    }
+  }
+
+  deleteSection(e, control, index) {
+    e.preventDefault();
+    control.removeAt(index)
+  }
+
+  deleteItem(control, index) {
+    control.removeAt(index)
+  }
+
+  setBgroups() {
+    let control = <FormArray>this.myForm.controls.bGroups;
+    this.data.bGroups.forEach(x => {
+      control.push(this.fb.group({ 
+        bGroup: x.bGroup, 
+        sections: this.setSections(x)
+      }))
+    })
+  }
+
+  setSections(x) {
+    let arr = new FormArray([])
+    x.sections.forEach(y => {
+      arr.push(this.fb.group({ 
+        sectionName: y.sectionName,
+        items: this.setItems(y)
+      }))
+    })
+    return arr;
+  }
+
+  setItems(y) {
+    let arr = new FormArray([])
+    y.items.forEach(z => {
+      arr.push(this.fb.group({ 
+        itemName: z.itemName 
+      }))
+    })
+    return arr;
+  }
+
+
 
   ngOnInit() {
 

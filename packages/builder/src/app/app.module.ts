@@ -16,6 +16,7 @@ import {BallotGroupComponent} from './ballot-group/ballot-group.component';
 import {BallotSectionComponent} from './ballot-section/ballot-section.component';
 import {BallotItemComponent} from './ballot-item/ballot-item.component';
 import {BallotBuilderComponent} from './ballot-builder/ballot-builder.component';
+import { BallotAccordionComponent } from './ballot-accordion/ballot-accordion.component';
 
 import {AngularFireModule} from 'angularfire2';
 import {AngularFirestoreModule} from 'angularfire2/firestore';
@@ -41,6 +42,7 @@ import {MainLayoutComponent} from './layouts/main-layout/main-layout.component';
 import {LoginLayoutComponent} from './layouts/login-layout/login-layout.component';
 import {QRCodeModule} from 'angular2-qrcode';
 import {SpinnerModule} from '@chevtek/angular-spinners';
+
 
 const appRoutes: Routes = [
 
@@ -109,7 +111,8 @@ const appRoutes: Routes = [
     MainLayoutComponent,
     LoginLayoutComponent,
     BallotBuilderComponent,
-    RandomImageDirective 
+    RandomImageDirective,
+    BallotAccordionComponent 
   ],
   imports: [
     BrowserModule,
