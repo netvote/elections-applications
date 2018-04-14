@@ -22,6 +22,8 @@
 
     &__header{
         border: 1px solid  mix(white, black, 80%);
+        overflow: hidden;
+        background-color: white;
     }
 
     &__identifier{
@@ -38,11 +40,11 @@
         }
 
         &--section{
-            background-color: mix(white, black, 75%);
+            background-color: mix(white, black, 85%);
         }
 
         &--item{
-            background-color: mix(white, black, 90%);
+            background-color: mix(white, black, 95%);
         }
     }
 
@@ -55,7 +57,7 @@
 
             &:focus{
                 box-shadow: none;
-                background: mix(white, $app-color-pri, 90%);
+                background-image: linear-gradient(45deg, rgba($app-color-pri,0.1) 0%,rgba($app-color-pri,0.1) 30%,rgba(white,0) 100%);
             }
         }
     }
@@ -64,31 +66,58 @@
         padding: 0.5rem;
     }
 
+    &__group{
+
+        &:not(:first-child){
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 4px solid #bbb;
+        }
+    }
+
     &__items{
         margin-left: 80px;
     }
 
-    &__toggle{
-        display: flex;
-        align-items: center;
-        padding: 0 1rem;
+    &__actions{
+        transform: translateX(50%);
+        transition: all 0.15s linear;
+
+        > button{
+            height: 100%;
+            min-width: 42px;
+            border-radius: 0; 
+        }
+
+        .btn-link{
+            color: #ddd;
+        }
+
+        .oi-caret-left{
+            transition: all 0.1s linear;
+            transform: rotate(0);
+        }
+
+        &.is-active{
+            transform: translateX(0);
+
+            .oi-caret-left{
+                transform: rotate(-180deg);
+            }
+        }
     }
 
-    &__delete-section{
-        position: absolute;
-        right: 0;
-        top: 0;
-        left: 100%;
-        border-radius: 0;
-        height: 42px;
-    }
-
-    &__new-item{
+    &__add-new{
         border: 1px dashed #ccc;
         margin-top: 6px;
         margin-bottom: 8px;
         padding: 8px;
         text-align: center;
+        color: #bbb;
+
+        &:hover, &focus{
+            color: #999;
+        }
     }
 }
 

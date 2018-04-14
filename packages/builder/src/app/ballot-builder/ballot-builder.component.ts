@@ -30,31 +30,6 @@ import {NgbPanelChangeEvent} from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./ballot-builder.component.scss']
 })
 export class BallotBuilderComponent implements OnInit {
-
-  // Watch for accordion events
-  public beforeChange($event: NgbPanelChangeEvent) {
-
-    // Stop panel toggle
-    if ($event.panelId === 'sectionPanel-1') {
-      //$event.preventDefault();
-    }
-  };
-
-  public testinput(e){
-    console.log(e);
-    e.stopPropagation();
-
-    e.preventDefault();
-    return false;
-  }
-  public togglePanel(e, j) {
-    console.log("whwhwhwh", j);
-    // Stop panel toggle
-    // if ($event.panelId === 'sectionPanel-1') {
-    //   $event.preventDefault();
-    // }
-
-  };
      
   // TEST MODEL
   data = {
@@ -116,6 +91,20 @@ export class BallotBuilderComponent implements OnInit {
 
   }
 
+  // Watch for accordion events
+  public beforeChange($event: NgbPanelChangeEvent) {
+
+    // Stop panel toggle
+    if ($event.panelId === 'sectionPanel-1') {
+      //$event.preventDefault();
+    }
+  };
+
+  async toggleActions(e, target: any) {
+    e.stopPropagation();
+
+    target.actionsActive = !target.actionsActive;
+  }
 
   addNewbGroup() {
     let control = <FormArray>this.myForm.controls.bGroups;
@@ -177,7 +166,8 @@ export class BallotBuilderComponent implements OnInit {
     control.removeAt(index)
   }
 
-  deleteItem(control, index) {
+  deleteItem(e, control, index) {
+    e.preventDefault();
     control.removeAt(index)
   }
 

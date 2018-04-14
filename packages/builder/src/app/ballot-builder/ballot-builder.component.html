@@ -9,7 +9,10 @@
       
       <strong>Ballot Groups:</strong> 
       <ul class="list-unstyled">
-        <li *ngFor="let group of myForm.get('bGroups').controls" >{{group.controls['bGroup'].value}}</li>
+        <li *ngFor="let group of myForm.get('bGroups').controls">
+          <div *ngIf="!group.controls['bGroup'].value"><em>New Group</em></div>
+          <div *ngIf="group.controls['bGroup'].value">{{group.controls['bGroup'].value}}</div>
+        </li>
       </ul>
 
       <button (click)="addNewbGroup()" class="btn btn-primary btn-sm rounded text-light  mt-3">Add new Group</button>
@@ -22,7 +25,8 @@
     
         <!-- GROUPS -->
         <div formArrayName="bGroups">
-          <div *ngFor="let bGroup of myForm.get('bGroups').controls; let i=index">
+
+          <div *ngFor="let bGroup of myForm.get('bGroups').controls; let i=index" class="nv-builder-acc__group">
 
             <div [formGroupName]="i">
 
@@ -39,6 +43,11 @@
                       <input formControlName="bGroup" type="text" class="form-control" placeholder="e.g., Secretary of State">
                     </div>
 
+                    <div class="nv-builder-acc__actions" [class.is-active]="bGroup.actionsActive">
+                        <button class="btn btn-link btn-large" (click)="toggleActions($event, bGroup)" ><span class="oi oi-caret-left"></span></button>
+                        <button class="btn btn-danger btn-large" (click)="deleteSection($event, myForm.controls.bGroups, j)" title="Delete Section"><span class="oi oi-trash"></span></button>
+                    </div>
+
                 </div>
                 
               </div>
@@ -53,6 +62,8 @@
 
                       <ngb-panel *ngFor="let section of bGroup.get('sections').controls; let j=index" id="sectionPanel-{{j+1}}" [formGroupName]="j">
 
+                        <!-- Section: {{section.controls['sectionName'].value}} -->
+
                           <ng-template ngbPanelTitle let-panelInfo="acc">
 
                             <!-- SECION HEADER -->
@@ -63,24 +74,21 @@
                               </div>
           
                               <div class="nv-builder-acc__field">
-                                <input formControlName="sectionName" (focus)="testinput($event)" type="text" class="form-control  border-0  rounded-0" placeholder="e.g., Section Name">
+                                <input formControlName="sectionName" type="text" class="form-control  border-0  rounded-0" placeholder="e.g., Section Name">
                               </div>
 
-                              <div class="d-flex  align-items-center  nv-builder-acc__toggle" (click)="panelInfo.toggle('sectionPanel-1')">
-                                  <span class="oi oi-chevron-bottom"></span>
+                              <div class="nv-builder-acc__actions" [class.is-active]="section.actionsActive">
+                                  <button class="btn btn-link btn-large" (click)="toggleActions($event, section)" ><span class="oi oi-caret-left"></span></button>
+                                  <button class="btn btn-danger btn-large" (click)="deleteSection($event, bGroup.controls.sections, j)" title="Delete Section"><span class="oi oi-trash"></span></button>
                               </div>
             
                             </div>
-
-                            <button class="btn btn-danger btn-large nv-builder-acc__delete-section" (click)="deleteSection($event, bGroup.controls.sections, j)" title="Delete Section"><span class="oi oi-trash"></span></button>
-
 
                           </ng-template>
   
                           <ng-template ngbPanelContent>
                               
                             <div >
-                              <!-- Section: {{section.controls['sectionName'].value}} -->
 
                               <!-- ITEMS -->
                               <div formArrayName="items" class="pt-0" class="nv-builder-acc__items">
@@ -99,15 +107,19 @@
                                       <div class="nv-builder-acc__field">
                                         <input formControlName="itemName" type="text" class="form-control  border-0  rounded-0" placeholder="e.g., Section Name">
                                       </div>
-                    
-                                    </div>  
 
+                                      <div class="nv-builder-acc__actions" [class.is-active]="item.actionsActive">
+                                          <button class="btn btn-link btn-large" (click)="toggleActions($event, item)"><span class="oi oi-caret-left"></span></button>
+                                          <button class="btn btn-danger btn-large" (click)="deleteItem($event, section.controls.items, k)" title="Delete Item"><span class="oi oi-trash"></span></button>
+                                      </div>
+
+                                    </div>  
 
                                   </div>
                                  
                                 </div>
 
-                                <div class="nv-builder-acc__new-item" (click)="addNewItem(section.controls.items)">
+                                <div class="nv-builder-acc__add-new" (click)="addNewItem(section.controls.items)">
                                     Add new item
                                 </div>
               
@@ -122,10 +134,12 @@
                     </ngb-accordion>
             
                   </nv-ballot-accordion>
-                  
-                  <button (click)="addNewSection(bGroup.controls.sections)" class="btn btn-primary btn-sm rounded text-light  mt-3">Add Section</button>
                 
-              </div><br><hr>
+                  <div class="nv-builder-acc__add-new  mt-4" (click)="addNewSection(bGroup.controls.sections)">
+                      Add new section
+                  </div>
+
+              </div>
 
             </div>
          
@@ -135,7 +149,7 @@
         
       </form>
     
-      <br><pre>{{myForm.value | json}}</pre>
+      <!-- <br><pre>{{myForm.value | json}}</pre> -->
 
 
       <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
