@@ -25,7 +25,7 @@ export class BallotBuilderComponent implements OnInit {
       bDescription: '',
       bStartTime: ''
     },
-    bGroups: [
+    ballotGroups: [
       {
         bGroup: "example group",
         sections: [
@@ -60,10 +60,10 @@ export class BallotBuilderComponent implements OnInit {
 
     this.myForm = this.fb.group({
       bName: this.data.bMeta.bName,
-      bGroups: this.fb.array([])
+      ballotGroups: this.fb.array([])
     })
   
-    this.setBgroups();
+    this.setballotGroups();
 
   }
 
@@ -84,7 +84,7 @@ export class BallotBuilderComponent implements OnInit {
   }
 
   addNewbGroup() {
-    let control = <FormArray>this.myForm.controls.bGroups;
+    let control = <FormArray>this.myForm.controls.ballotGroups;
     control.push(
       this.fb.group({
         bGroup: [''],
@@ -108,7 +108,7 @@ export class BallotBuilderComponent implements OnInit {
 
   deleteBgroup(e, index) {
     e.preventDefault();
-    let control = <FormArray>this.myForm.controls.bGroups;
+    let control = <FormArray>this.myForm.controls.ballotGroups;
     control.removeAt(index)
   }
 
@@ -131,7 +131,7 @@ export class BallotBuilderComponent implements OnInit {
   // deleteBallotPart(control, index) {
 
   //   if(!control){
-  //     let control = <FormArray>this.myForm.controls.bGroups;
+  //     let control = <FormArray>this.myForm.controls.ballotGroups;
   //     control.removeAt(index)
   //   }
   //   else{
@@ -149,9 +149,9 @@ export class BallotBuilderComponent implements OnInit {
     control.removeAt(index)
   }
 
-  setBgroups() {
-    let control = <FormArray>this.myForm.controls.bGroups;
-    this.data.bGroups.forEach(x => {
+  setballotGroups() {
+    let control = <FormArray>this.myForm.controls.ballotGroups;
+    this.data.ballotGroups.forEach(x => {
       control.push(this.fb.group({ 
         bGroup: x.bGroup, 
         sections: this.setSections(x)

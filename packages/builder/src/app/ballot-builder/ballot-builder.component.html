@@ -19,7 +19,7 @@
 
         <strong>Ballot Groups:</strong> 
         <ul class="list-unstyled">
-          <li *ngFor="let group of myForm.get('bGroups').controls">
+          <li *ngFor="let group of myForm.get('ballotGroups').controls">
             <div *ngIf="!group.controls['bGroup'].value"><em>New Group</em></div>
             <div *ngIf="group.controls['bGroup'].value">{{group.controls['bGroup'].value}}</div>
           </li>
@@ -38,9 +38,9 @@
       <form [formGroup]="myForm" class="nv-builder__form">
     
         <!-- GROUPS -->
-        <div formArrayName="bGroups">
+        <div formArrayName="ballotGroups">
 
-          <div *ngFor="let bGroup of myForm.get('bGroups').controls; let i=index" class="nv-builder-acc__group">
+          <div *ngFor="let bGroup of myForm.get('ballotGroups').controls; let i=index" class="nv-builder-acc__group">
 
             <div [formGroupName]="i">
 
@@ -59,7 +59,7 @@
 
                     <div class="nv-builder-acc__actions" [class.is-active]="bGroup.actionsActive">
                         <button tabindex="-1" class="btn btn-link btn-large" (click)="toggleActions($event, bGroup)"><span class="oi" [ngClass]="bGroup.actionsActive ? 'oi-expand-left' : 'oi-expand-right'"></span></button>
-                        <button tabindex="-1" class="btn btn-danger btn-large" (click)="deleteBgroup($event, myForm.controls.bGroups, i)" title="Delete Group"><span class="oi oi-trash"></span></button>
+                        <button tabindex="-1" class="btn btn-danger btn-large" (click)="deleteBgroup($event, myForm.controls.ballotGroups, i)" title="Delete Group"><span class="oi oi-trash"></span></button>
                     </div>
 
                 </div>
@@ -235,7 +235,7 @@
 
                 <div class="nv-preview__groups">
 
-                  <div *ngFor="let group of myForm.get('bGroups').controls; let i=index" class="nv-preview__group">
+                  <div *ngFor="let group of myForm.get('ballotGroups').controls; let i=index" class="nv-preview__group">
 
                     <div class="nv-preview__group__title">
                       <span [ngClass]="{'nv-skeleton nv-skeleton--dark  nv-skeleton--150': !group.controls['bGroup'].value}">&nbsp;{{group.controls['bGroup'].value}}</span>
