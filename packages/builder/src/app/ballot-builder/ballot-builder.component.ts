@@ -129,7 +129,8 @@ export class BallotBuilderComponent implements OnInit {
     });
   }
 
-  deleteBgroup(index) {
+  deleteBgroup(e, index) {
+    e.preventDefault();
     let control = <FormArray>this.myForm.controls.bGroups;
     control.removeAt(index)
   }
@@ -150,16 +151,16 @@ export class BallotBuilderComponent implements OnInit {
       }))
   }
 
-  deleteBallotPart(control, index) {
+  // deleteBallotPart(control, index) {
 
-    if(!control){
-      let control = <FormArray>this.myForm.controls.bGroups;
-      control.removeAt(index)
-    }
-    else{
-      control.removeAt(index)
-    }
-  }
+  //   if(!control){
+  //     let control = <FormArray>this.myForm.controls.bGroups;
+  //     control.removeAt(index)
+  //   }
+  //   else{
+  //     control.removeAt(index)
+  //   }
+  // }
 
   deleteSection(e, control, index) {
     e.preventDefault();
