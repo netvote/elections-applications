@@ -18,14 +18,7 @@ import {NgbPanelChangeEvent} from '@ng-bootstrap/ng-bootstrap';
 })
 export class BallotBuilderComponent implements OnInit {
 
-  data = {
-    ballotTitle: 'Netvote Demo Election',
-    bMeta: {
-      bName: '',
-      bDescription: '',
-      bStartTime: ''
-    },
-    
+  data = { 
     ballotType: "registerable",
     ballotTitle: "Fulton County Ballot",
     ballotLocation: "Fulton County",
@@ -69,7 +62,12 @@ export class BallotBuilderComponent implements OnInit {
 
 
     this.myForm = this.fb.group({
+      ballotType: this.data.ballotType,
       ballotTitle: this.data.ballotTitle,
+      ballotLocation: this.data.ballotLocation,
+      ballotDate: this.data.ballotDate,
+      ballotImage: this.data.ballotImage,
+      ballotInformation: null,
       ballotGroups: this.fb.array([])
     })
 

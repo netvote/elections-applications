@@ -231,23 +231,23 @@
 
                   <div class="nv-preview__header">
 
-                  <!-- <div class="nv-preview__image" [style.background-image]="'url(' + formGroup.value.ballotImage + ')'"></div> -->
+                  <div class="nv-preview__image" [style.background-image]="'url(' + myForm.controls['ballotImage'].value + ')'"></div>
 
-                  <div class="nv-preview__meta">
+                    <div class="nv-preview__meta">
 
-                    <div [ngClass]="{'nv-skeleton  nv-skeleton--light  nv-skeleton--100': !myForm.controls['ballotTitle'].value}" class="nv-preview__title">
-                      {{myForm.controls['ballotTitle'].value}}
+                      <div [ngClass]="{'nv-skeleton  nv-skeleton--light  nv-skeleton--100': !myForm.controls['ballotTitle'].value}" class="nv-preview__title">
+                        {{myForm.controls['ballotTitle'].value}}
+                      </div>
+
+                      <div [ngClass]="{'nv-skeleton nv-skeleton--light  nv-skeleton--150': !myForm.controls['ballotLocation'].value}" class="nv-preview__location">
+                        {{myForm.controls['ballotLocation'].value}}
+                      </div>
+
+                      <div [ngClass]="{'nv-skeleton nv-skeleton--thin  nv-skeleton--light  nv-skeleton--50': !myForm.controls['ballotDate'].value}" class="nv-preview__date">
+                        {{myForm.controls['ballotDate'].value}}
+                      </div>
+
                     </div>
-
-                    <!-- <div [ngClass]="{'nv-skeleton nv-skeleton--light  nv-skeleton--150': !formGroup.value.ballotLocation}" class="nv-preview__location">
-                      {{formGroup.value.ballotLocation}}
-                    </div>
-
-                    <div [ngClass]="{'nv-skeleton nv-skeleton--thin  nv-skeleton--light  nv-skeleton--50': !formGroup.value.ballotDate}" class="nv-preview__date">
-                      {{formGroup.value.ballotDate}}
-                    </div> -->
-
-                  </div>
 
                 </div>
 
