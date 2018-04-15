@@ -3,8 +3,6 @@ import {environment} from './../environments/environment';
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {DynamicFormsCoreModule} from '@ng-dynamic-forms/core';
-import {DynamicFormsBootstrapUIModule} from '@ng-dynamic-forms/ui-bootstrap';
 
 import {CoreModule} from './core/core.module';
 
@@ -112,8 +110,6 @@ const appRoutes: Routes = [
     BrowserAnimationsModule,
     QRCodeModule,
     ReactiveFormsModule,
-    DynamicFormsCoreModule.forRoot(),
-    DynamicFormsBootstrapUIModule,
     SpinnerModule
   ],
   providers: [AuthService, AuthGuard, {provide: ToastOptions, useClass: CustomToastOption}],

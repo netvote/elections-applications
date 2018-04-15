@@ -66,7 +66,7 @@
                 
               </div>
     
-            
+
               <!-- SECTIONS -->
               <div formArrayName="sections">
 
@@ -167,59 +167,6 @@
 
     </div>
 
-
-<!--- ORIGINAL WITH DYNAMIC FORMS LIB -->
-      <!-- <form [formGroup]="formGroup" class="form-horizontal">
-
-        <dynamic-bootstrap-form [group]="formGroup" [model]="formModel">
-
-          <ng-template modelId="ballotGroups" let-group="group" let-context="context" let-index="index">
-
-              <div class="d-flex  justify-content-end">
-
-                <button type="button" class="btn btn-danger btn-sm rounded" (click)="removeItem(context, index)">Remove Group</button>
-                <button *ngIf="index === context.groups.length - 1" type="button" class="btn btn-primary btn-sm rounded ml-2 text-light" (click)="insertItem(group, context, index + 1)">Add Group</button>
-                  
-              </div>
-              
-          </ng-template>
-
-          <ng-template modelId="ballotSections" let-group="group" let-context="context" let-index="index">
-            
-            <div class="d-flex  justify-content-end">
-              <button type="button" class="btn btn-danger btn-sm rounded" (click)="removeItem(context, index)">Remove Section</button>
-              <button *ngIf="index === context.groups.length - 1" type="button" class="btn btn-primary btn-sm rounded ml-2 text-light" (click)="insertItem(group, context, index + 1)">Add Section</button>
-            </div>
-
-          </ng-template>
-
-          <ng-template modelId="ballotItems" let-group="group" let-context="context" let-index="index">
-            
-            <div class="d-flex  justify-content-end">
-                <button type="button" class="btn btn-danger btn-sm rounded" (click)="removeItem(context, index)">Remove Item</button>
-                <button *ngIf="index === context.groups.length - 1" type="button" class="btn btn-primary btn-sm rounded ml-2 text-light" (click)="insertItem(group, context, index + 1)">Add Item</button>
-            </div>
-          </ng-template>
-
-          <ng-template modelId="ballotInformation">
-
-            <h5 class="mt-4">Ballot Groups</h5>
-
-          </ng-template>
-
-        </dynamic-bootstrap-form>
-
-      </form>
-
-      <div class="nv-builder__save">
-        <button (click)="saveBallot()" class="btn  btn-large  btn-primary  text-light">Save Ballot</button>
-        <button (click)="activateBallot()" class="btn  btn-large  btn-secondary">Activate Ballot</button>
-        <button (click) = "testDelete(ballot)" class="btn btn-danger btn-large"><span class="oi oi-trash"></span></button>
-      </div>
-
-    </div> -->
-    <!-- end row -->
-
     <div class="col col-4">
 
       <div class="mt-5">
@@ -254,7 +201,7 @@
             <div class="nv-mock__preview">
 
               <div *ngIf="showJson" class="nv-mock__json">
-                <pre>{{ formGroup.value | json }}</pre>
+                <!-- <pre>{{ formGroup.value | json }}</pre> -->
               </div>
 
               <div *ngIf="!showJson">
@@ -264,7 +211,7 @@
                   <img src="/assets/netvote-logo-mark.svg">
                 </div>
 
-                <div class="nv-preview__header">
+                <!-- <div class="nv-preview__header">
 
                   <div class="nv-preview__image" [style.background-image]="'url(' + formGroup.value.ballotImage + ')'"></div>
 
@@ -284,7 +231,7 @@
 
                   </div>
 
-                </div>
+                </div> -->
 
                 <div class="nv-preview__groups">
 
