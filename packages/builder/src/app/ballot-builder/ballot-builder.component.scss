@@ -177,9 +177,24 @@
 /* PREVIEW AREA INSIDE MOCK PHONE*/
 .nv-preview{
 
+    &__navbar{
+        position: fixed;
+        z-index: 3;
+        width: 240px;
+        padding: 10px;
+        background: $app-color-sec;
+        color: white;
+        text-align: center;
+
+        img{
+            height: 24px;
+        }
+    }
+
     &__header{
         position: relative;
         line-height: 1;
+        padding-top: 44px;
 
         &:after{
             content: "";
@@ -226,7 +241,7 @@
     }
 
     &__group{
-        min-height: 150px;
+        //min-height: 150px;
 
         &__title{
             padding: 0.25rem 0.5rem;
@@ -248,10 +263,6 @@
         border-bottom: 1px solid $app-color-ter;
         color: white;
 
-        &:last-child{
-            border: none;
-        }
-
         &__title{
             padding: 0.5rem 0.5rem 0.125rem 0.625rem;
         }
@@ -261,6 +272,14 @@
             color: rgba(white, 0.4);
             font-size: 10px;
         }
+    }
+
+    &__end{
+        padding: 1rem 0;
+        font-style: italic;
+        color: white;
+        font-size: 10px;
+        text-align: center;
     }
 }
 

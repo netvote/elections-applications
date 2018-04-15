@@ -160,14 +160,10 @@
         </div>
         
         <br><pre>{{myForm.value | json}}</pre>
-        
+
       </form>
 
-      
-    
     </div>
-
-    <!-- <br><pre>{{myForm.value | json}}</pre> -->
 
 
 <!--- ORIGINAL WITH DYNAMIC FORMS LIB -->
@@ -261,6 +257,11 @@
 
               <div *ngIf="!showJson">
 
+                <div class="nv-preview__navbar">
+                  <span class="oi oi-menu float-left  mt-1"></span>
+                  <img src="/assets/netvote-logo-mark.svg">
+                </div>
+
                 <div class="nv-preview__header">
 
                   <div class="nv-preview__image" [style.background-image]="'url(' + formGroup.value.ballotImage + ')'"></div>
@@ -314,6 +315,8 @@
                     </div>
 
                   </div>
+
+                  <div class="nv-preview__end">You've reached the end of the ballot.</div>
 
                 </div>
 
