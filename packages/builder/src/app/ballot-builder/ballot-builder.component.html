@@ -25,7 +25,7 @@
           </li>
         </ul>
   
-        <button (click)="addNewbGroup()" class="btn btn-primary btn-sm rounded text-light  mt-3">Add new Group</button>
+        <button (click)="addNewbGroup()" class="btn btn-primarry btn-sm rounded text-light  mt-3">Add new Group</button>
 
       </div>
       
@@ -62,8 +62,8 @@
                     </div>
 
                     <div class="nv-builder-acc__actions" [class.is-active]="bGroup.actionsActive">
-                        <button class="btn btn-link btn-large" (click)="toggleActions($event, bGroup)"><span class="oi" [ngClass]="bGroup.actionsActive ? 'oi-expand-left' : 'oi-expand-right'"></span></button>
-                        <button class="btn btn-danger btn-large" (click)="deleteBgroup($event, myForm.controls.bGroups, i)" title="Delete Group"><span class="oi oi-trash"></span></button>
+                        <button tabindex="-1" class="btn btn-link btn-large" (click)="toggleActions($event, bGroup)"><span class="oi" [ngClass]="bGroup.actionsActive ? 'oi-expand-left' : 'oi-expand-right'"></span></button>
+                        <button tabindex="-1" class="btn btn-danger btn-large" (click)="deleteBgroup($event, myForm.controls.bGroups, i)" title="Delete Group"><span class="oi oi-trash"></span></button>
                     </div>
 
                 </div>
@@ -96,8 +96,8 @@
                               </div>
 
                               <div class="nv-builder-acc__actions" [class.is-active]="section.actionsActive">
-                                  <button class="btn btn-link btn-large" (click)="toggleActions($event, section)"><span class="oi" [ngClass]="section.actionsActive ? 'oi-expand-left' : 'oi-expand-right'"></span></button>
-                                  <button class="btn btn-danger btn-large" (click)="deleteSection($event, bGroup.controls.sections, j)" title="Delete Section"><span class="oi oi-trash"></span></button>
+                                  <button tabindex="-1" class="btn btn-link btn-large" (click)="toggleActions($event, section)"><span class="oi" [ngClass]="section.actionsActive ? 'oi-expand-left' : 'oi-expand-right'"></span></button>
+                                  <button tabindex="-1" class="btn btn-danger btn-large" (click)="deleteSection($event, bGroup.controls.sections, j)" title="Delete Section"><span class="oi oi-trash"></span></button>
                               </div>
             
                             </div>
@@ -127,8 +127,8 @@
                                       </div>
 
                                       <div class="nv-builder-acc__actions" [class.is-active]="item.actionsActive">
-                                          <button class="btn btn-link btn-large" (click)="toggleActions($event, item)"><span class="oi" [ngClass]="item.actionsActive ? 'oi-expand-left' : 'oi-expand-right'"></span></button>
-                                          <button class="btn btn-danger btn-large" (click)="deleteItem($event, section.controls.items, k)" title="Delete Item"><span class="oi oi-trash"></span></button>
+                                          <button tabindex="-1" class="btn btn-link btn-large" (click)="toggleActions($event, item)"><span class="oi" [ngClass]="item.actionsActive ? 'oi-expand-left' : 'oi-expand-right'"></span></button>
+                                          <button tabindex="-1" class="btn btn-danger btn-large" (click)="deleteItem($event, section.controls.items, k)" title="Delete Item"><span class="oi oi-trash"></span></button>
                                       </div>
 
                                     </div>  
