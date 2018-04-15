@@ -52,6 +52,7 @@ export class BallotBuilderComponent implements OnInit {
   ballot: Ballot = null;
   ready = false;
   newBallot: any;
+  readyToBuild: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -302,6 +303,11 @@ export class BallotBuilderComponent implements OnInit {
     } catch (err) {
       this.toast.error(err.message);
     }
+  }
+
+  async toggleReadyToBuild(e){
+    e.preventDefault();
+   this.readyToBuild = !this.readyToBuild;
   }
 
 }

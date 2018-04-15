@@ -41,8 +41,7 @@
 
         <form [formGroup]="myForm" class="nv-builder__form">
 
-          <div>
-
+          <div *ngIf="!readyToBuild">
 
               <div class="form-group">
                 <label >Ballot Type</label>
@@ -81,7 +80,7 @@
                 <textarea formControlName="ballotInformation" type="text" class="form-control" placeholder=""></textarea>
               </div>
 
-            <button class="btn btn-primary btn-large text-light" (click)"{ readyToBuild = !readyToBuild }">Start Building</button>
+            <button class="btn btn-primary btn-large text-light" (click)="toggleReadyToBuild($event);">Start Building</button>
 
           </div>
 
