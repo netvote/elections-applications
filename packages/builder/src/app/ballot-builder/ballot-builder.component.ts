@@ -125,6 +125,7 @@ export class BallotBuilderComponent implements OnInit {
     ballotSections.push(
       this.fb.group({
         sectionTitle: [''],
+        sectionNote: [''],
         ballotItems: this.fb.array([this.createItem()])
       }))
   }
@@ -162,6 +163,7 @@ export class BallotBuilderComponent implements OnInit {
     x.ballotSections.forEach(y => {
       arr.push(this.fb.group({
         sectionTitle: y.sectionTitle,
+        sectionNote: y.sectionNote,
         ballotItems: this.setItems(y)
       }))
     })
@@ -172,7 +174,8 @@ export class BallotBuilderComponent implements OnInit {
     let arr = new FormArray([])
     y.ballotItems.forEach(z => {
       arr.push(this.fb.group({
-        itemTitle: z.itemTitle
+        itemTitle: z.itemTitle,
+        itemDescription: z.itemDescription
       }))
     })
     return arr;
