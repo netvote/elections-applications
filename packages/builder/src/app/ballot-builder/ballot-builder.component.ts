@@ -232,38 +232,36 @@ export class BallotBuilderComponent implements OnInit {
 
     console.log(this.myForm.value);
 
-    // if (!this.ballot) {
+    if (!this.ballot) {
 
-    //   this.ballot = {
-    //     title: this.formGroup.value.ballotTitle,
-    //     description: this.formGroup.value.ballotInformation,
-    //     status: 'building',
-    //     type: this.formGroup.value.type,
-    //     json: this.formGroup.value,
-    //     json_model: JSON.stringify(this.formModel)
-    //   } as Ballot;
+      this.ballot = {
+        title: this.myForm.value.ballotTitle,
+        description: this.myForm.value.ballotInformation,
+        status: 'building',
+        type: this.myForm.value.type,
+        json: this.myForm.value
+      } as Ballot;
 
-    //   return this.ballotService.createBallot(this.ballot)
-    //     .then((afs_ballot) => {
-    //       this.toast.info('Ballot created.');
-    //       this.router.navigate([`/ballot-builder/${afs_ballot.id}`]);
-    //       return afs_ballot;
-    //     });
+      return this.ballotService.createBallot(this.ballot)
+        .then((afs_ballot) => {
+          this.toast.info('Ballot created.');
+          this.router.navigate([`/ballot-builder/${afs_ballot.id}`]);
+          return afs_ballot;
+        });
 
-    // } else {
+    } else {
 
-    //   this.ballot.title = this.formGroup.value.ballotTitle;
-    //   this.ballot.description = this.formGroup.value.ballotInformation;
-    //   this.ballot.type = this.formGroup.value.type;
-    //   this.ballot.json = this.formGroup.value;
-    //   this.ballot.json_model = JSON.stringify(this.formModel);
+      this.ballot.title = this.myForm.value.ballotTitle;
+      this.ballot.description = this.myForm.value.ballotInformation;
+      this.ballot.type = this.myForm.value.type;
+      this.ballot.json = this.myForm.value;
 
-    //   return this.ballotService.updateBallot(this.ballot)
-    //     .then((afs_ballot) => {
-    //       this.toast.info('Ballot updated.');
-    //       return afs_ballot;
-    //     });
-    // }
+      return this.ballotService.updateBallot(this.ballot)
+        .then((afs_ballot) => {
+          this.toast.info('Ballot updated.');
+          return afs_ballot;
+        });
+    }
   }
 
   activateBallot() {
