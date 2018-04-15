@@ -240,7 +240,7 @@ export class BallotBuilderComponent implements OnInit {
         title: this.myForm.value.ballotTitle,
         description: this.myForm.value.ballotInformation,
         status: 'building',
-        type: this.myForm.value.type,
+        type: this.myForm.value.ballotType,
         json: this.myForm.value
       } as Ballot;
 
@@ -255,7 +255,7 @@ export class BallotBuilderComponent implements OnInit {
 
       this.ballot.title = this.myForm.value.ballotTitle;
       this.ballot.description = this.myForm.value.ballotInformation;
-      this.ballot.type = this.myForm.value.type;
+      this.ballot.type = this.myForm.value.ballotType;
       this.ballot.json = this.myForm.value;
 
       return this.ballotService.updateBallot(this.ballot)
