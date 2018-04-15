@@ -155,7 +155,7 @@
       <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 
 <!--- ORIGINAL WITH DYNAMIC FORMS LIB -->
-      <form [formGroup]="formGroup" class="form-horizontal">
+      <!-- <form [formGroup]="formGroup" class="form-horizontal">
 
         <dynamic-bootstrap-form [group]="formGroup" [model]="formModel">
 
@@ -203,7 +203,7 @@
         <button (click) = "testDelete(ballot)" class="btn btn-danger btn-large"><span class="oi oi-trash"></span></button>
       </div>
 
-    </div>
+    </div> -->
     <!-- end row -->
 
     <div class="col col-4">
@@ -269,29 +269,29 @@
 
                 <div class="nv-preview__groups">
 
-                  <div *ngFor="let group of formGroup.value.ballotGroups" class="nv-preview__group">
+                  <div *ngFor="let group of myForm.get('bGroups').controls; let i=index" class="nv-preview__group">
 
                     <div class="nv-preview__group__title">
-                      <span [ngClass]="{'nv-skeleton nv-skeleton--dark  nv-skeleton--150': !group.groupTitle}">&nbsp;{{group.groupTitle}}</span>
+                      <span [ngClass]="{'nv-skeleton nv-skeleton--dark  nv-skeleton--150': !group.controls['bGroup'].value}">&nbsp;{{group.controls['bGroup'].value}}</span>
                     </div>
 
-                    <div *ngFor="let section of group.ballotSections">
+                    <div *ngFor="let section of group.get('sections').controls; let j=index">
 
                       <div class="nv-preview__section__title">
-                        <span [ngClass]="{'nv-skeleton nv-skeleton--light  nv-skeleton--150': !section.sectionTitle}">&nbsp;{{section.sectionTitle}}&nbsp;
-                          <small *ngIf="section.sectionNote">({{section.sectionNote}})</small>
+                        <span [ngClass]="{'nv-skeleton nv-skeleton--light  nv-skeleton--150': !section.controls['sectionName'].value}">&nbsp;{{section.controls['sectionName'].value}}&nbsp;
+                          <!-- <small *ngIf="section.sectionNote">({{section.sectionNote}})</small> -->
                         </span>
                       </div>
 
-                      <div *ngFor="let item of section.ballotItems" class="nv-preview__item">
+                      <div *ngFor="let item of section.get('items').controls; let k=index" class="nv-preview__item">
 
                         <div class="nv-preview__item__title">
-                          <span [ngClass]="{'nv-skeleton nv-skeleton--light  nv-skeleton--150': !item.itemTitle}">&nbsp;{{item.itemTitle}}</span>
+                          <span [ngClass]="{'nv-skeleton nv-skeleton--light  nv-skeleton--150': !item.controls['itemName'].value}">&nbsp;{{item.controls['itemName'].value}}</span>
                         </div>
 
-                        <div class="nv-preview__item__desc">
-                          <span [ngClass]="{'nv-skeleton  nv-skeleton--thin  nv-skeleton--light  nv-skeleton--100': !item.itemDescription}">&nbsp;{{item.itemDescription}}</span>
-                        </div>
+                        <!-- <div class="nv-preview__item__desc">
+                          <span [ngClass]="{'nv-skeleton  nv-skeleton--thin  nv-skeleton--light  nv-skeleton--100': !item.itemDescription}">&nbsp;Need Descriptions here</span>
+                        </div> -->
 
                       </div>
 
