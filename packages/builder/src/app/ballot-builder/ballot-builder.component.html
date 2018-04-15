@@ -229,27 +229,27 @@
                     <img src="/assets/netvote-logo-mark.svg">
                   </div>
 
-                  <!-- <div class="nv-preview__header">
+                  <div class="nv-preview__header">
 
-                  <div class="nv-preview__image" [style.background-image]="'url(' + formGroup.value.ballotImage + ')'"></div>
+                  <!-- <div class="nv-preview__image" [style.background-image]="'url(' + formGroup.value.ballotImage + ')'"></div> -->
 
                   <div class="nv-preview__meta">
 
-                    <div [ngClass]="{'nv-skeleton  nv-skeleton--light  nv-skeleton--100': !formGroup.value.ballotTitle}" class="nv-preview__title">
-                      {{formGroup.value.ballotTitle}}
+                    <div [ngClass]="{'nv-skeleton  nv-skeleton--light  nv-skeleton--100': !myForm.controls['ballotTitle'].value}" class="nv-preview__title">
+                      {{myForm.controls['ballotTitle'].value}}
                     </div>
 
-                    <div [ngClass]="{'nv-skeleton nv-skeleton--light  nv-skeleton--150': !formGroup.value.ballotLocation}" class="nv-preview__location">
+                    <!-- <div [ngClass]="{'nv-skeleton nv-skeleton--light  nv-skeleton--150': !formGroup.value.ballotLocation}" class="nv-preview__location">
                       {{formGroup.value.ballotLocation}}
                     </div>
 
                     <div [ngClass]="{'nv-skeleton nv-skeleton--thin  nv-skeleton--light  nv-skeleton--50': !formGroup.value.ballotDate}" class="nv-preview__date">
                       {{formGroup.value.ballotDate}}
-                    </div>
+                    </div> -->
 
                   </div>
 
-                </div> -->
+                </div>
 
                   <div class="nv-preview__groups">
 

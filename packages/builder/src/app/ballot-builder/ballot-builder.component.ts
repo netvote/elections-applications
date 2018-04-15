@@ -20,6 +20,7 @@ export class BallotBuilderComponent implements OnInit {
 
   // TEST MODEL
   data = {
+    ballotTitle: 'Netvote Demo Election',
     bMeta: {
       bName: '',
       bDescription: '',
@@ -61,7 +62,7 @@ export class BallotBuilderComponent implements OnInit {
 
 
     this.myForm = this.fb.group({
-      bName: this.data.bMeta.bName,
+      ballotTitle: this.data.ballotTitle,
       ballotGroups: this.fb.array([])
     })
 
