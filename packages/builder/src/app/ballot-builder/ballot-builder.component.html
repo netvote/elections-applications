@@ -1,5 +1,11 @@
 <div class="p-3">
 
+  <div class="nv-builder__save">
+    <button (click)="saveBallot()" class="btn  btn-large  btn-primary  text-light">Save Ballot</button>
+    <button (click)="activateBallot()" class="btn  btn-large  btn-secondary">Activate Ballot</button>
+    <button (click) = "testDelete(ballot)" class="btn btn-danger btn-large"><span class="oi oi-trash"></span></button>
+  </div>
+      
   <div class="nv-builder__main-header">
       <h1>Build a Ballot</h1>
       <p>Build a ballot to use on Netvote apps.</p>
