@@ -17,7 +17,7 @@ import {NgbPanelChangeEvent} from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./ballot-builder.component.scss']
 })
 export class BallotBuilderComponent implements OnInit {
-     
+
   // TEST MODEL
   data = {
     bMeta: {
@@ -27,13 +27,15 @@ export class BallotBuilderComponent implements OnInit {
     },
     ballotGroups: [
       {
-        bGroup: "example group",
+        groupTitle: "",
         ballotSections: [
           {
-            sectionName: "example section",
-            items: [
+            sectionTitle: "",
+            sectionNote: "",
+            ballotItems: [
               {
-                itemName: "example item"
+                itemTitle: "",
+                itemDescription: ""
               }
             ]
           }
@@ -62,7 +64,7 @@ export class BallotBuilderComponent implements OnInit {
       bName: this.data.bMeta.bName,
       ballotGroups: this.fb.array([])
     })
-  
+
     this.setballotGroups();
 
   }
@@ -83,61 +85,51 @@ export class BallotBuilderComponent implements OnInit {
     target.actionsActive = !target.actionsActive;
   }
 
-  addNewbGroup() {
+  addNewBallotGroup() {
     let control = <FormArray>this.myForm.controls.ballotGroups;
     control.push(
       this.fb.group({
-        bGroup: [''],
-        ballotSections: this.fb.array([ this.createSection() ])
+        groupTitle: [''],
+        ballotSections: this.fb.array([this.createSection()])
       })
     )
   }
 
   createSection(): FormGroup {
     return this.fb.group({
-      sectionName: 'adadsf',
-      items: this.fb.array([ this.createItem() ])
+      sectionTitle: '',
+      ballotItems: this.fb.array([this.createItem()])
     });
   }
 
   createItem(): FormGroup {
     return this.fb.group({
-      itemName: 'zzz'
+      itemTitle: '',
+      itemDescription: ''
     });
   }
 
-  deleteBgroup(e, index) {
+  deleteBallotGroup(e, index) {
     e.preventDefault();
     let control = <FormArray>this.myForm.controls.ballotGroups;
     control.removeAt(index)
   }
 
-  addNewSection(control) {
-    control.push(
+  addNewSection(ballotSections) {
+    ballotSections.push(
       this.fb.group({
-        sectionName: [''],
-        items: this.fb.array([ this.createItem() ])
+        sectionTitle: [''],
+        ballotItems: this.fb.array([this.createItem()])
       }))
   }
 
   addNewItem(control) {
     control.push(
       this.fb.group({
-        itemName: ['newbie'],
-        items: this.fb.array([])
+        itemTitle: '',
+        itemDescription: ''
       }))
   }
-
-  // deleteBallotPart(control, index) {
-
-  //   if(!control){
-  //     let control = <FormArray>this.myForm.controls.ballotGroups;
-  //     control.removeAt(index)
-  //   }
-  //   else{
-  //     control.removeAt(index)
-  //   }
-  // }
 
   deleteSection(e, control, index) {
     e.preventDefault();
@@ -152,8 +144,8 @@ export class BallotBuilderComponent implements OnInit {
   setballotGroups() {
     let control = <FormArray>this.myForm.controls.ballotGroups;
     this.data.ballotGroups.forEach(x => {
-      control.push(this.fb.group({ 
-        bGroup: x.bGroup, 
+      control.push(this.fb.group({
+        groupTitle: x.groupTitle,
         ballotSections: this.setSections(x)
       }))
     })
@@ -162,9 +154,9 @@ export class BallotBuilderComponent implements OnInit {
   setSections(x) {
     let arr = new FormArray([])
     x.ballotSections.forEach(y => {
-      arr.push(this.fb.group({ 
-        sectionName: y.sectionName,
-        items: this.setItems(y)
+      arr.push(this.fb.group({
+        sectionTitle: y.sectionTitle,
+        ballotItems: this.setItems(y)
       }))
     })
     return arr;
@@ -172,14 +164,13 @@ export class BallotBuilderComponent implements OnInit {
 
   setItems(y) {
     let arr = new FormArray([])
-    y.items.forEach(z => {
-      arr.push(this.fb.group({ 
-        itemName: z.itemName 
+    y.ballotItems.forEach(z => {
+      arr.push(this.fb.group({
+        itemTitle: z.itemTitle
       }))
     })
     return arr;
   }
-
 
 
   ngOnInit() {
@@ -272,27 +263,27 @@ export class BallotBuilderComponent implements OnInit {
     // First save the ballot
     //this.saveBallot().then((afs_ballot) => {
 
-     // const json = this.formGroup.value;
+    // const json = this.formGroup.value;
 
-      // const e = new BallotManager();
+    // const e = new BallotManager();
 
-      // // Deploy the ballot
-      // e.createBallot(json, 20).then((res) => {
+    // // Deploy the ballot
+    // e.createBallot(json, 20).then((res) => {
 
-      //   this.ballot.ipfs = res.ipfs;
+    //   this.ballot.ipfs = res.ipfs;
 
-      //   this.saveBallot().then(() => {
+    //   this.saveBallot().then(() => {
 
-      //   });
+    //   });
 
-      // });
+    // });
 
     //});
 
   }
 
   async testDelete(ballot) {
-    
+
     try {
       // if (ballot.status /*!== 'building'*/) {
       //   throw new Error('You cannot delete a ballot that has already been deployed');
@@ -304,7 +295,7 @@ export class BallotBuilderComponent implements OnInit {
       this.toast.error(err.message);
     }
   }
-    
+
 }
 
 
