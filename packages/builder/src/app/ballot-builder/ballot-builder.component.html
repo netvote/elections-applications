@@ -41,8 +41,52 @@
 
         <form [formGroup]="myForm" class="nv-builder__form">
 
+          <div>
+
+
+              <div class="form-group">
+                <label >Ballot Type</label>
+                <select class="form-control" formControlName="ballotType">
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                  </select>
+                <small id="ballotTypeHelp" class="form-text text-muted">Choose what type of ballot this will be.</small>
+              </div>
+
+              <div class="form-group">
+                <label>Ballot Title</label>
+                <input formControlName="ballotTitle" type="text" class="form-control" placeholder="">
+              </div>
+
+              <div class="form-group">
+                <label>Ballot Location</label>
+                <input formControlName="ballotLocation" type="text" class="form-control" placeholder="">
+              </div>
+
+              <div class="form-group">
+                <label>Ballot Image</label>
+                <input formControlName="ballotImage" type="file" class="form-control" placeholder="">
+              </div>
+
+              <div class="form-group">
+                <label>Ballot Date</label>
+                <input formControlName="ballotDate" type="text" class="form-control" placeholder="">
+              </div>
+
+              <div class="form-group">
+                <label>Ballot Information</label>
+                <textarea formControlName="ballotInformation" type="text" class="form-control" placeholder=""></textarea>
+              </div>
+
+            <button class="btn btn-primary btn-large text-light" (click)"{ readyToBuild = !readyToBuild }">Start Building</button>
+
+          </div>
+
           <!-- GROUPS -->
-          <div formArrayName="ballotGroups">
+          <div *ngIf="readyToBuild" formArrayName="ballotGroups">
 
             <div *ngFor="let ballotGroup of myForm.get('ballotGroups').controls; let i=index" class="nv-builder-acc__group">
 
