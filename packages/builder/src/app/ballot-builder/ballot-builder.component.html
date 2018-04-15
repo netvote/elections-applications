@@ -25,7 +25,7 @@
           </li>
         </ul>
   
-        <button (click)="addNewbGroup()" class="btn btn-primarry btn-sm rounded text-light  mt-3">Add new Group</button>
+        <button (click)="addNewbGroup()" class="btn btn-primary btn-sm rounded text-light  mt-3">Add new Group</button>
 
       </div>
       
@@ -34,10 +34,6 @@
     <div class="col col-6  pl-4">
 
       <div class="nv-builder__form-scroll">
-
-
-
-      
 
       <form [formGroup]="myForm" class="nv-builder__form">
     
@@ -76,7 +72,7 @@
 
                 <nv-ballot-accordion>
 
-                  <ngb-accordion #acc="ngbAccordion" [closeOthers]="true" [destroyOnHide]="false" activeIds="" (panelChange)="beforeChange($event)">
+                  <ngb-accordion #acc="ngbAccordion" [closeOthers]="false" [destroyOnHide]="false" activeIds="" (panelChange)="beforeChange($event)">
 
                       <ngb-panel *ngFor="let section of bGroup.get('sections').controls; let j=index" id="sectionPanel-{{j+1}}" [formGroupName]="j">
 
