@@ -11,10 +11,6 @@ import {CoreModule} from './core/core.module';
 import {AppComponent} from './app.component';
 import {HeaderComponent} from './header/header.component';
 import {HomeComponent} from './home/home.component';
-import {BuildBallotComponent} from './build-ballot/build-ballot.component';
-import {BallotGroupComponent} from './ballot-group/ballot-group.component';
-import {BallotSectionComponent} from './ballot-section/ballot-section.component';
-import {BallotItemComponent} from './ballot-item/ballot-item.component';
 import {BallotBuilderComponent} from './ballot-builder/ballot-builder.component';
 import { BallotAccordionComponent } from './ballot-accordion/ballot-accordion.component';
 
@@ -64,14 +60,6 @@ const appRoutes: Routes = [
         component: BallotBuilderComponent
       },
       {
-        path: 'build-ballot',
-        component: BuildBallotComponent
-      },
-      {
-        path: 'build-ballot/:id',
-        component: BuildBallotComponent
-      },
-      {
         path: 'ballot-list',
         component: BallotListComponent
       }
@@ -99,10 +87,6 @@ const appRoutes: Routes = [
     AppComponent,
     HeaderComponent,
     HomeComponent,
-    BuildBallotComponent,
-    BallotGroupComponent,
-    BallotSectionComponent,
-    BallotItemComponent,
     UserProfileComponent,
     BallotListComponent,
     LoginComponent,
