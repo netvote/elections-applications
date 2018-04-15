@@ -1,27 +1,39 @@
 <div class="p-3">
 
-  <h1>Build a Ballot</h1>
-  <p>Build a ballot to use on Netvote apps.</p>
-
+  <div class="nv-builder__main-header">
+      <h1>Build a Ballot</h1>
+      <p>Build a ballot to use on Netvote apps.</p>
+  </div>
+  
   <div class="row mt-5">
 
-    <div class="col col-2  nv-builder__group-rail">
+    <div class="col col-2">
       
-      <strong>Ballot Groups:</strong> 
-      <ul class="list-unstyled">
-        <li *ngFor="let group of myForm.get('bGroups').controls">
-          <div *ngIf="!group.controls['bGroup'].value"><em>New Group</em></div>
-          <div *ngIf="group.controls['bGroup'].value">{{group.controls['bGroup'].value}}</div>
-        </li>
-      </ul>
+      <div class="nv-builder__group-rail">
 
-      <button (click)="addNewbGroup()" class="btn btn-primary btn-sm rounded text-light  mt-3">Add new Group</button>
+        <strong>Ballot Groups:</strong> 
+        <ul class="list-unstyled">
+          <li *ngFor="let group of myForm.get('bGroups').controls">
+            <div *ngIf="!group.controls['bGroup'].value"><em>New Group</em></div>
+            <div *ngIf="group.controls['bGroup'].value">{{group.controls['bGroup'].value}}</div>
+          </li>
+        </ul>
+  
+        <button (click)="addNewbGroup()" class="btn btn-primary btn-sm rounded text-light  mt-3">Add new Group</button>
 
+      </div>
+      
     </div>
 
     <div class="col col-6  pl-4">
 
-      <form [formGroup]="myForm">
+      <div class="nv-builder__form-scroll">
+
+
+
+      
+
+      <form [formGroup]="myForm" class="nv-builder__form">
     
         <!-- GROUPS -->
         <div formArrayName="bGroups">
@@ -149,10 +161,10 @@
         
       </form>
     
+    </div>
+
       <!-- <br><pre>{{myForm.value | json}}</pre> -->
 
-
-      <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 
 <!--- ORIGINAL WITH DYNAMIC FORMS LIB -->
       <!-- <form [formGroup]="formGroup" class="form-horizontal">

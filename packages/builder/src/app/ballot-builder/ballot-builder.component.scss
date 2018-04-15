@@ -13,8 +13,31 @@
     right: 5rem;
 }
 
+.#{$ns}builder__main-header{
+    // position: fixed;
+    // background-color: $body-bg;
+}
+
+.#{$ns}builder__form-scroll{
+    position: fixed;
+    width: 600px;
+    height: calc(100% - 200px);
+    overflow: hidden;
+}
+
+.#{$ns}builder__form{
+    position: absolute;
+    height: 100%;
+    overflow-y: auto;
+    width: 100%;
+    padding-bottom: 100px;
+}
+
 .#{$ns}builder__group-rail{
+    position: fixed;
+    height: 100%;
     border-right: 2px solid #eee;
+    padding-right: 3rem;
 }
 
 // Accordion
