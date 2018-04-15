@@ -82,13 +82,6 @@ export class BallotBuilderComponent implements OnInit {
     private router: Router,
     private toast: ToastService) {
 
-    this.myForm = this.fb.group({
-      bName: this.data.bMeta.bName,
-      bGroups: this.fb.array([])
-    })
-  
-    this.setBgroups();
-
   }
 
   // Watch for accordion events
@@ -100,6 +93,7 @@ export class BallotBuilderComponent implements OnInit {
     }
   };
 
+  // UI actions on each Group, Section, Item (Delete, etc.)
   async toggleActions(e, target: any) {
     e.stopPropagation();
 
@@ -235,6 +229,15 @@ export class BallotBuilderComponent implements OnInit {
 
             this.ballot = ballot;
             this.ready = true;
+            console.log(this.ballot);
+
+
+            this.myForm = this.fb.group({
+              bName: json.ballotTitle,
+              bGroups: this.fb.array([])
+            })
+          
+            this.setBgroups();
 
           });
 
