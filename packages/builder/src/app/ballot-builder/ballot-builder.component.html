@@ -68,13 +68,13 @@
     
 
               <!-- SECTIONS -->
-              <div formArrayName="sections">
+              <div formArrayName="ballotSections">
 
                 <nv-ballot-accordion>
 
                   <ngb-accordion #acc="ngbAccordion" [closeOthers]="false" [destroyOnHide]="false" activeIds="" (panelChange)="beforeChange($event)">
 
-                      <ngb-panel *ngFor="let section of bGroup.get('sections').controls; let j=index" id="sectionPanel-{{j+1}}" [formGroupName]="j">
+                      <ngb-panel *ngFor="let section of bGroup.get('ballotSections').controls; let j=index" id="sectionPanel-{{j+1}}" [formGroupName]="j">
 
                         <!-- Section: {{section.controls['sectionName'].value}} -->
 
@@ -93,7 +93,7 @@
 
                               <div class="nv-builder-acc__actions" [class.is-active]="section.actionsActive">
                                   <button tabindex="-1" class="btn btn-link btn-large" (click)="toggleActions($event, section)"><span class="oi" [ngClass]="section.actionsActive ? 'oi-expand-left' : 'oi-expand-right'"></span></button>
-                                  <button tabindex="-1" class="btn btn-danger btn-large" (click)="deleteSection($event, bGroup.controls.sections, j)" title="Delete Section"><span class="oi oi-trash"></span></button>
+                                  <button tabindex="-1" class="btn btn-danger btn-large" (click)="deleteSection($event, bGroup.controls.ballotSections, j)" title="Delete Section"><span class="oi oi-trash"></span></button>
                               </div>
             
                             </div>
@@ -149,7 +149,7 @@
             
                   </nv-ballot-accordion>
                 
-                  <div class="nv-builder-acc__add-new  mt-4" (click)="addNewSection(bGroup.controls.sections)">
+                  <div class="nv-builder-acc__add-new  mt-4" (click)="addNewSection(bGroup.controls.ballotSections)">
                       Add new section
                   </div>
 
@@ -241,7 +241,7 @@
                       <span [ngClass]="{'nv-skeleton nv-skeleton--dark  nv-skeleton--150': !group.controls['bGroup'].value}">&nbsp;{{group.controls['bGroup'].value}}</span>
                     </div>
 
-                    <div *ngFor="let section of group.get('sections').controls; let j=index">
+                    <div *ngFor="let section of group.get('ballotSections').controls; let j=index">
 
                       <div class="nv-preview__section__title">
                         <span [ngClass]="{'nv-skeleton nv-skeleton--light  nv-skeleton--150': !section.controls['sectionName'].value}">&nbsp;{{section.controls['sectionName'].value}}&nbsp;

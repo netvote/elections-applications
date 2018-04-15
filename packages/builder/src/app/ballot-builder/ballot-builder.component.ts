@@ -28,7 +28,7 @@ export class BallotBuilderComponent implements OnInit {
     ballotGroups: [
       {
         bGroup: "example group",
-        sections: [
+        ballotSections: [
           {
             sectionName: "example section",
             items: [
@@ -88,7 +88,7 @@ export class BallotBuilderComponent implements OnInit {
     control.push(
       this.fb.group({
         bGroup: [''],
-        sections: this.fb.array([ this.createSection() ])
+        ballotSections: this.fb.array([ this.createSection() ])
       })
     )
   }
@@ -154,14 +154,14 @@ export class BallotBuilderComponent implements OnInit {
     this.data.ballotGroups.forEach(x => {
       control.push(this.fb.group({ 
         bGroup: x.bGroup, 
-        sections: this.setSections(x)
+        ballotSections: this.setSections(x)
       }))
     })
   }
 
   setSections(x) {
     let arr = new FormArray([])
-    x.sections.forEach(y => {
+    x.ballotSections.forEach(y => {
       arr.push(this.fb.group({ 
         sectionName: y.sectionName,
         items: this.setItems(y)
