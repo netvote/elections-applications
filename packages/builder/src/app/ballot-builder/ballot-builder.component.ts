@@ -18,13 +18,20 @@ import {NgbPanelChangeEvent} from '@ng-bootstrap/ng-bootstrap';
 })
 export class BallotBuilderComponent implements OnInit {
 
-  // TEST MODEL
   data = {
     bMeta: {
       bName: '',
       bDescription: '',
       bStartTime: ''
     },
+    
+    ballotType: "registerable",
+    ballotTitle: "Fulton County Ballot",
+    ballotLocation: "Fulton County",
+    ballotDate: "2017-11-07",
+    ballotImage: "/assets/temp/test-image-6.jpg",
+    ballotInformation: null,
+
     ballotGroups: [
       {
         groupTitle: "",
@@ -172,7 +179,6 @@ export class BallotBuilderComponent implements OnInit {
     return arr;
   }
 
-
   ngOnInit() {
 
     this.route.params.subscribe(params => {
@@ -222,41 +228,43 @@ export class BallotBuilderComponent implements OnInit {
     this.showJson = !this.showJson;
   }
 
-  // saveBallot() {
+  saveBallot() {
 
-  //   if (!this.ballot) {
+    console.log(this.myForm.value);
 
-  //     this.ballot = {
-  //       title: this.formGroup.value.ballotTitle,
-  //       description: this.formGroup.value.ballotInformation,
-  //       status: 'building',
-  //       type: this.formGroup.value.type,
-  //       json: this.formGroup.value,
-  //       json_model: JSON.stringify(this.formModel)
-  //     } as Ballot;
+    // if (!this.ballot) {
 
-  //     return this.ballotService.createBallot(this.ballot)
-  //       .then((afs_ballot) => {
-  //         this.toast.info('Ballot created.');
-  //         this.router.navigate([`/ballot-builder/${afs_ballot.id}`]);
-  //         return afs_ballot;
-  //       });
+    //   this.ballot = {
+    //     title: this.formGroup.value.ballotTitle,
+    //     description: this.formGroup.value.ballotInformation,
+    //     status: 'building',
+    //     type: this.formGroup.value.type,
+    //     json: this.formGroup.value,
+    //     json_model: JSON.stringify(this.formModel)
+    //   } as Ballot;
 
-  //   } else {
+    //   return this.ballotService.createBallot(this.ballot)
+    //     .then((afs_ballot) => {
+    //       this.toast.info('Ballot created.');
+    //       this.router.navigate([`/ballot-builder/${afs_ballot.id}`]);
+    //       return afs_ballot;
+    //     });
 
-  //     this.ballot.title = this.formGroup.value.ballotTitle;
-  //     this.ballot.description = this.formGroup.value.ballotInformation;
-  //     this.ballot.type = this.formGroup.value.type;
-  //     this.ballot.json = this.formGroup.value;
-  //     this.ballot.json_model = JSON.stringify(this.formModel);
+    // } else {
 
-  //     return this.ballotService.updateBallot(this.ballot)
-  //       .then((afs_ballot) => {
-  //         this.toast.info('Ballot updated.');
-  //         return afs_ballot;
-  //       });
-  //   }
-  // }
+    //   this.ballot.title = this.formGroup.value.ballotTitle;
+    //   this.ballot.description = this.formGroup.value.ballotInformation;
+    //   this.ballot.type = this.formGroup.value.type;
+    //   this.ballot.json = this.formGroup.value;
+    //   this.ballot.json_model = JSON.stringify(this.formModel);
+
+    //   return this.ballotService.updateBallot(this.ballot)
+    //     .then((afs_ballot) => {
+    //       this.toast.info('Ballot updated.');
+    //       return afs_ballot;
+    //     });
+    // }
+  }
 
   activateBallot() {
 
