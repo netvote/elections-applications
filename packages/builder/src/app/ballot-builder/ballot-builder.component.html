@@ -21,7 +21,7 @@
 
         <strong>Ballot Groups:</strong>
         <ul class="list-unstyled">
-          <li *ngFor="let ballotGroup of myForm.get('ballotGroups').controls">
+          <li *ngFor="let ballotGroup of ballotForm.get('ballotGroups').controls">
             <div *ngIf="!ballotGroup.controls['groupTitle'].value">
               <em>New Group</em>
             </div>
@@ -39,18 +39,16 @@
 
       <div class="nv-builder__form-scroll">
 
-        <form [formGroup]="myForm" class="nv-builder__form">
+        <form [formGroup]="ballotForm" class="nv-builder__form">
 
           <div *ngIf="!readyToBuild">
 
               <div class="form-group">
                 <label >Ballot Type</label>
                 <select class="form-control" formControlName="ballotType">
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
+                    <option value="registerable">Registerable</option>
+                    <option value="public">Public</option>
+                    <option value="token-holder">Token Holder</option>
                   </select>
                 <small id="ballotTypeHelp" class="form-text text-muted">Choose what type of ballot this will be.</small>
               </div>
@@ -87,7 +85,7 @@
           <!-- GROUPS -->
           <div *ngIf="readyToBuild" formArrayName="ballotGroups">
 
-            <div *ngFor="let ballotGroup of myForm.get('ballotGroups').controls; let i=index" class="nv-builder-acc__group">
+            <div *ngFor="let ballotGroup of ballotForm.get('ballotGroups').controls; let i=index" class="nv-builder-acc__group">
 
               <div [formGroupName]="i">
 
@@ -107,7 +105,7 @@
                       <button tabindex="-1" class="btn btn-link btn-large" (click)="toggleActions($event, ballotGroup)">
                         <span class="oi" [ngClass]="ballotGroup.actionsActive ? 'oi-expand-left' : 'oi-expand-right'"></span>
                       </button>
-                      <button tabindex="-1" class="btn btn-danger btn-large" (click)="deleteBallotGroup($event, myForm.controls.ballotGroups, i)" title="Delete Group">
+                      <button tabindex="-1" class="btn btn-danger btn-large" (click)="deleteBallotGroup($event, ballotForm.controls.ballotGroups, i)" title="Delete Group">
                         <span class="oi oi-trash"></span>
                       </button>
                     </div>
@@ -225,7 +223,7 @@
           </div>
 
           <br>
-          <pre>{{myForm.value | json}}</pre>
+          <pre>{{ballotForm.value | json}}</pre>
 
         </form>
 
@@ -277,20 +275,20 @@
 
                   <div class="nv-preview__header">
 
-                  <div class="nv-preview__image" [style.background-image]="'url(' + myForm.controls['ballotImage'].value + ')'"></div>
+                  <div class="nv-preview__image" [style.background-image]="'url(' + ballotForm.controls['ballotImage'].value + ')'"></div>
 
                     <div class="nv-preview__meta">
 
-                      <div [ngClass]="{'nv-skeleton  nv-skeleton--light  nv-skeleton--100': !myForm.controls['ballotTitle'].value}" class="nv-preview__title">
-                        {{myForm.controls['ballotTitle'].value}}
+                      <div [ngClass]="{'nv-skeleton  nv-skeleton--light  nv-skeleton--100': !ballotForm.controls['ballotTitle'].value}" class="nv-preview__title">
+                        {{ballotForm.controls['ballotTitle'].value}}
                       </div>
 
-                      <div [ngClass]="{'nv-skeleton nv-skeleton--light  nv-skeleton--150': !myForm.controls['ballotLocation'].value}" class="nv-preview__location">
-                        {{myForm.controls['ballotLocation'].value}}
+                      <div [ngClass]="{'nv-skeleton nv-skeleton--light  nv-skeleton--150': !ballotForm.controls['ballotLocation'].value}" class="nv-preview__location">
+                        {{ballotForm.controls['ballotLocation'].value}}
                       </div>
 
-                      <div [ngClass]="{'nv-skeleton nv-skeleton--thin  nv-skeleton--light  nv-skeleton--50': !myForm.controls['ballotDate'].value}" class="nv-preview__date">
-                        {{myForm.controls['ballotDate'].value}}
+                      <div [ngClass]="{'nv-skeleton nv-skeleton--thin  nv-skeleton--light  nv-skeleton--50': !ballotForm.controls['ballotDate'].value}" class="nv-preview__date">
+                        {{ballotForm.controls['ballotDate'].value}}
                       </div>
 
                     </div>
@@ -299,7 +297,7 @@
 
                   <div class="nv-preview__groups">
 
-                    <div *ngFor="let ballotGroup of myForm.get('ballotGroups').controls; let i=index" class="nv-preview__group">
+                    <div *ngFor="let ballotGroup of ballotForm.get('ballotGroups').controls; let i=index" class="nv-preview__group">
 
                       <div class="nv-preview__group__title">
                         <span [ngClass]="{'nv-skeleton nv-skeleton--dark  nv-skeleton--150': !ballotGroup.controls['groupTitle'].value}">&nbsp;{{ballotGroup.controls['groupTitle'].value}}</span>

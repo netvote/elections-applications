@@ -1,7 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-
 import {FormBuilder, FormGroup, FormArray} from '@angular/forms';
-
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import {BallotService} from '../services/ballot.service';
@@ -18,14 +16,13 @@ import {NgbPanelChangeEvent} from '@ng-bootstrap/ng-bootstrap';
 })
 export class BallotBuilderComponent implements OnInit {
 
-  data = { 
+  emptyBallot = {
     ballotType: "registerable",
-    ballotTitle: "Fulton County Ballot",
-    ballotLocation: "Fulton County",
-    ballotDate: "2017-11-07",
+    ballotTitle: "",
+    ballotLocation: "",
+    ballotDate: "",
     ballotImage: "/assets/temp/test-image-6.jpg",
-    ballotInformation: null,
-
+    ballotInformation: "",
     ballotGroups: [
       {
         groupTitle: "",
@@ -45,7 +42,7 @@ export class BallotBuilderComponent implements OnInit {
     ]
   }
 
-  myForm: FormGroup
+  ballotForm: FormGroup
 
   showJson: boolean;
 
@@ -62,17 +59,84 @@ export class BallotBuilderComponent implements OnInit {
     private toast: ToastService) {
 
 
-    this.myForm = this.fb.group({
-      ballotType: this.data.ballotType,
-      ballotTitle: this.data.ballotTitle,
-      ballotLocation: this.data.ballotLocation,
-      ballotDate: this.data.ballotDate,
-      ballotImage: this.data.ballotImage,
+    this.ballotForm = this.fb.group({
+      ballotType: this.emptyBallot.ballotType,
+      ballotTitle: this.emptyBallot.ballotTitle,
+      ballotLocation: this.emptyBallot.ballotLocation,
+      ballotDate: this.emptyBallot.ballotDate,
+      ballotImage: this.emptyBallot.ballotImage,
       ballotInformation: null,
       ballotGroups: this.fb.array([])
     })
 
-    this.setballotGroups();
+    this.setBallot(this.emptyBallot);
+
+  }
+
+  setBallot(ballot) {
+
+    this.ballotForm = this.fb.group({
+      ballotType: ballot.ballotType,
+      ballotTitle: ballot.ballotTitle,
+      ballotLocation: ballot.ballotLocation,
+      ballotDate: ballot.ballotDate,
+      ballotImage: ballot.ballotImage,
+      ballotInformation: null,
+      ballotGroups: this.setballotGroups(ballot)
+    })
+
+  }
+
+  setballotGroups(ballot): FormArray {
+    let groups = new FormArray([]);
+    ballot.ballotGroups.forEach(x => {
+      groups.push(this.fb.group({
+        groupTitle: x.groupTitle,
+        ballotSections: this.setSections(x)
+      }))
+    })
+    return groups;
+  }
+
+  setSections(ballotGroup): FormArray {
+    let sections = new FormArray([])
+    ballotGroup.ballotSections.forEach(y => {
+      sections.push(this.fb.group({
+        sectionTitle: y.sectionTitle,
+        sectionNote: y.sectionNote,
+        ballotItems: this.setItems(y)
+      }))
+    })
+    return sections;
+  }
+
+  setItems(ballotSection): FormArray {
+    let items = new FormArray([])
+    ballotSection.ballotItems.forEach(z => {
+      items.push(this.fb.group({
+        itemTitle: z.itemTitle,
+        itemDescription: z.itemDescription
+      }))
+    })
+    return items;
+  }
+
+  ngOnInit() {
+
+    this.route.params.subscribe(params => {
+
+      if (params['id']) {
+        this.ballot = null;
+        this.ballotService.getBallot(params['id'])
+          .subscribe((ballot) => {
+            const json = ballot.json;
+            this.ballot = ballot;
+            this.readyToBuild = true;
+            this.setBallot(ballot.json);
+          });
+      }
+
+    });
 
   }
 
@@ -88,12 +152,11 @@ export class BallotBuilderComponent implements OnInit {
   // UI actions on each Group, Section, Item (Delete, etc.)
   async toggleActions(e, target: any) {
     e.stopPropagation();
-
     target.actionsActive = !target.actionsActive;
   }
 
   addNewBallotGroup() {
-    let control = <FormArray>this.myForm.controls.ballotGroups;
+    let control = <FormArray>this.ballotForm.controls.ballotGroups;
     control.push(
       this.fb.group({
         groupTitle: [''],
@@ -118,7 +181,7 @@ export class BallotBuilderComponent implements OnInit {
 
   deleteBallotGroup(e, index) {
     e.preventDefault();
-    let control = <FormArray>this.myForm.controls.ballotGroups;
+    let control = <FormArray>this.ballotForm.controls.ballotGroups;
     control.removeAt(index)
   }
 
@@ -149,63 +212,6 @@ export class BallotBuilderComponent implements OnInit {
     control.removeAt(index)
   }
 
-  setballotGroups() {
-    let control = <FormArray>this.myForm.controls.ballotGroups;
-    this.data.ballotGroups.forEach(x => {
-      control.push(this.fb.group({
-        groupTitle: x.groupTitle,
-        ballotSections: this.setSections(x)
-      }))
-    })
-  }
-
-  setSections(x) {
-    let arr = new FormArray([])
-    x.ballotSections.forEach(y => {
-      arr.push(this.fb.group({
-        sectionTitle: y.sectionTitle,
-        sectionNote: y.sectionNote,
-        ballotItems: this.setItems(y)
-      }))
-    })
-    return arr;
-  }
-
-  setItems(y) {
-    let arr = new FormArray([])
-    y.ballotItems.forEach(z => {
-      arr.push(this.fb.group({
-        itemTitle: z.itemTitle,
-        itemDescription: z.itemDescription
-      }))
-    })
-    return arr;
-  }
-
-  ngOnInit() {
-
-    this.route.params.subscribe(params => {
-
-      if (params['id']) {
-
-        this.ballot = null;
-        this.ready = true;
-
-        this.ballotService.getBallot(params['id'])
-          .subscribe((ballot) => {
-
-            const json = ballot.json;
-
-            this.ballot = ballot;
-            this.ready = true;
-            console.log(this.ballot);
-          });
-      }
-
-    });
-
-  }
-
   tempBallotImage() {
 
     const path = '/assets/temp/';
@@ -233,16 +239,14 @@ export class BallotBuilderComponent implements OnInit {
 
   saveBallot() {
 
-    console.log(this.myForm.value);
-
     if (!this.ballot) {
 
       this.ballot = {
-        title: this.myForm.value.ballotTitle,
-        description: this.myForm.value.ballotInformation,
+        title: this.ballotForm.value.ballotTitle,
+        description: this.ballotForm.value.ballotInformation,
         status: 'building',
-        type: this.myForm.value.ballotType,
-        json: this.myForm.value
+        type: this.ballotForm.value.ballotType,
+        json: this.ballotForm.value
       } as Ballot;
 
       return this.ballotService.createBallot(this.ballot)
@@ -254,10 +258,10 @@ export class BallotBuilderComponent implements OnInit {
 
     } else {
 
-      this.ballot.title = this.myForm.value.ballotTitle;
-      this.ballot.description = this.myForm.value.ballotInformation;
-      this.ballot.type = this.myForm.value.ballotType;
-      this.ballot.json = this.myForm.value;
+      this.ballot.title = this.ballotForm.value.ballotTitle;
+      this.ballot.description = this.ballotForm.value.ballotInformation;
+      this.ballot.type = this.ballotForm.value.ballotType;
+      this.ballot.json = this.ballotForm.value;
 
       return this.ballotService.updateBallot(this.ballot)
         .then((afs_ballot) => {
@@ -305,9 +309,9 @@ export class BallotBuilderComponent implements OnInit {
     }
   }
 
-  async toggleReadyToBuild(e){
+  async toggleReadyToBuild(e) {
     e.preventDefault();
-   this.readyToBuild = !this.readyToBuild;
+    this.readyToBuild = !this.readyToBuild;
   }
 
 }
