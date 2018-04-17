@@ -10,7 +10,7 @@ import {AppComponent} from './app.component';
 import {HeaderComponent} from './header/header.component';
 import {HomeComponent} from './home/home.component';
 import {BallotBuilderComponent} from './ballot-builder/ballot-builder.component';
-import { BallotAccordionComponent } from './ballot-accordion/ballot-accordion.component';
+import {BallotAccordionComponent} from './ballot-accordion/ballot-accordion.component';
 
 import {AngularFireModule} from 'angularfire2';
 import {AngularFirestoreModule} from 'angularfire2/firestore';
@@ -29,6 +29,7 @@ import {GradientDirective} from './directives/gradient.directive';
 import {RandomImageDirective} from './directives/random-image.directive';
 
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+
 import {ToastModule, ToastOptions} from 'ng2-toastr/ng2-toastr';
 import {CustomToastOption} from './core/custom-toast';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
@@ -36,6 +37,7 @@ import {MainLayoutComponent} from './layouts/main-layout/main-layout.component';
 import {LoginLayoutComponent} from './layouts/login-layout/login-layout.component';
 import {QRCodeModule} from 'angular2-qrcode';
 import {SpinnerModule} from '@chevtek/angular-spinners';
+import {BallotDatepickerComponent} from './ballot-datepicker/ballot-datepicker.component';
 
 
 const appRoutes: Routes = [
@@ -94,7 +96,8 @@ const appRoutes: Routes = [
     LoginLayoutComponent,
     BallotBuilderComponent,
     RandomImageDirective,
-    BallotAccordionComponent 
+    BallotAccordionComponent,
+    BallotDatepickerComponent 
   ],
   imports: [
     BrowserModule,

@@ -8,6 +8,7 @@ import {Ballot} from '@netvote/core';
 import {ToastService} from '../services/toast.service';
 
 import {NgbPanelChangeEvent} from '@ng-bootstrap/ng-bootstrap';
+import {BallotDatepickerComponent} from '../ballot-datepicker/ballot-datepicker.component';
 
 @Component({
   selector: 'ballot-builder',

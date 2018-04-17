@@ -19,18 +19,26 @@
 
       <div class="nv-builder__group-rail">
 
-        <strong>Ballot Groups:</strong>
-        <ul class="list-unstyled">
-          <li *ngFor="let ballotGroup of ballotForm.get('ballotGroups').controls">
-            <div *ngIf="!ballotGroup.controls['groupTitle'].value">
-              <em>New Group</em>
-            </div>
-            <div *ngIf="ballotGroup.controls['groupTitle'].value">{{ballotGroup.controls['groupTitle'].value}}</div>
-          </li>
-        </ul>
+        <div *ngIf="!readyToBuild">
+          Begin by 
+        </div>
 
-        <button (click)="addNewBallotGroup()" class="btn btn-primary btn-sm rounded text-light  mt-3">Add new Group</button>
+        <div *ngIf="readyToBuild">
 
+          <strong>Ballot Groups:</strong>
+          <ul class="list-unstyled">
+            <li *ngFor="let ballotGroup of ballotForm.get('ballotGroups').controls">
+              <div *ngIf="!ballotGroup.controls['groupTitle'].value">
+                <em>New Group</em>
+              </div>
+              <div *ngIf="ballotGroup.controls['groupTitle'].value">{{ballotGroup.controls['groupTitle'].value}}</div>
+            </li>
+          </ul>
+  
+          <button (click)="addNewBallotGroup()" class="btn btn-primary btn-sm rounded text-light  mt-3">Add new Group</button>
+
+        </div>
+        
       </div>
 
     </div>
@@ -43,40 +51,57 @@
 
           <div *ngIf="!readyToBuild">
 
-              <div class="form-group">
-                <label >Ballot Type</label>
-                <select class="form-control" formControlName="ballotType">
-                    <option value="registerable">Registerable</option>
-                    <option value="public">Public</option>
-                    <option value="token-holder">Token Holder</option>
-                  </select>
-                <small id="ballotTypeHelp" class="form-text text-muted">Choose what type of ballot this will be.</small>
-              </div>
+            <div class="form-group">
+              <label >Ballot Type</label>
+              <select class="form-control" formControlName="ballotType">
+                  <option value="registerable">Registerable</option>
+                  <option value="public">Public</option>
+                  <option value="token-holder">Token Holder</option>
+                </select>
+              <small id="ballotTypeHelp" class="form-text text-muted">Choose what type of ballot this will be.</small>
+            </div>
 
-              <div class="form-group">
-                <label>Ballot Title</label>
-                <input formControlName="ballotTitle" type="text" class="form-control" placeholder="">
-              </div>
+            <div class="form-group">
+              <label>Ballot Title</label>
+              <input formControlName="ballotTitle" type="text" class="form-control" placeholder="">
+            </div>
 
-              <div class="form-group">
-                <label>Ballot Location</label>
-                <input formControlName="ballotLocation" type="text" class="form-control" placeholder="">
-              </div>
+            <div class="form-group">
+              <label>Ballot Location</label>
+              <input formControlName="ballotLocation" type="text" class="form-control" placeholder="">
+            </div>
 
-              <div class="form-group">
-                <label>Ballot Image</label>
-                <input formControlName="ballotImage" type="file" class="form-control" placeholder="">
-              </div>
+            <div class="form-group">
+              <label>Ballot Image</label>
+              <input formControlName="ballotImage" type="file" class="form-control" placeholder="">
+            </div>
 
-              <div class="form-group">
-                <label>Ballot Date</label>
-                <input formControlName="ballotDate" type="text" class="form-control" placeholder="">
-              </div>
+            <div class="form-group">
+              <label>Ballot Date</label>
 
-              <div class="form-group">
-                <label>Ballot Information</label>
-                <textarea formControlName="ballotInformation" type="text" class="form-control" placeholder=""></textarea>
-              </div>
+                <nv-datepicker>
+
+                  <div class="input-group">
+
+                    <input formControlName="ballotDate" type="text" class="form-control" placeholder="yyyy-mm-dd"
+                      name="dp" ngbDatepicker #d="ngbDatepicker">
+                  
+                    <div class="input-group-append">
+                      <button class="btn btn-outline-primary" (click)="d.toggle()" type="button">
+                        <span class="oi oi-calendar" style="width: 1.2rem; height: 1rem; cursor: pointer;"></span>
+                      </button>
+                    </div>
+
+                </div>
+
+              </nv-datepicker>
+
+            </div>
+
+            <div class="form-group">
+              <label>Ballot Information</label>
+              <textarea formControlName="ballotInformation" type="text" class="form-control" placeholder=""></textarea>
+            </div>
 
             <button class="btn btn-primary btn-large text-light" (click)="toggleReadyToBuild($event);">Start Building</button>
 
@@ -288,48 +313,48 @@
                       </div>
 
                       <div [ngClass]="{'nv-skeleton nv-skeleton--thin  nv-skeleton--light  nv-skeleton--50': !ballotForm.controls['ballotDate'].value}" class="nv-preview__date">
-                        {{ballotForm.controls['ballotDate'].value}}
+                          {{ballotForm.controls['ballotDate'].value['month']}}<span *ngIf="ballotForm.controls['ballotDate'].value['month']">-</span>{{ballotForm.controls['ballotDate'].value['day']}}<span *ngIf="ballotForm.controls['ballotDate'].value['year']">-</span>{{ballotForm.controls['ballotDate'].value['year']}}
                       </div>
 
                     </div>
 
                 </div>
 
-                  <div class="nv-preview__groups">
+                <div class="nv-preview__groups">
 
-                    <div *ngFor="let ballotGroup of ballotForm.get('ballotGroups').controls; let i=index" class="nv-preview__group">
+                  <div *ngFor="let ballotGroup of ballotForm.get('ballotGroups').controls; let i=index" class="nv-preview__group">
 
-                      <div class="nv-preview__group__title">
-                        <span [ngClass]="{'nv-skeleton nv-skeleton--dark  nv-skeleton--150': !ballotGroup.controls['groupTitle'].value}">&nbsp;{{ballotGroup.controls['groupTitle'].value}}</span>
+                    <div class="nv-preview__group__title">
+                      <span [ngClass]="{'nv-skeleton nv-skeleton--dark  nv-skeleton--150': !ballotGroup.controls['groupTitle'].value}">&nbsp;{{ballotGroup.controls['groupTitle'].value}}</span>
+                    </div>
+
+                    <div *ngFor="let ballotSection of ballotGroup.get('ballotSections').controls; let j=index">
+
+                      <div class="nv-preview__section__title">
+                        <span [ngClass]="{'nv-skeleton nv-skeleton--light  nv-skeleton--150': !ballotSection.controls['sectionTitle'].value}">&nbsp;{{ballotSection.controls['sectionTitle'].value}}&nbsp;
+                          <small *ngIf="ballotSection.controls['sectionNote'].value">({{ballotSection.controls['sectionNote'].value}})</small>
+                        </span>
                       </div>
 
-                      <div *ngFor="let ballotSection of ballotGroup.get('ballotSections').controls; let j=index">
+                      <div *ngFor="let ballotItem of ballotSection.get('ballotItems').controls; let k=index" class="nv-preview__item">
 
-                        <div class="nv-preview__section__title">
-                          <span [ngClass]="{'nv-skeleton nv-skeleton--light  nv-skeleton--150': !ballotSection.controls['sectionTitle'].value}">&nbsp;{{ballotSection.controls['sectionTitle'].value}}&nbsp;
-                            <small *ngIf="ballotSection.controls['sectionNote'].value">({{ballotSection.controls['sectionNote'].value}})</small>
-                          </span>
+                        <div class="nv-preview__item__title">
+                          <span [ngClass]="{'nv-skeleton nv-skeleton--light  nv-skeleton--150': !ballotItem.controls['itemTitle'].value}">&nbsp;{{ballotItem.controls['itemTitle'].value}}</span>
                         </div>
 
-                        <div *ngFor="let ballotItem of ballotSection.get('ballotItems').controls; let k=index" class="nv-preview__item">
-
-                          <div class="nv-preview__item__title">
-                            <span [ngClass]="{'nv-skeleton nv-skeleton--light  nv-skeleton--150': !ballotItem.controls['itemTitle'].value}">&nbsp;{{ballotItem.controls['itemTitle'].value}}</span>
-                          </div>
-
-                          <div class="nv-preview__item__desc">
-                          <span [ngClass]="{'nv-skeleton  nv-skeleton--thin  nv-skeleton--light  nv-skeleton--100': !ballotItem.controls['itemDescription'].value}">&nbsp;{{ballotItem.controls['itemDescription'].value}}</span>
-                        </div>
-
-                        </div>
+                        <div class="nv-preview__item__desc">
+                        <span [ngClass]="{'nv-skeleton  nv-skeleton--thin  nv-skeleton--light  nv-skeleton--100': !ballotItem.controls['itemDescription'].value}">&nbsp;{{ballotItem.controls['itemDescription'].value}}</span>
+                      </div>
 
                       </div>
 
                     </div>
 
-                    <div class="nv-preview__end">You've reached the end of the ballot.</div>
-
                   </div>
+
+                  <div class="nv-preview__end">You've reached the end of the ballot.</div>
+
+                </div>
 
                 </div>
 
