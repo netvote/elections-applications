@@ -59,7 +59,6 @@ export class BallotBuilderComponent implements OnInit {
     private router: Router,
     private toast: ToastService) {
 
-
     this.ballotForm = this.fb.group({
       ballotType: this.emptyBallot.ballotType,
       ballotTitle: this.emptyBallot.ballotTitle,
