@@ -13,7 +13,13 @@
     <p>Build a ballot to use on Netvote apps.</p>
   </div>
 
-  <div class="row mt-5">
+  <div class="row mt-5" *ngIf="readyToBuild">
+    <div class="col col-8">
+      <h6><strong>Current Ballot:</strong> <span style="color: #60bebd; text-decoration: underline;" (click)="readyToBuild = false">{{ballotForm.value.ballotTitle}}</span></h6>
+    </div>
+  </div>
+
+  <div class="row mt-4">
 
     <div class="col col-2" *ngIf="readyToBuild">
 
@@ -133,7 +139,7 @@
 
                 <div formArrayName="ballotSections">
 
-                  <div *ngFor="let ballotSection of ballotGroup.get('ballotSections').controls; let j=index" id="sectionPanel-{{j+1}}" [formGroupName]="j">
+                  <div *ngFor="let ballotSection of ballotGroup.get('ballotSections').controls; let j=index" [formGroupName]="j">
 
                     <!-- SECION HEADER -->
                     <div class="d-flex  align-items-stretch  nv-builder-acc__header  m-0" (click)="toggleSectionsPanel(ballotSection)">
@@ -158,7 +164,7 @@
 
                     </div>
 
-                    <div class="pt-0" class="nv-builder-acc__items" >
+                    <div class="pt-0" class="nv-builder-acc__items" [ngbCollapse]="!ballotSection.showSectionPanel">
 
                       <div class="nv-builder-acc__field  nv-builder-acc__additional  m-0" data-mini-placeholder="Section Note">
                         <input formControlName="sectionNote" type="text" class="form-control  border-0  rounded-0" placeholder="">

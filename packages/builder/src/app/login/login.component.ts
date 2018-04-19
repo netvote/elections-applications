@@ -33,6 +33,7 @@ export class LoginComponent implements OnInit {
   login() {
 
     this.loading = true;
+    this.router.navigate(['ballot-list']);
     this.auth.emailLogin(this.model.username, this.model.password)
       .then((data) => {
         console.log(data);
