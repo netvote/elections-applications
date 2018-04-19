@@ -65,7 +65,7 @@
 
             <div class="form-group">
               <label>Ballot Image</label>
-              <input formControlName="ballotImage" type="file" class="form-control" placeholder="">
+              <input formControlName="ballotImage" type="text" class="form-control" placeholder="">
             </div>
 
             <div class="form-group">
@@ -239,9 +239,6 @@
 
           </div>
 
-          <br>
-          <pre>{{ballotForm.value | json}}</pre>
-
         </form>
 
       </div>
@@ -280,7 +277,7 @@
               <div class="nv-mock__preview">
 
                 <div *ngIf="showJson" class="nv-mock__json">
-                  <!-- <pre>{{ formGroup.value | json }}</pre> -->
+                    <pre>{{ballotForm.value | json}}</pre>
                 </div>
 
                 <div *ngIf="!showJson">

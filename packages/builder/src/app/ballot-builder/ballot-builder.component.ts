@@ -121,6 +121,10 @@ export class BallotBuilderComponent implements OnInit {
     return items;
   }
 
+  trackByFn(index, item) {
+    return index; // or item.id
+  }
+
   ngOnInit() {
 
     this.route.params.subscribe(params => {
