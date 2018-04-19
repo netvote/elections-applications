@@ -173,6 +173,7 @@ export class BallotBuilderComponent implements OnInit {
   createSection(): FormGroup {
     return this.fb.group({
       sectionTitle: '',
+      sectionNote: '',
       ballotItems: this.fb.array([this.createItem()])
     });
   }

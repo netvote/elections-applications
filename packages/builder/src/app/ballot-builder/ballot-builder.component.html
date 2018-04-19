@@ -131,9 +131,6 @@
 
                 </div>
 
-
-
-
                 <div formArrayName="ballotSections">
 
                   <div *ngFor="let ballotSection of ballotGroup.get('ballotSections').controls; let j=index" id="sectionPanel-{{j+1}}" [formGroupName]="j">
@@ -161,7 +158,7 @@
 
                     </div>
 
-                    <div class="pt-0" class="nv-builder-acc__items" [ngbCollapse]="!ballotSection.showSectionPanel">
+                    <div class="pt-0" class="nv-builder-acc__items" >
 
                       <div class="nv-builder-acc__field  nv-builder-acc__additional  m-0" data-mini-placeholder="Section Note">
                         <input formControlName="sectionNote" type="text" class="form-control  border-0  rounded-0" placeholder="">
@@ -215,17 +212,9 @@
 
                 </div>
 
-
-
-             
-
-            
-
                   <div class="nv-builder-acc__add-new  mt-4" (click)="addNewSection(ballotGroup.controls.ballotSections)">
                     Add new section
                   </div>
-
-               
 
               </div>
 
@@ -285,61 +274,61 @@
 
                   <div class="nv-preview__header">
 
-                  <div class="nv-preview__image" [style.background-image]="'url(' + ballotForm.controls['ballotImage'].value + ')'"></div>
+                    <div class="nv-preview__image" [style.background-image]="'url(' + ballotForm.value.ballotImage + ')'"></div>
 
-                    <div class="nv-preview__meta">
+                      <div class="nv-preview__meta">
 
-                      <div [ngClass]="{'nv-skeleton  nv-skeleton--light  nv-skeleton--100': !ballotForm.controls['ballotTitle'].value}" class="nv-preview__title">
-                        {{ballotForm.controls['ballotTitle'].value}}
-                      </div>
-
-                      <div [ngClass]="{'nv-skeleton nv-skeleton--light  nv-skeleton--150': !ballotForm.controls['ballotLocation'].value}" class="nv-preview__location">
-                        {{ballotForm.controls['ballotLocation'].value}}
-                      </div>
-
-                      <div [ngClass]="{'nv-skeleton nv-skeleton--thin  nv-skeleton--light  nv-skeleton--50': !ballotForm.controls['ballotDate'].value}" class="nv-preview__date">
-                          {{ballotForm.controls['ballotDate'].value['month']}}<span *ngIf="ballotForm.controls['ballotDate'].value['month']">-</span>{{ballotForm.controls['ballotDate'].value['day']}}<span *ngIf="ballotForm.controls['ballotDate'].value['year']">-</span>{{ballotForm.controls['ballotDate'].value['year']}}
-                      </div>
-
-                    </div>
-
-                </div>
-
-                <div class="nv-preview__groups">
-
-                  <div *ngFor="let ballotGroup of ballotForm.get('ballotGroups').controls; let i=index" class="nv-preview__group">
-
-                    <div class="nv-preview__group__title">
-                      <span [ngClass]="{'nv-skeleton nv-skeleton--dark  nv-skeleton--150': !ballotGroup.controls['groupTitle'].value}">&nbsp;{{ballotGroup.controls['groupTitle'].value}}</span>
-                    </div>
-
-                    <div *ngFor="let ballotSection of ballotGroup.get('ballotSections').controls; let j=index">
-
-                      <div class="nv-preview__section__title">
-                        <span [ngClass]="{'nv-skeleton nv-skeleton--light  nv-skeleton--150': !ballotSection.controls['sectionTitle'].value}">&nbsp;{{ballotSection.controls['sectionTitle'].value}}&nbsp;
-                          <small *ngIf="ballotSection.controls['sectionNote'].value">({{ballotSection.controls['sectionNote'].value}})</small>
-                        </span>
-                      </div>
-
-                      <div *ngFor="let ballotItem of ballotSection.get('ballotItems').controls; let k=index" class="nv-preview__item">
-
-                        <div class="nv-preview__item__title">
-                          <span [ngClass]="{'nv-skeleton nv-skeleton--light  nv-skeleton--150': !ballotItem.controls['itemTitle'].value}">&nbsp;{{ballotItem.controls['itemTitle'].value}}</span>
+                        <div [ngClass]="{'nv-skeleton  nv-skeleton--light  nv-skeleton--100': !ballotForm.value.ballotTitle}" class="nv-preview__title">
+                          {{ballotForm.value.ballotTitle}}
                         </div>
 
-                        <div class="nv-preview__item__desc">
-                        <span [ngClass]="{'nv-skeleton  nv-skeleton--thin  nv-skeleton--light  nv-skeleton--100': !ballotItem.controls['itemDescription'].value}">&nbsp;{{ballotItem.controls['itemDescription'].value}}</span>
-                      </div>
+                        <div [ngClass]="{'nv-skeleton nv-skeleton--light  nv-skeleton--150': !ballotForm.value.ballotLocation}" class="nv-preview__location">
+                          {{ballotForm.value.ballotLocation}}
+                        </div>
+
+                        <div [ngClass]="{'nv-skeleton nv-skeleton--thin  nv-skeleton--light  nv-skeleton--50': !ballotForm.value.ballotDate}" class="nv-preview__date">
+                            {{ballotForm.value.ballotDate.month}}<span *ngIf="ballotForm.value.ballotDate.month">-</span>{{ballotForm.value.ballotDate.day}}<span *ngIf="ballotForm.value.ballotDate.year">-</span>{{ballotForm.value.ballotDate.year}}
+                        </div>
 
                       </div>
-
-                    </div>
 
                   </div>
 
-                  <div class="nv-preview__end">You've reached the end of the ballot.</div>
+                  <div class="nv-preview__groups">
 
-                </div>
+                    <div *ngFor="let ballotGroup of ballotForm.value.ballotGroups; let i=index" class="nv-preview__group">
+
+                      <div class="nv-preview__group__title">
+                        <span [ngClass]="{'nv-skeleton nv-skeleton--dark  nv-skeleton--150': !ballotGroup.groupTitle}">&nbsp;{{ballotGroup.groupTitle}}</span>
+                      </div>
+
+                      <div *ngFor="let ballotSection of ballotGroup.ballotSections; let j=index">
+
+                        <div class="nv-preview__section__title">
+                          <span [ngClass]="{'nv-skeleton nv-skeleton--light  nv-skeleton--150': !ballotSection.sectionTitle}">&nbsp;{{ballotSection.sectionTitle}}&nbsp;
+                            <small *ngIf="ballotSection.sectionNote">({{ballotSection.sectionNote}})</small>
+                          </span>
+                        </div>
+
+                        <div *ngFor="let ballotItem of ballotSection.ballotItems; let k=index" class="nv-preview__item">
+
+                          <div class="nv-preview__item__title">
+                            <span [ngClass]="{'nv-skeleton nv-skeleton--light  nv-skeleton--150': !ballotItem.itemTitle}">&nbsp;{{ballotItem.itemTitle}}</span>
+                          </div>
+
+                          <div class="nv-preview__item__desc">
+                          <span [ngClass]="{'nv-skeleton  nv-skeleton--thin  nv-skeleton--light  nv-skeleton--100': !ballotItem.itemDescription}">&nbsp;{{ballotItem.itemDescription}}</span>
+                        </div>
+
+                        </div>
+
+                      </div>
+
+                    </div>
+
+                    <div class="nv-preview__end">You've reached the end of the ballot.</div>
+
+                  </div>
 
                 </div>
 
