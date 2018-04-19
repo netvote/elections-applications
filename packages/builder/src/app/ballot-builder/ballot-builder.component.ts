@@ -154,6 +154,11 @@ export class BallotBuilderComponent implements OnInit {
     e.stopPropagation();
     target.actionsActive = !target.actionsActive;
   }
+  
+  // UI actions on to show Section panel dropdown content
+  async toggleSectionsPanel(target: any) {
+    target.showSectionPanel = !target.showSectionPanel;
+  }
 
   addNewBallotGroup() {
     let control = <FormArray>this.ballotForm.controls.ballotGroups;

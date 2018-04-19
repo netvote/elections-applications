@@ -65,7 +65,7 @@
 
             <div class="form-group">
               <label>Ballot Image</label>
-              <input formControlName="ballotImage" type="file" class="form-control" placeholder="">
+              <input formControlName="ballotImage" type="text" class="form-control" placeholder="">
             </div>
 
             <div class="form-group">
@@ -132,106 +132,101 @@
                 </div>
 
 
-                <!-- SECTIONS -->
+
+
                 <div formArrayName="ballotSections">
 
-                  <nv-ballot-accordion>
+                  <div *ngFor="let ballotSection of ballotGroup.get('ballotSections').controls; let j=index" id="sectionPanel-{{j+1}}" [formGroupName]="j">
 
-                    <ngb-accordion #acc="ngbAccordion" [closeOthers]="false" [destroyOnHide]="false" activeIds="" (panelChange)="beforeChange($event)">
+                    <!-- SECION HEADER -->
+                    <div class="d-flex  align-items-stretch  nv-builder-acc__header  m-0" (click)="toggleSectionsPanel(ballotSection)">
 
-                      <ngb-panel *ngFor="let ballotSection of ballotGroup.get('ballotSections').controls; let j=index" id="sectionPanel-{{j+1}}" [formGroupName]="j">
+                      <div class="d-flex  align-items-center  nv-builder-acc__identifier  nv-builder-acc__identifier--section">
+                        <div>Section</div>
+                      </div>
 
-                        <ng-template ngbPanelTitle let-panelInfo="acc">
+                      <div class="nv-builder-acc__field" data-mini-placeholder="Section Title">
+                        <input formControlName="sectionTitle" type="text" class="form-control  border-0  rounded-0" placeholder="">
+                      </div>
+                      
+                      <div class="nv-builder-acc__actions" [class.is-active]="ballotSection.actionsActive">
+                        <button tabindex="-1" class="btn btn-link btn-large" (click)="toggleActions($event, ballotSection)">
+                          <span class="oi" [ngClass]="ballotSection.actionsActive ? 'oi-expand-left' : 'oi-expand-right'"></span>
+                        </button>
+                        <button tabindex="-1" class="btn btn-danger btn-large" (click)="deleteSection($event, ballotGroup.controls.ballotSections, j)"
+                          title="Delete Section">
+                          <span class="oi oi-trash"></span>
+                        </button>
+                      </div>
 
-                          <!-- SECION HEADER -->
-                          <div class="d-flex  align-items-stretch  nv-builder-acc__header  m-0">
+                    </div>
 
-                            <div class="d-flex  align-items-center  nv-builder-acc__identifier  nv-builder-acc__identifier--section">
-                              <div>Section</div>
-                            </div>
+                    <div class="pt-0" class="nv-builder-acc__items" [ngbCollapse]="!ballotSection.showSectionPanel">
 
-                            <div class="nv-builder-acc__field" data-mini-placeholder="Section Title">
-                              <input formControlName="sectionTitle" type="text" class="form-control  border-0  rounded-0" placeholder="">
-                            </div>
-                           
-                            <div class="nv-builder-acc__actions" [class.is-active]="ballotSection.actionsActive">
-                              <button tabindex="-1" class="btn btn-link btn-large" (click)="toggleActions($event, ballotSection)">
-                                <span class="oi" [ngClass]="ballotSection.actionsActive ? 'oi-expand-left' : 'oi-expand-right'"></span>
-                              </button>
-                              <button tabindex="-1" class="btn btn-danger btn-large" (click)="deleteSection($event, ballotGroup.controls.ballotSections, j)"
-                                title="Delete Section">
-                                <span class="oi oi-trash"></span>
-                              </button>
-                            </div>
+                    <div class="nv-builder-acc__field  nv-builder-acc__additional  m-0" data-mini-placeholder="Section Note">
+                      <input formControlName="sectionNote" type="text" class="form-control  border-0  rounded-0" placeholder="">
+                    </div>
 
+                    <!-- ITEMS -->
+                    <div formArrayName="ballotItems">
+
+                      <div *ngFor="let ballotItem of ballotSection.get('ballotItems').controls; let k=index">
+
+                      <div [formGroupName]="k">
+
+                        <!-- ITEM HEADER -->
+                        <div class="d-flex  align-items-stretch  nv-builder-acc__header">
+
+                          <div class="d-flex  align-items-center  nv-builder-acc__identifier  nv-builder-acc__identifier--item">
+                            <div>Item</div>
                           </div>
 
-                        </ng-template>
-
-                        <ng-template ngbPanelContent>
-
-                          <div class="pt-0" class="nv-builder-acc__items">
-
-                            <div class="nv-builder-acc__field  nv-builder-acc__additional  m-0" data-mini-placeholder="Section Note">
-                              <input formControlName="sectionNote" type="text" class="form-control  border-0  rounded-0" placeholder="">
-                            </div>
-    
-                            <!-- ITEMS -->
-                            <div formArrayName="ballotItems">
-
-                              <div *ngFor="let ballotItem of ballotSection.get('ballotItems').controls; let k=index">
-
-                                <div [formGroupName]="k">
-
-                                  <!-- ITEM HEADER -->
-                                  <div class="d-flex  align-items-stretch  nv-builder-acc__header">
-
-                                    <div class="d-flex  align-items-center  nv-builder-acc__identifier  nv-builder-acc__identifier--item">
-                                      <div>Item</div>
-                                    </div>
-
-                                    <div class="nv-builder-acc__field" data-mini-placeholder="Item Title">
-                                      <input formControlName="itemTitle" type="text" class="form-control  border-0  rounded-0" placeholder="">
-                                    </div>
-  
-                                    <div class="nv-builder-acc__actions" [class.is-active]="ballotItem.actionsActive">
-                                      <button tabindex="-1" class="btn btn-link btn-large" (click)="toggleActions($event, ballotItem)">
-                                        <span class="oi" [ngClass]="ballotItem.actionsActive ? 'oi-expand-left' : 'oi-expand-right'"></span>
-                                      </button>
-                                      <button tabindex="-1" class="btn btn-danger btn-large" (click)="deleteItem($event, ballotSection.controls.ballotItems, k)" title="Delete Item">
-                                        <span class="oi oi-trash"></span>
-                                      </button>
-                                    </div>
-
-                                  </div>
-                                  <div class="nv-builder-acc__field  nv-builder-acc__additional" data-mini-placeholder="Item Description">
-                                      <input formControlName="itemDescription" type="text" class="form-control  border-0  rounded-0" placeholder="">
-                                    </div>
-                                </div>
-
-                              </div>
-
-                              <div class="nv-builder-acc__add-new" (click)="addNewItem(ballotSection.controls.ballotItems)">
-                                Add new item
-                              </div>
-
-                            </div>
-
+                          <div class="nv-builder-acc__field" data-mini-placeholder="Item Title">
+                            <input formControlName="itemTitle" type="text" class="form-control  border-0  rounded-0" placeholder="">
                           </div>
 
-                        </ng-template>
+                          <div class="nv-builder-acc__actions" [class.is-active]="ballotItem.actionsActive">
+                            <button tabindex="-1" class="btn btn-link btn-large" (click)="toggleActions($event, ballotItem)">
+                              <span class="oi" [ngClass]="ballotItem.actionsActive ? 'oi-expand-left' : 'oi-expand-right'"></span>
+                            </button>
+                            <button tabindex="-1" class="btn btn-danger btn-large" (click)="deleteItem($event, ballotSection.controls.ballotItems, k)" title="Delete Item">
+                              <span class="oi oi-trash"></span>
+                            </button>
+                          </div>
 
-                      </ngb-panel>
+                        </div>
+                        <div class="nv-builder-acc__field  nv-builder-acc__additional" data-mini-placeholder="Item Description">
+                            <input formControlName="itemDescription" type="text" class="form-control  border-0  rounded-0" placeholder="">
+                          </div>
+                        </div>
 
-                    </ngb-accordion>
+                      </div>
 
-                  </nv-ballot-accordion>
+                      <div class="nv-builder-acc__add-new" (click)="addNewItem(ballotSection.controls.ballotItems)">
+                        Add new item
+                      </div>
+
+                    </div>
+
+                  </div>
+
+
+                    
+                  </div>
+
+                </div>
+
+
+
+             
+
+            
 
                   <div class="nv-builder-acc__add-new  mt-4" (click)="addNewSection(ballotGroup.controls.ballotSections)">
                     Add new section
                   </div>
 
-                </div>
+               
 
               </div>
 
@@ -240,7 +235,6 @@
           </div>
 
           <br>
-          <pre>{{ballotForm.value | json}}</pre>
 
         </form>
 
@@ -253,8 +247,6 @@
           <div class="nv-mock">
 
             <div class="nv-mock__inner">
-
-              <!-- <img src="/assets/phone-mock.svg"> -->
 
               <svg version="1.1" id="Layer_1" class="nv-svg-shadow" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                 x="0px" y="0px" viewBox="0 0 861 1732" enable-background="new 0 0 861 1732" xml:space="preserve">
@@ -277,10 +269,12 @@
                 </g>
               </svg>
 
-              <div class="nv-mock__preview">
+              <div class="nv-mock__preview"> 
 
                 <div *ngIf="showJson" class="nv-mock__json">
-                  <!-- <pre>{{ formGroup.value | json }}</pre> -->
+                  
+                  <pre>{{ballotForm.value | json}}</pre>
+                  
                 </div>
 
                 <div *ngIf="!showJson">
