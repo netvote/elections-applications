@@ -43,6 +43,21 @@
     }
 }
 
+.collapse, .collapse.in {
+    display: block !important;
+    transition: all .25s ease-in-out;
+  }
+  
+  .collapse {
+   opacity: 0;
+   height: 0;
+  }
+  
+  .collapse.show {
+    opacity: 1;
+    height: 300px;
+  }
+
 // Accordion
 .#{$ns}builder-acc{
 
