@@ -51,11 +51,12 @@
   .collapse {
    opacity: 0;
    height: 0;
+   overflow: hidden;
   }
   
   .collapse.show {
     opacity: 1;
-    height: 300px;
+    height: 100%;
   }
 
 // Accordion
