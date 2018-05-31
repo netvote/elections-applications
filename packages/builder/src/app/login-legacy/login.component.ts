@@ -14,19 +14,13 @@ export class LoginComponent implements OnInit {
   loading = false;
   returnUrl: string;
   showLogin = true;
-  authMethod: any;
-  rootAccount: string;
 
   constructor(
     private auth: AuthService,
     private route: ActivatedRoute,
     private router: Router,
     private toast: ToastService
-  ) {
-    this.auth.getEthAccounts().subscribe((accounts)=>{
-      this.rootAccount = accounts[0];
-    })
-  }
+  ) {}
 
   ngOnInit() {
     this.auth.signOut();
@@ -56,33 +50,14 @@ export class LoginComponent implements OnInit {
   }
 
   register() {
-    if(this.authMethod === "metamask"){
-      if(!this.model.username || !this.model.firstName || !this.model.lastName){
-        alert('Missing form values');
-        return;
-      }
-
-      this.loading = true;
-
-      this.auth.ethSignUp(this.model.username, this.model.firstName,this.model.lastName)
-        .then((data)=>{
-          this.router.navigate(['/']);
-        }).catch(
-          (error) => {
-            this.loading = false;
-          });
-    } else if(this.authMethod === "google"){
-
-    }
-    //console.log(this.authMethod, this.model.username);
-    // this.loading = true;
-    // this.auth.emailSignUp(this.model.username, this.model.password, this.model.firstName, this.model.lastName)
-    //   .then((data) => {
-    //     this.router.navigate(['/']);
-    // }).catch(
-    // (error) => {
-    //   this.loading = false;
-    // });
+    this.loading = true;
+    this.auth.emailSignUp(this.model.username, this.model.password, this.model.firstName, this.model.lastName)
+      .then((data) => {
+        this.router.navigate(['/']);
+      }).catch(
+      (error) => {
+        this.loading = false;
+      });
   }
 
 }

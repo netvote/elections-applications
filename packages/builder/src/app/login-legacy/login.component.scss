@@ -1,0 +1,143 @@
+@import '../../assets/scss/variables';
+@import "../../../node_modules/bootstrap/scss/bootstrap.scss";
+
+$login-narrow-side-width: 400px;
+
+.#{$ns}page-wrap{
+    height: 100%;
+    background: black;
+}
+
+.#{$ns}login{
+    height: 100%;
+
+    &__header{
+        text-align: center;
+
+        h2{
+            font-size: 1.5rem;
+            @include media-breakpoint-up(md) { 
+                height: inherit;
+            }
+        }
+    }
+
+    &__side{
+        position: relative;
+        width: 100%;
+        padding: 1rem;
+        color: white;
+        @include media-breakpoint-up(md) {
+            position: absolute;
+            display: flex;
+            height: 100%;
+        }
+
+        > div{
+            position: relative;
+            z-index: 0;
+            width: 100%;
+        }
+
+        &--narrow{
+            padding-top: 1.5rem;
+            padding-bottom: 1.5rem;
+            background-color: $app-color-sec; 
+            @include media-breakpoint-up(md) { 
+                left: 0;
+                width: 400px;
+                padding-top: 5rem;
+                background-image: url('../../assets/nv-globe-pri.jpg');
+                background-size: cover;
+                background-position: center bottom;
+                transition: all 0.125s ease-out;
+            }
+        }
+
+        &--wide{
+            position: absolute;
+            height: calc(100% - 88px);
+            padding: 1rem 2.5% 3rem;
+            background-color: $app-color-sec;
+            background: linear-gradient(to bottom, rgba(30, 83, 109,1) 0%,rgba(30, 83, 109,1) 40%,rgba(11,37,50,1) 100%);
+            // background: linear-gradient(to bottom, rgba($app-color-sec,1) 0%,rgba($app-color-sec,1) 40%,rgba(11,37,50,1) 100%);
+            transition: all 0.125s ease-out;
+            @include media-breakpoint-up(md) {
+                right: 0;
+                width: calc(100% - #{$login-narrow-side-width});
+                height: 100%;
+                padding: 1rem 5% 1rem;
+                transform: translateX(0);
+                box-shadow: 0 0 0 20px rgba($app-color-sec, 0.5);
+            }
+
+            &:before{
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                height: 100%;
+                width: 100%;
+                display: block;
+                background: linear-gradient(to bottom, #078887 0%, #078887 40%, #036463 100%);
+                opacity: 0;
+                transition: all 1s ease-out;                
+            }
+        }
+    }
+
+    &.showing-register{ 
+
+        .#{$ns}login__side--wide{
+            @include media-breakpoint-up(md) { 
+                transform: translateX(-#{$login-narrow-side-width});
+                box-shadow: 0 0 0 20px rgba(#078887, 0.3);
+            }
+
+            &:before{
+                opacity: 1;   
+                transition: all 1s ease-out;            
+            }
+        }
+
+        .#{$ns}login__side--narrow{
+            background-color: $app-color-pri; 
+            @include media-breakpoint-up(md) { 
+                margin-left: calc(100% - 400px);
+                background-image: url('../../assets/nv-globe-sec.jpg');
+            }
+        }
+    }
+
+    &__forms{
+        align-self: center;
+    }
+
+    &__form{
+        width: 80%;
+        max-width: 650px;
+        margin: 0 auto;
+    }
+
+
+    &__logo{
+        width: 100px;
+        margin: 0 auto;
+        @include media-breakpoint-up(md) { 
+            width: 150px;
+            margin-bottom: 5rem;
+        }
+    }
+
+    .form-control{
+        background-color: rgba(white, 0.2);
+        border: none;
+        color: white;
+    }
+
+    .help-block{
+        padding: 0 0.5rem;
+        font-size: 0.85em;
+        background-color: theme-color("danger");
+    }
+}

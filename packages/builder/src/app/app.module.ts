@@ -3,6 +3,7 @@ import {environment} from './../environments/environment';
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {HttpClientModule} from '@angular/common/http';
 
 import {CoreModule} from './core/core.module';
 
@@ -101,6 +102,7 @@ const appRoutes: Routes = [
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     FormsModule,
     NgbModule.forRoot(),
     AngularFireModule.initializeApp(environment.firebase),

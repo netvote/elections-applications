@@ -42,16 +42,21 @@
                 <div *ngIf="showLogin" class="nv-login__login">
 
                     <header class="nv-login__header">
-                        <h2>Welcome to Netvote</h2>
+                        <h2>Welcome Back</h2>
                         <p>Please sign in</p>
-                        <p><button *ngIf="authMethod !== 'metamask'" type="button" (click)="authMethod='metamask'">Use Metamask</button><button *ngIf="authMethod !== 'google'" type="button" (click)="authMethod='google'">Use Google</button></p>
                     </header>
     
-                    <form class="nv-login__form" name="form" #f="ngForm" novalidate>
+                    <form class="nv-login__form" name="form" (ngSubmit)="f.form.valid && login()" #f="ngForm" novalidate>
 
-                        <div *ngIf="authMethod==='metamask'" class="form-group">
-                            <label>Ethereum Address</label>
-                            <div>{{rootAccount || 'Please install Metamask'}}</div>
+                        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !username.valid }">
+                            <label for="username">Email</label>
+                            <input type="text" class="form-control  rounded-0" name="username" [(ngModel)]="model.username" #username="ngModel" required />
+                            <div *ngIf="f.submitted && !username.valid" class="help-block">Username is required</div>
+                        </div>
+                        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !password.valid }">
+                            <label for="password">Password</label>
+                            <input type="password" class="form-control  rounded-0" name="password" [(ngModel)]="model.password" #password="ngModel" required />
+                            <div *ngIf="f.submitted && !password.valid" class="help-block">Password is required</div>
                         </div>
                         <div class="form-group">
                             <button [disabled]="loading" class="btn btn-primary text-light">Login</button>
@@ -73,33 +78,31 @@
                     <header class="nv-login__header">
                         <h2>Welcome to Netvote</h2>
                         <p>Create an account</p>
-                        <p><button *ngIf="authMethod !== 'metamask'" type="button" (click)="authMethod='metamask'">Use Metamask</button><button *ngIf="authMethod !== 'google'" type="button" (click)="authMethod='google'">Use Google</button></p>
                     </header>
-                    
-                    <!-- (ngSubmit)="f.form.valid && register()"  -->
-                    <form *ngIf="authMethod" class="nv-login__form" name="form" #f="ngForm" novalidate>
-                        <div *ngIf="authMethod==='metamask'" class="form-group" [ngClass]="{ 'has-error': f.submitted && !firstName.valid }">
+
+                    <form class="nv-login__form" name="form" (ngSubmit)="f.form.valid && register()" #f="ngForm" novalidate>
+                        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !username.valid }">
                             <label for="firstName">First Name</label>
                             <input type="text" class="form-control rounded-0" name="firstName" [(ngModel)]="model.firstName" #firstName="ngModel" required />
                             <div *ngIf="f.submitted && !firstName.valid" class="help-block">First Name is required</div>
                         </div>
-                        <div *ngIf="authMethod==='metamask'" class="form-group" [ngClass]="{ 'has-error': f.submitted && !lastName.valid }">
+                        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !username.valid }">
                             <label for="lastName">Last Name</label>
                             <input type="text" class="form-control rounded-0" name="lastName" [(ngModel)]="model.lastName" #lastName="ngModel" required />
                             <div *ngIf="f.submitted && !lastName.valid" class="help-block">Last Name is required</div>
                         </div>
-                        <div *ngIf="authMethod==='metamask'" class="form-group" [ngClass]="{ 'has-error': f.submitted && !username.valid }">
+                        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !username.valid }">
                             <label for="username">Email</label>
                             <input type="text" class="form-control rounded-0" name="username" [(ngModel)]="model.username" #username="ngModel" required />
                             <div *ngIf="f.submitted && !username.valid" class="help-block">Username is required</div>
                         </div>
-                        <div *ngIf="authMethod==='metamask'" class="form-group">
-                            <label>Ethereum Address</label>
-                            <div>{{rootAccount || 'Please install Metamask'}}</div>
+                        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !password.valid }">
+                            <label for="password">Password</label>
+                            <input type="password" class="form-control rounded-0" name="password" [(ngModel)]="model.password" #password="ngModel" required />
+                            <div *ngIf="f.submitted && !password.valid" class="help-block">Password is required</div>
                         </div>
-
                         <div class="form-group">
-                            <button type="button" [disabled]="loading" class="btn btn-secondary" (click)="register()">Register using {{authMethod | titlecase}}</button>
+                            <button [disabled]="loading" class="btn btn-secondary">Register</button>
                             <spinner name="registerSpinner" [(show)]="loading">
                                 <div class="nv-spinner  is-animating">
                                     <div class="nv-spinner__anim"></div>
