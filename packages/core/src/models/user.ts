@@ -37,6 +37,7 @@ export interface User {
         }
     };
     currentOrg: any;
+    fb: any;
 }
 
 export interface OrgUser {
