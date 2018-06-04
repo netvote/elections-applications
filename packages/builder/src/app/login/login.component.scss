@@ -11,6 +11,71 @@ $login-narrow-side-width: 400px;
 .#{$ns}login{
     height: 100%;
 
+    &__img-btn{
+        height: 100px;
+        width: 100px;
+        transition: all 0.15s linear;
+
+        @at-root{
+            
+            @keyframes revealUp{
+
+                0%{
+                    transform: translateY(100%);
+                    opacity: 0;
+                }
+                100%{
+                    transform: translateY(0);
+                    opacity: 1;
+                }
+            }
+        }
+
+        img{
+            max-width: 100%;
+            filter: grayscale(1) brightness(1.35) contrast(200%);
+            animation: revealUp 0.5s forwards ease-out;
+            transform: translateY(100%);
+            transition: filter 0.3s linear;
+            opacity: 0;
+        }
+
+        &:first-child{
+            margin-right: 5rem;
+        }
+
+        &:last-child{
+
+            img{
+                animation-delay: 0.15s;
+            }
+        }
+
+        &:hover, &.is-active{
+            transform: scale(1.1);
+        }
+
+        &.is-active{
+
+            img{
+                filter: none;
+            }
+        }
+
+        &.is-inactive{
+            transform: scale(0.8);
+            opacity: 0.4;
+
+            &:hover{
+                opacity: 1;
+            }
+        }
+
+        &:focus{
+            outline: none;
+        }
+    }
+
     &__header{
         text-align: center;
 
@@ -129,7 +194,19 @@ $login-narrow-side-width: 400px;
         }
     }
 
-    .form-control{
+    &__eth-address{
+        color: rgba(white, 0.5);
+    }
+
+    &__info-box{
+
+        a{
+            color: white;
+            text-decoration: underline;
+        }
+    }
+
+    .form-control, &__info-box{
         background-color: rgba(white, 0.2);
         border: none;
         color: white;

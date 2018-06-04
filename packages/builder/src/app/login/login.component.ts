@@ -34,6 +34,7 @@ export class LoginComponent implements OnInit {
 
   toggleLogin() {
     this.showLogin = !this.showLogin;
+    this.authMethod = '';
   }
 
   login() {

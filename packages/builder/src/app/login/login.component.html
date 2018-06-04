@@ -38,77 +38,140 @@
                 
             <div class="nv-login__forms">
 
-                <!-- Login -->
+                <!-- 
+                    
+                    
+                    Login 
+                
+            
+                -->
                 <div *ngIf="showLogin" class="nv-login__login">
 
                     <header class="nv-login__header">
                         <h2>Welcome to Netvote</h2>
-                        <p>Please sign in</p>
-                        <p><button *ngIf="authMethod !== 'metamask'" type="button" (click)="authMethod='metamask'">Use Metamask</button><button *ngIf="authMethod !== 'google'" type="button" (click)="authMethod='google'">Use Google</button></p>
-                    </header>
-    
-                    <form class="nv-login__form" name="form" #f="ngForm" novalidate>
+                        <p>Please login with your Metamask or Google credentials.</p>
 
-                        <div *ngIf="authMethod==='metamask'" class="form-group">
-                            <label>Ethereum Address</label>
-                            <div>{{rootAccount || 'Please install Metamask'}}</div>
-                        </div>
-                        <div class="form-group">
-                            <button [disabled]="loading" class="btn btn-primary text-light">Login</button>
-                            <spinner name="signinSpinner" [(show)]="loading">
-                                <div class="nv-spinner  is-animating">
-                                    <div class="nv-spinner__anim"></div>
-                                </div>
-                            </spinner>
-                            <button type="button" (click)="toggleLogin()" class="btn btn-outline-light d-md-none">Register</button>
-                        </div>
-    
-                    </form>
+                        <p class="mt-4">
+                            <button type="button" (click)="authMethod='metamask'" [ngClass]="{ 'is-active' : authMethod === 'metamask', 'is-inactive' : authMethod === 'google' }" class="bg-transparent  border-0  nv-login__img-btn">
+                                <img src="/assets/metamask-logo.png">
+                            </button>
+                            <button type="button" (click)="authMethod='google'" [ngClass]="{ 'is-active' : authMethod === 'google', 'is-inactive' : authMethod === 'metamask' }" class="bg-transparent  border-0  nv-login__img-btn">
+                                <img src="/assets/google-logo.png">
+                            </button>
+                        </p>
+
+                    </header>
+
+                    <div *ngIf="authMethod === 'metamask' && !rootAccount" class="text-center   alert  alert-warning">
+
+                        <h3>MetaMask is locked or not installed.</h3>
+                        <p>Please login to your MetaMask Chrome Extension.</p>
+                        <p>If you don't have the MetaMask extension, you'll need to install it to authenticate using MetaMask.</p>
+                        <p><a class="btn btn-warning" href="https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn" target="_blank">Get Chrome Extension</a></p>
+                    
+                    </div>
+
+                    <div *ngIf="authMethod ==='metamask'">
+                        <p class="text-center  nv-login__eth-address"><strong>Ethereum Address:</strong>&nbsp;<span class="d-inline-block  text-truncate  align-middle" title="{{ rootAccount }}">{{rootAccount || 'Please install Metamask.' }}</span>&nbsp;<span *ngIf="!rootAccount"><a href="https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn" target="_blank">Get Chrome Extension</a></span></p>
+                    </div>
+
+                    <div class="text-center">
+
+                        <button *ngIf="authMethod === 'metamask' && rootAccount || authMethod === 'google'" type="button" [disabled]="loading" class="btn btn-primary  text-light  my-4" (click)="register()">Login using {{authMethod | titlecase}}</button>
+                        <spinner name="registerSpinner" [(show)]="loading">
+                            <div class="nv-spinner  is-animating">
+                                <div class="nv-spinner__anim"></div>
+                            </div>
+                        </spinner>
+
+                        <p class="d-md-none  text-center">Not registered? <a (click)="!!toggleLogin()" href="#">Register</a>.</p>
+
+                    </div>
 
                 </div>
                 
-                <!-- Register -->
+                <!-- 
+                    
+                    
+                    Register 
+                
+                
+                -->
                 <div *ngIf="!showLogin" class="nv-login__register">
 
                     <header class="nv-login__header">
                         <h2>Welcome to Netvote</h2>
-                        <p>Create an account</p>
-                        <p><button *ngIf="authMethod !== 'metamask'" type="button" (click)="authMethod='metamask'">Use Metamask</button><button *ngIf="authMethod !== 'google'" type="button" (click)="authMethod='google'">Use Google</button></p>
+                        <p>Register with MetaMask or Google</p>
+                        <p class="my-5">
+                            <button type="button" (click)="authMethod='metamask'" [ngClass]="{ 'is-active' : authMethod === 'metamask', 'is-inactive' : authMethod === 'google' }" class="bg-transparent  border-0  nv-login__img-btn">
+                                <img src="/assets/metamask-logo.png">
+                            </button>
+                            <button type="button" (click)="authMethod='google'" [ngClass]="{ 'is-active' : authMethod === 'google', 'is-inactive' : authMethod === 'metamask' }" class="bg-transparent  border-0  nv-login__img-btn">
+                                <img src="/assets/google-logo.png">
+                            </button>
+                        </p>
                     </header>
                     
+                    <!-- MetaMask Register -->
+                    <div *ngIf="authMethod === 'metamask' && !rootAccount" class="text-center   alert  alert-warning">
+
+                        <h3>MetaMask is locked or not installed.</h3>
+                        <p>Please login to your MetaMask Chrome Extension.</p>
+                        <p>If you don't have the MetaMask extension, you'll need to install it to authenticate using MetaMask.</p>
+                        <p><a class="btn btn-warning" href="https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn" target="_blank">Get Chrome Extension</a></p>
+                    </div>
+
                     <!-- (ngSubmit)="f.form.valid && register()"  -->
-                    <form *ngIf="authMethod" class="nv-login__form" name="form" #f="ngForm" novalidate>
-                        <div *ngIf="authMethod==='metamask'" class="form-group" [ngClass]="{ 'has-error': f.submitted && !firstName.valid }">
+                    <form *ngIf="authMethod && rootAccount" class="nv-login__form" name="form" #f="ngForm" novalidate>
+
+                        <div *ngIf="authMethod === 'metamask'" class="form-group" [ngClass]="{ 'has-error': f.submitted && !firstName.valid }">
                             <label for="firstName">First Name</label>
                             <input type="text" class="form-control rounded-0" name="firstName" [(ngModel)]="model.firstName" #firstName="ngModel" required />
                             <div *ngIf="f.submitted && !firstName.valid" class="help-block">First Name is required</div>
                         </div>
-                        <div *ngIf="authMethod==='metamask'" class="form-group" [ngClass]="{ 'has-error': f.submitted && !lastName.valid }">
+                        <div *ngIf="authMethod === 'metamask'" class="form-group" [ngClass]="{ 'has-error': f.submitted && !lastName.valid }">
                             <label for="lastName">Last Name</label>
                             <input type="text" class="form-control rounded-0" name="lastName" [(ngModel)]="model.lastName" #lastName="ngModel" required />
                             <div *ngIf="f.submitted && !lastName.valid" class="help-block">Last Name is required</div>
                         </div>
-                        <div *ngIf="authMethod==='metamask'" class="form-group" [ngClass]="{ 'has-error': f.submitted && !username.valid }">
+                        <div *ngIf="authMethod === 'metamask'" class="form-group" [ngClass]="{ 'has-error': f.submitted && !username.valid }">
                             <label for="username">Email</label>
                             <input type="text" class="form-control rounded-0" name="username" [(ngModel)]="model.username" #username="ngModel" required />
                             <div *ngIf="f.submitted && !username.valid" class="help-block">Username is required</div>
                         </div>
-                        <div *ngIf="authMethod==='metamask'" class="form-group">
-                            <label>Ethereum Address</label>
-                            <div>{{rootAccount || 'Please install Metamask'}}</div>
+                        <div *ngIf="authMethod ==='metamask'" class="form-group">
+                            <p class="nv-login__eth-address"><strong>Ethereum Address:</strong>&nbsp;<span class="d-inline-block  text-truncate  align-middle  w-75" title="{{ rootAccount }}">{{rootAccount || 'Please install Metamask.' }}</span>&nbsp;<span *ngIf="!rootAccount"><a href="https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn" target="_blank">Get Chrome Extension</a></span></p>
                         </div>
 
-                        <div class="form-group">
-                            <button type="button" [disabled]="loading" class="btn btn-secondary" (click)="register()">Register using {{authMethod | titlecase}}</button>
+                        <div *ngIf="authMethod === 'metamask' && rootAccount" class="text-center">
+
+                            <button type="button" [disabled]="loading" class="btn btn-secondary  my-4" (click)="register()">Register using {{authMethod | titlecase}}</button>
                             <spinner name="registerSpinner" [(show)]="loading">
                                 <div class="nv-spinner  is-animating">
                                     <div class="nv-spinner__anim"></div>
                                 </div>
                             </spinner>
-                            <button (click)="toggleLogin()" [disabled]="loading" class="btn btn-outline-light d-md-none">Signin</button>
+    
                         </div>
+                        
                     </form>
 
+                    <!-- Google Register -->
+                    <div *ngIf="authMethod === 'google'" class="alert  nv-login__info-box  w-75  mx-auto  text-center">
+                        <p>You will need a Google account in order to register with Google authentication.</p>
+                        <p>If you don't have a Gooogle account, you can register with MetaMask or <a href="https://accounts.google.com/signup/v2/webcreateaccount?continue=https%3A%2F%2Fwww.google.com%2F&hl=en&flowName=GlifWebSignIn&flowEntry=SignUp" target="_blank">create a Google account</a>.</p>
+
+                        <button type="button" [disabled]="loading" class="btn   btn-secondary  mt-4" (click)="register()">Register using {{authMethod | titlecase}}</button>
+                        <spinner name="registerSpinner" [(show)]="loading">
+                            <div class="nv-spinner  is-animating">
+                                <div class="nv-spinner__anim"></div>
+                            </div>
+                        </spinner>
+                                
+                    </div>
+
+                    <p class="d-md-none  text-center">Already registered? <a (click)="!!toggleLogin()" href="#">Signin</a>.</p>
+                    
                 </div>
         
             </div>
