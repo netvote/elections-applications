@@ -12,8 +12,6 @@
         
                 </div>
 
-                <!-- <img src="/assets/temp/testmock.png"> -->
-
                 <div *ngIf="showLogin" class="p-4  d-none  d-md-block  nv-login__side__content">
 
                     <p>Don't have an account?</p>
@@ -48,7 +46,7 @@
                 <div *ngIf="showLogin" class="nv-login__login">
 
                     <header class="nv-login__header">
-                        <h2>Welcome to Netvote</h2>
+                        <h2>Welcome Back</h2>
                         <p>Please login with your Metamask or Google credentials.</p>
 
                         <p class="mt-4">
@@ -100,7 +98,7 @@
                 <div *ngIf="!showLogin" class="nv-login__register">
 
                     <header class="nv-login__header">
-                        <h2>Welcome to Netvote</h2>
+                        <h2>Welcome. Ready to get started?</h2>
                         <p>Register with MetaMask or Google</p>
                         <p class="my-5">
                             <button type="button" (click)="authMethod='metamask'" [ngClass]="{ 'is-active' : authMethod === 'metamask', 'is-inactive' : authMethod === 'google' }" class="bg-transparent  border-0  nv-login__img-btn">
