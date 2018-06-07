@@ -41,7 +41,7 @@
 
     </div>
 
-    <div class="col col-6  pl-4">
+    <div class="col col-md-6  pl-4">
 
       <div class="nv-builder__form-scroll">
 
@@ -234,114 +234,114 @@
 
       </div>
 
-      <div class="col col-4">
+    </div>
 
-        <div class="mt-5">
+    <div class="col" [ngClass]="readyToBuild ? 'col-md-4' : 'col-md-6'">
 
-          <div class="nv-mock">
+      <div class="mt-5">
 
-            <div class="nv-mock__inner">
+        <div class="nv-mock">
 
-              <svg version="1.1" id="Layer_1" class="nv-svg-shadow" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                x="0px" y="0px" viewBox="0 0 861 1732" enable-background="new 0 0 861 1732" xml:space="preserve">
-                <g>
-                  <path display="none" fill="#686868" d="M838,1638.8c0,44.3-35.5,80.2-79.9,80.2H101c-44.5,0-81-35.9-81-80.2V93.2
-                  C20,48.9,56.6,13,101,13h657c44.5,0,79.9,35.9,79.9,80.2V1638.8z" />
-                  <path fill="#333333" d="M757.1,0h-655C50.1,0,7,41.8,7,93v1546.2c0,51.2,43.1,92.7,95.2,92.7h655c52.1,0,93.9-41.5,93.9-92.7V93
-                  C851,41.8,809.2,0,757.1,0z M804,1538H54V204h750V1538z" />
+          <div class="nv-mock__inner">
 
-                  <circle (click)="toggleShowJson()" title="Show JSON" fill="#222222" cx="429.7" cy="1626" r="61.6" />
+            <svg version="1.1" id="Layer_1" class="nv-svg-shadow" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+              x="0px" y="0px" viewBox="0 0 861 1732" enable-background="new 0 0 861 1732" xml:space="preserve">
+              <g>
+                <path display="none" fill="#686868" d="M838,1638.8c0,44.3-35.5,80.2-79.9,80.2H101c-44.5,0-81-35.9-81-80.2V93.2
+                C20,48.9,56.6,13,101,13h657c44.5,0,79.9,35.9,79.9,80.2V1638.8z" />
+                <path fill="#333333" d="M757.1,0h-655C50.1,0,7,41.8,7,93v1546.2c0,51.2,43.1,92.7,95.2,92.7h655c52.1,0,93.9-41.5,93.9-92.7V93
+                C851,41.8,809.2,0,757.1,0z M804,1538H54V204h750V1538z" />
 
-                  <path fill="#222222" d="M492,109c0,2.8-2.2,5-5,5H370c-2.8,0-5-2.2-5-5l0,0c0-2.8,2.2-5,5-5h117C489.8,104,492,106.2,492,109
-                  L492,109z" />
-                  <circle fill="#222222" cx="429.4" cy="57.9" r="12.7" />
-                  <circle fill="#222222" cx="294.4" cy="110.3" r="14" />
-                  <path fill="#333333" d="M859,376h-8v122h8c1.4,0,2-1.1,2-2.5V378.5C861,377.1,860.4,376,859,376z" />
-                  <path fill="#333333" d="M7,219H5c-1.4,0-3,1.1-3,2.5v52.9c0,1.4,1.6,2.5,3,2.5h2V219z" />
-                  <path fill="#333333" d="M7,376H3c-1.4,0-3,1.1-3,2.5v116.9c0,1.4,1.6,2.5,3,2.5h4V376z" />
-                  <path fill="#333333" d="M7,536H3c-1.4,0-3,1.1-3,2.5v116.9c0,1.4,1.6,2.5,3,2.5h4V536z" />
-                </g>
-              </svg>
+                <circle (click)="toggleShowJson()" title="Show JSON" fill="#222222" cx="429.7" cy="1626" r="61.6" />
 
-              <div class="nv-mock__preview"> 
+                <path fill="#222222" d="M492,109c0,2.8-2.2,5-5,5H370c-2.8,0-5-2.2-5-5l0,0c0-2.8,2.2-5,5-5h117C489.8,104,492,106.2,492,109
+                L492,109z" />
+                <circle fill="#222222" cx="429.4" cy="57.9" r="12.7" />
+                <circle fill="#222222" cx="294.4" cy="110.3" r="14" />
+                <path fill="#333333" d="M859,376h-8v122h8c1.4,0,2-1.1,2-2.5V378.5C861,377.1,860.4,376,859,376z" />
+                <path fill="#333333" d="M7,219H5c-1.4,0-3,1.1-3,2.5v52.9c0,1.4,1.6,2.5,3,2.5h2V219z" />
+                <path fill="#333333" d="M7,376H3c-1.4,0-3,1.1-3,2.5v116.9c0,1.4,1.6,2.5,3,2.5h4V376z" />
+                <path fill="#333333" d="M7,536H3c-1.4,0-3,1.1-3,2.5v116.9c0,1.4,1.6,2.5,3,2.5h4V536z" />
+              </g>
+            </svg>
 
-                <div *ngIf="showJson" class="nv-mock__json">
-                  
-                  <pre>{{ballotForm.value | json}}</pre>
-                  
+            <div class="nv-mock__preview"> 
+
+              <div *ngIf="showJson" class="nv-mock__json">
+                
+                <pre>{{ballotForm.value | json}}</pre>
+                
+              </div>
+
+              <div *ngIf="!showJson">
+
+                <div class="nv-preview__navbar">
+                  <span class="oi oi-menu float-left  mt-1"></span>
+                  <img src="/assets/netvote-logo-mark.svg">
                 </div>
 
-                <div *ngIf="!showJson">
+                <div class="nv-preview__header">
 
-                  <div class="nv-preview__navbar">
-                    <span class="oi oi-menu float-left  mt-1"></span>
-                    <img src="/assets/netvote-logo-mark.svg">
-                  </div>
+                  <div class="nv-preview__image" [style.background-image]="'url(' + ballotForm.value.ballotImage + ')'"></div>
 
-                  <div class="nv-preview__header">
+                    <div class="nv-preview__meta">
 
-                    <div class="nv-preview__image" [style.background-image]="'url(' + ballotForm.value.ballotImage + ')'"></div>
-
-                      <div class="nv-preview__meta">
-
-                        <div [ngClass]="{'nv-skeleton  nv-skeleton--light  nv-skeleton--100': !ballotForm.value.ballotTitle}" class="nv-preview__title">
-                          {{ballotForm.value.ballotTitle}}
-                        </div>
-
-                        <div [ngClass]="{'nv-skeleton nv-skeleton--light  nv-skeleton--150': !ballotForm.value.ballotLocation}" class="nv-preview__location">
-                          {{ballotForm.value.ballotLocation}}
-                        </div>
-
-                        <div [ngClass]="{'nv-skeleton nv-skeleton--thin  nv-skeleton--light  nv-skeleton--50': !ballotForm.value.ballotDate}" class="nv-preview__date">
-                            {{ballotForm.value.ballotDate.month}}<span *ngIf="ballotForm.value.ballotDate.month">-</span>{{ballotForm.value.ballotDate.day}}<span *ngIf="ballotForm.value.ballotDate.year">-</span>{{ballotForm.value.ballotDate.year}}
-                        </div>
-
+                      <div [ngClass]="{'nv-skeleton  nv-skeleton--light  nv-skeleton--100': !ballotForm.value.ballotTitle}" class="nv-preview__title">
+                        {{ballotForm.value.ballotTitle}}
                       </div>
 
-                  </div>
-
-                  <div class="nv-preview__groups">
-
-                    <div *ngFor="let ballotGroup of ballotForm.value.ballotGroups; let i=index" class="nv-preview__group">
-
-                      <div class="nv-preview__group__title">
-                        <span [ngClass]="{'nv-skeleton nv-skeleton--dark  nv-skeleton--150': !ballotGroup.groupTitle}">&nbsp;{{ballotGroup.groupTitle}}</span>
+                      <div [ngClass]="{'nv-skeleton nv-skeleton--light  nv-skeleton--150': !ballotForm.value.ballotLocation}" class="nv-preview__location">
+                        {{ballotForm.value.ballotLocation}}
                       </div>
 
-                      <div *ngFor="let ballotSection of ballotGroup.ballotSections; let j=index">
+                      <div [ngClass]="{'nv-skeleton nv-skeleton--thin  nv-skeleton--light  nv-skeleton--50': !ballotForm.value.ballotDate}" class="nv-preview__date">
+                          {{ballotForm.value.ballotDate.month}}<span *ngIf="ballotForm.value.ballotDate.month">-</span>{{ballotForm.value.ballotDate.day}}<span *ngIf="ballotForm.value.ballotDate.year">-</span>{{ballotForm.value.ballotDate.year}}
+                      </div>
 
-                        <div class="nv-preview__section__title">
-                          <span [ngClass]="{'nv-skeleton nv-skeleton--light  nv-skeleton--150': !ballotSection.sectionTitle}">&nbsp;{{ballotSection.sectionTitle}}&nbsp;
-                            <small *ngIf="ballotSection.sectionNote">({{ballotSection.sectionNote}})</small>
-                          </span>
+                    </div>
+
+                </div>
+
+                <div class="nv-preview__groups">
+
+                  <div *ngFor="let ballotGroup of ballotForm.value.ballotGroups; let i=index" class="nv-preview__group">
+
+                    <div class="nv-preview__group__title">
+                      <span [ngClass]="{'nv-skeleton nv-skeleton--dark  nv-skeleton--150': !ballotGroup.groupTitle}">&nbsp;{{ballotGroup.groupTitle}}</span>
+                    </div>
+
+                    <div *ngFor="let ballotSection of ballotGroup.ballotSections; let j=index">
+
+                      <div class="nv-preview__section__title">
+                        <span [ngClass]="{'nv-skeleton nv-skeleton--light  nv-skeleton--150': !ballotSection.sectionTitle}">&nbsp;{{ballotSection.sectionTitle}}&nbsp;
+                          <small *ngIf="ballotSection.sectionNote">({{ballotSection.sectionNote}})</small>
+                        </span>
+                      </div>
+
+                      <div *ngFor="let ballotItem of ballotSection.ballotItems; let k=index" class="nv-preview__item">
+
+                        <div class="nv-preview__item__title">
+                          <span [ngClass]="{'nv-skeleton nv-skeleton--light  nv-skeleton--150': !ballotItem.itemTitle}">&nbsp;{{ballotItem.itemTitle}}</span>
                         </div>
 
-                        <div *ngFor="let ballotItem of ballotSection.ballotItems; let k=index" class="nv-preview__item">
-
-                          <div class="nv-preview__item__title">
-                            <span [ngClass]="{'nv-skeleton nv-skeleton--light  nv-skeleton--150': !ballotItem.itemTitle}">&nbsp;{{ballotItem.itemTitle}}</span>
-                          </div>
-
-                          <div class="nv-preview__item__desc">
-                          <span [ngClass]="{'nv-skeleton  nv-skeleton--thin  nv-skeleton--light  nv-skeleton--100': !ballotItem.itemDescription}">&nbsp;{{ballotItem.itemDescription}}</span>
-                        </div>
-
-                        </div>
+                        <div class="nv-preview__item__desc">
+                        <span [ngClass]="{'nv-skeleton  nv-skeleton--thin  nv-skeleton--light  nv-skeleton--100': !ballotItem.itemDescription}">&nbsp;{{ballotItem.itemDescription}}</span>
+                      </div>
 
                       </div>
 
                     </div>
 
-                    <div class="nv-preview__end">You've reached the end of the ballot.</div>
-
                   </div>
+
+                  <div class="nv-preview__end">You've reached the end of the ballot.</div>
 
                 </div>
 
               </div>
-              <!-- Preview -->
 
             </div>
+            <!-- Preview -->
 
           </div>
 

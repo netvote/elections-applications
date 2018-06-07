@@ -153,7 +153,10 @@
 
                         <div class="text-center">
 
-                            <button type="submit"  class="btn btn-secondary  my-4" [disabled]="!registerForm.valid" (click)="register()">Register using {{authMethod | titlecase}}</button>
+                            <button type="submit"  class="btn btn-secondary  my-4" [disabled]="!registerForm.valid || loading" (click)="register()">
+                                <span *ngIf="!loading">Register using {{authMethod | titlecase}}</span>
+                                <span *ngIf="loading">Registering with {{authMethod | titlecase}}</span>
+                            </button>
                             <spinner name="registerSpinner" [(show)]="loading">
                                 <div class="nv-spinner  is-animating">
                                     <div class="nv-spinner__anim"></div>
@@ -164,49 +167,15 @@
 
                     </form>
 
-
-
-                    <!-- (ngSubmit)="f.form.valid && register()"  -->
-                    <!-- <form *ngIf="authMethod && rootAccount" class="nv-login__form" name="form" #f="ngForm" novalidate>
-
-                        <div *ngIf="authMethod === 'metamask'" class="form-group" [ngClass]="{ 'has-error': f.submitted && !firstName.valid }">
-                            <label for="firstName">First Name</label>
-                            <input type="text" class="form-control rounded-0" name="firstName" [(ngModel)]="model.firstName" #firstName="ngModel" required />
-                            <div *ngIf="f.submitted && !firstName.valid" class="help-block">First Name is required</div>
-                        </div>
-                        <div *ngIf="authMethod === 'metamask'" class="form-group" [ngClass]="{ 'has-error': f.submitted && !lastName.valid }">
-                            <label for="lastName">Last Name</label>
-                            <input type="text" class="form-control rounded-0" name="lastName" [(ngModel)]="model.lastName" #lastName="ngModel" required />
-                            <div *ngIf="f.submitted && !lastName.valid" class="help-block">Last Name is required</div>
-                        </div>
-                        <div *ngIf="authMethod === 'metamask'" class="form-group" [ngClass]="{ 'has-error': f.submitted && !username.valid }">
-                            <label for="username">Email</label>
-                            <input type="text" class="form-control rounded-0" name="username" [(ngModel)]="model.username" #username="ngModel" required />
-                            <div *ngIf="f.submitted && !username.valid" class="help-block">Username is required</div>
-                        </div>
-                        <div *ngIf="authMethod ==='metamask'" class="form-group">
-                            <p class="nv-login__eth-address"><strong>Ethereum Address:</strong>&nbsp;<span class="d-inline-block  text-truncate  align-middle  w-75" title="{{ rootAccount }}">{{rootAccount || 'Please install Metamask.' }}</span>&nbsp;<span *ngIf="!rootAccount"><a href="https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn" target="_blank">Get Chrome Extension</a></span></p>
-                        </div>
-
-                        <div *ngIf="authMethod === 'metamask' && rootAccount" class="text-center">
-
-                            <button type="button" [disabled]="loading" class="btn btn-secondary  my-4" (click)="register()">Register using {{authMethod | titlecase}}</button>
-                            <spinner name="registerSpinner" [(show)]="loading">
-                                <div class="nv-spinner  is-animating">
-                                    <div class="nv-spinner__anim"></div>
-                                </div>
-                            </spinner>
-    
-                        </div>
-                        
-                    </form> -->
-
                     <!-- Google Register -->
                     <div *ngIf="authMethod === 'google'" class="alert  nv-login__info-box  w-75  mx-auto  text-center">
                         <p>You will need a Google account in order to register with Google authentication.</p>
                         <p>If you don't have a Gooogle account, you can register with MetaMask or <a href="https://accounts.google.com/signup/v2/webcreateaccount?continue=https%3A%2F%2Fwww.google.com%2F&hl=en&flowName=GlifWebSignIn&flowEntry=SignUp" target="_blank">create a Google account</a>.</p>
 
-                        <button type="button" [disabled]="loading" class="btn   btn-secondary  mt-4" (click)="register()">Register using {{authMethod | titlecase}}</button>
+                        <button type="button" [disabled]="loading" class="btn   btn-secondary  mt-4" (click)="register()">
+                            <span *ngIf="!loading">Register using {{authMethod | titlecase}}</span>
+                            <span *ngIf="loading">Registering with {{authMethod | titlecase}}</span>
+                        </button>
                         <spinner name="registerSpinner" [(show)]="loading">
                             <div class="nv-spinner  is-animating">
                                 <div class="nv-spinner__anim"></div>
