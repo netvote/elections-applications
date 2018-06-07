@@ -257,7 +257,8 @@ export class BallotBuilderComponent implements OnInit {
 
       return this.ballotService.createBallot(this.ballot)
         .then((afs_ballot) => {
-          this.toast.info('Ballot created.');
+          console.log("adslfafd", afs_ballot);
+          this.toast.info('Ballot: ' + this.ballot.title + ' has been created!');
           this.router.navigate([`/ballot-builder/${afs_ballot.id}`]);
           return afs_ballot;
         });
@@ -309,7 +310,10 @@ export class BallotBuilderComponent implements OnInit {
       // }
 
       await this.ballotService.deleteBallot(ballot);
-
+    
+      this.toast.info('Ballot ' + ballot.title + ' has been deleted.');
+      this.router.navigate([`/ballot-builder/`]);
+      
     } catch (err) {
       this.toast.error(err.message);
     }
@@ -317,6 +321,7 @@ export class BallotBuilderComponent implements OnInit {
 
   async toggleReadyToBuild(e) {
     e.preventDefault();
+    this.saveBallot();
     this.readyToBuild = !this.readyToBuild;
   }
 
