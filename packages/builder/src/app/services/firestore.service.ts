@@ -19,6 +19,16 @@ export class FirestoreService {
 
   // Get reference helpers
 
+  exists<T>(ref: string): Promise<boolean> {
+    return new Promise<boolean>((resolve, reject) => {
+      this.afs.doc<T>(ref).ref.get().then((snap)=>{
+        if(snap.exists)
+          return resolve(true);
+        return resolve(false);
+      })  
+    });
+  }
+
   /*
   Ex usage:
   const ref: AngularFirestoreDocument<User> = this.db.document("user/1234");
@@ -45,6 +55,8 @@ export class FirestoreService {
     return this.document(ref).snapshotChanges().map(doc => {
       const id = doc.payload.id;
       const data = doc.payload.data();
+      if(!data)
+        return null;
       data['id'] = id;
       return data as T;
     });
