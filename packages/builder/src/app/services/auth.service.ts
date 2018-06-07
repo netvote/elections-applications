@@ -69,58 +69,6 @@ export class AuthService {
     });
   }
 
-  emailSignUp(email: string, password: string, firstName: string, lastName: string) {
-
-    let uid: string = null;
-    let orgid: string = null;
-    let orgreference: any = null;
-
-    // Create the user in firebase
-    return this.afAuth.auth.createUserWithEmailAndPassword(email, password)
-      .then((user) => {
-        uid = user.uid;
-
-        const data = {
-          uid: user.uid,
-          email: user.email,
-          displayName: `${firstName} ${lastName}`
-        };
-
-        return this.db.set<User>(`user/${user.uid}`, data as User);
-      })
-      .then((userref) => {
-        const org = {
-          slug: uuid(),
-          displayName: `${firstName} ${lastName}`
-        };
-
-        return this.db.add<OrgUser>('org', org as Org);
-      })
-      .then((orgref) => {
-
-        orgid = orgref.id;
-        orgreference = orgref;
-
-        // Set the org relationship
-        const orguser = {
-          uid: uid,
-          orgid: orgref.id,
-          roles: ['admin']
-        };
-
-        return this.db.add<OrgUser>('orguser', orguser as OrgUser);
-
-      })
-      .then((orguser) => {
-
-        // Set the user's current org
-        return this.db.update<User>(`user/${uid}`, {currentOrg: orgreference});
-
-      })
-      .catch(error => console.log(error));
-  }
-
-
   ethSignUp(email: string, firstName: string, lastName: string) {
 
     let uid: string = null;
@@ -135,55 +83,14 @@ export class AuthService {
         return userRef.updateEmail(email);
       })
       .then(()=>{
-        return userRef.updateProfile({displayName: `${firstName} ${lastName}`})
+        return userRef.updateProfile({displayName: `${firstName} ${lastName}`});
       })
       .then(() => {
-
-        uid = userRef.uid;
-
-        // Create the user document in firestore
-        const data = {
-          uid: userRef.uid,
-          email: email,
-          displayName: `${firstName} ${lastName}`
-        };
-
-        return this.db.set<User>(`user/${userRef.uid}`, data as User);
-
+        return this.createUserMeta(userRef, email, `${firstName} ${lastName}`);
       })
-      .then((userref) => {
-
-        // Create the org document
-        const org = {
-          slug: uuid(),
-          displayName: `${firstName} ${lastName}`
-        };
-
-        return this.db.add<OrgUser>('org', org as Org);
-
-      })
-      .then((orgref) => {
-
-        orgid = orgref.id;
-        orgRef = orgref;
-
-        // Set the org relationship
-        const orguser = {
-          uid: uid,
-          orgid: orgref.id,
-          roles: ['admin']
-        };
-
-        return this.db.add<OrgUser>('orguser', orguser as OrgUser);
-
-      })
-      .then((orguser) => {
-
-        // Set the user's current org
-        return this.db.update<User>(`user/${uid}`, {currentOrg: orgRef});
-
-      })
-      .catch(error => console.log(error));
+      .catch((error) => {
+        console.log(error)
+      });
   }
 
   private unestablishUser() {
@@ -247,38 +154,45 @@ export class AuthService {
 
     return new Promise<any>((resolve, reject) => {
 
-      uid = userRef.uid;
+      uid = fbuser.uid;
       const data = {
         uid: fbuser.uid,
         email: email || fbuser.email,
         displayName: displayName || fbuser.displayName
       };
 
-      this.db.set<User>(`user/${fbuser.uid}`, data as User)
-      .then(() => {
-        const org = {
-          slug: uuid(),
-          displayName: displayName || fbuser.displayName
-        };
-        return this.db.add<OrgUser>('org', org as Org);
-      })
-      .then((orgref) => {
-
-        orgid = orgref.id;
-        orgRef = orgref;
-
-        const orguser = {
-          uid: uid,
-          orgid: orgref.id,
-          roles: ['admin']
-        };
-        return this.db.add<OrgUser>('orguser', orguser as OrgUser);
-      })
-      .then((orguser) => {
-        return resolve(this.db.update<User>(`user/${uid}`, {currentOrg: orgRef}));
-      })
-      .catch((error) => {
-        return reject(error);
+      this.db.exists<User>(`user/${fbuser.uid}`).then((exists) => {
+        if(exists){
+          return resolve();
+        }        
+        else {
+          this.db.set<User>(`user/${fbuser.uid}`, data as User)
+          .then(() => {
+            const org = {
+              slug: uuid(),
+              displayName: displayName || fbuser.displayName
+            };
+            return this.db.add<OrgUser>('org', org as Org);
+          })
+          .then((orgref) => {
+    
+            orgid = orgref.id;
+            orgRef = orgref;
+    
+            const orguser = {
+              uid: uid,
+              orgid: orgref.id,
+              roles: ['admin']
+            };
+            return this.db.add<OrgUser>('orguser', orguser as OrgUser);
+          })
+          .then((orguser) => {
+            return resolve(this.db.update<User>(`user/${uid}`, {currentOrg: orgRef}));
+          })
+          .catch((error) => {
+            return reject(error);
+          });
+        }
       });
     });
   }
@@ -316,15 +230,6 @@ export class AuthService {
       });
 
     });
-
-  }
-
-  emailLogin(email: string, password: string): Promise<any> {
-
-    return this.afAuth.auth.signInWithEmailAndPassword(email, password)
-      .then((fbuser) => {
-        return this.establishUser(fbuser);
-      });
 
   }
 
@@ -388,10 +293,9 @@ export class AuthService {
 
   private oAuthLogin(provider): Promise<any> {
     return this.afAuth.auth.signInWithPopup(provider).then((credential) => {
-      const user = credential.user;
 
-      // Determine if user is new
-      // If new, create org, org relationship and assign user to the org, otherwise establish the user from existing org info
+      const userRef = credential.user;
+      return this.createUserMeta(userRef);
 
     })
   }
