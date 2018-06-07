@@ -51,15 +51,22 @@ export class LoginComponent implements OnInit {
             this.loading = false;
           });
     } else if(this.authMethod === "google"){
-
+      this.auth.googleLogin()
+        .then((data)=>{
+          this.router.navigate(['/']);
+        }).catch(
+          (error) => {
+            this.loading = false;
+          });;
     }
   }
 
   register() {
+
     if(this.authMethod === "metamask"){
 
       if(!this.model.username || !this.model.firstName || !this.model.lastName){
-        alert('Missing form values');
+        alert('Username, First Name and Last Name required for registration');
         return;
       }
 
