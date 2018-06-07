@@ -4,6 +4,7 @@ import {AuthService} from '../services/auth.service';
 import swal from 'sweetalert2/dist/sweetalert2.all.min.js';
 import {ToastService} from '../services/toast.service';
 import { SpinnerService } from '@chevtek/angular-spinners';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -16,16 +17,26 @@ export class LoginComponent implements OnInit {
   showLogin = true;
   authMethod: any;
   rootAccount: string;
+  registerForm: FormGroup;
 
   constructor(
     private auth: AuthService,
     private route: ActivatedRoute,
     private router: Router,
-    private toast: ToastService
+    private toast: ToastService,
+    public formBuilder: FormBuilder
   ) {
     this.auth.getEthAccounts().subscribe((accounts)=>{
       this.rootAccount = accounts[0];
     })
+
+    this.registerForm = formBuilder.group({
+      regFirstName: ['', Validators.compose([Validators.minLength(3), Validators.maxLength(25), Validators.pattern('^[\w\s-]+$'), Validators.required])],
+      regLastName: ['', Validators.compose([Validators.minLength(3), Validators.maxLength(25), Validators.pattern('^[\w\s-]+$'), Validators.required])],
+      regEmail: ['', Validators.compose([ Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$'), Validators.required])]
+      
+    });
+
   }
 
   ngOnInit() {

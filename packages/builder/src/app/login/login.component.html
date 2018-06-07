@@ -119,8 +119,43 @@
                         <p><a class="btn btn-warning" href="https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn" target="_blank">Get Chrome Extension</a></p>
                     </div>
 
+                    <form [formGroup]="registerForm" *ngIf="authMethod && rootAccount" class="nv-login__form" >
+
+                        <div *ngIf="authMethod === 'metamask'" class="form-group">
+                            <label for="regFirstName">First Name</label>
+                            <input type="text" class="form-control rounded-0" name="regFirstName" formControlName="regFirstName" />
+                            <!-- <div *ngIf="f.submitted && !firstName.valid" class="help-block">First Name is required</div> -->
+                        </div>
+
+                        <div *ngIf="authMethod === 'metamask'" class="form-group">
+                            <label for="regLastName">Last Name</label>
+                            <input type="text" class="form-control rounded-0" name="regLastName" formControlName="regLastName" />
+                            <!-- <div *ngIf="f.submitted && !lastName.valid" class="help-block">Last Name is required</div> -->
+                        </div>
+                        
+                        <div *ngIf="authMethod === 'metamask'" class="form-group">
+                            <label for="regEmail">Email</label>
+                            <input type="email" class="form-control rounded-0" name="regEmail" formControlName="regEmail" />
+                            <!-- <div *ngIf="f.submitted && !username.valid" class="help-block">Username is required</div> -->
+                        </div>
+
+                        <div *ngIf="authMethod === 'metamask' && rootAccount" class="text-center">
+
+                            <button type="submit" [disabled]="loading" class="btn btn-secondary  my-4" (click)="register()">Register using {{authMethod | titlecase}}</button>
+                            <spinner name="registerSpinner" [(show)]="loading">
+                                <div class="nv-spinner  is-animating">
+                                    <div class="nv-spinner__anim"></div>
+                                </div>
+                            </spinner>
+    
+                        </div>
+
+                    </form>
+
+
+
                     <!-- (ngSubmit)="f.form.valid && register()"  -->
-                    <form *ngIf="authMethod && rootAccount" class="nv-login__form" name="form" #f="ngForm" novalidate>
+                    <!-- <form *ngIf="authMethod && rootAccount" class="nv-login__form" name="form" #f="ngForm" novalidate>
 
                         <div *ngIf="authMethod === 'metamask'" class="form-group" [ngClass]="{ 'has-error': f.submitted && !firstName.valid }">
                             <label for="firstName">First Name</label>
@@ -152,7 +187,7 @@
     
                         </div>
                         
-                    </form>
+                    </form> -->
 
                     <!-- Google Register -->
                     <div *ngIf="authMethod === 'google'" class="alert  nv-login__info-box  w-75  mx-auto  text-center">
