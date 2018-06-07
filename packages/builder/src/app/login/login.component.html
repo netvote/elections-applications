@@ -69,8 +69,8 @@
                     
                     </div>
 
-                    <div *ngIf="authMethod ==='metamask'">
-                        <p class="text-center  nv-login__eth-address"><strong>Ethereum Address:</strong>&nbsp;<span class="d-inline-block  text-truncate  align-middle" title="{{ rootAccount }}">{{rootAccount || 'Please install Metamask.' }}</span>&nbsp;<span *ngIf="!rootAccount"><a href="https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn" target="_blank">Get Chrome Extension</a></span></p>
+                    <div *ngIf="authMethod ==='metamask' && rootAccount">
+                        <p class="text-center  nv-login__eth-address"><strong>Ethereum Address:</strong>&nbsp;<span class="d-inline-block  text-truncate  align-middle" title="{{ rootAccount }}">{{rootAccount }}</span></p>
                     </div>
 
                     <div class="text-center">
