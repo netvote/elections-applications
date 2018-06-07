@@ -184,6 +184,27 @@ $login-narrow-side-width: 400px;
         margin: 0 auto;
     }
 
+    .form-group{ // Bootstrap
+
+        &.is-invalid{
+
+            .form-control{
+                border-color: mix(black, theme-color("danger"), 30%);
+            }
+
+            .#{$ns}login__invalid-msg{
+                display: block;
+            }
+        }
+    }
+
+    &__invalid-msg{
+       // display: none;
+        color: white;
+        background: linear-gradient(to right, #6d0019 0%,#8f0222 56%,#a90329 100%);
+        padding: 3px 5px;
+        font-size: 0.75rem;
+    }
 
     &__logo{
         width: 100px;
@@ -208,13 +229,7 @@ $login-narrow-side-width: 400px;
 
     .form-control, &__info-box{
         background-color: rgba(white, 0.2);
-        border: none;
+        border-color: transparent;
         color: white;
-    }
-
-    .help-block{
-        padding: 0 0.5rem;
-        font-size: 0.85em;
-        background-color: theme-color("danger");
     }
 }

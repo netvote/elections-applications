@@ -4,7 +4,7 @@ import {AuthService} from '../services/auth.service';
 import swal from 'sweetalert2/dist/sweetalert2.all.min.js';
 import {ToastService} from '../services/toast.service';
 import { SpinnerService } from '@chevtek/angular-spinners';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormGroup, FormControl, Validators, COMPOSITION_BUFFER_MODE} from '@angular/forms';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -18,6 +18,9 @@ export class LoginComponent implements OnInit {
   authMethod: any;
   rootAccount: string;
   registerForm: FormGroup;
+  regFirstName: FormControl;
+  regLastName: FormControl;
+  regEmail: FormControl;
 
   constructor(
     private auth: AuthService,
@@ -30,17 +33,34 @@ export class LoginComponent implements OnInit {
       this.rootAccount = accounts[0];
     })
 
-    this.registerForm = formBuilder.group({
-      regFirstName: ['', Validators.compose([Validators.minLength(3), Validators.maxLength(25), Validators.pattern('^[\w\s-]+$'), Validators.required])],
-      regLastName: ['', Validators.compose([Validators.minLength(3), Validators.maxLength(25), Validators.pattern('^[\w\s-]+$'), Validators.required])],
-      regEmail: ['', Validators.compose([ Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$'), Validators.required])]
+    // this.registerForm = formBuilder.group({
+    //   regFirstName: ['', Validators.compose([Validators.minLength(3), Validators.maxLength(25), Validators.pattern('^[\w\s-]+$'), Validators.required])],
+    //   regLastName: ['', Validators.compose([Validators.minLength(3), Validators.maxLength(25), Validators.pattern('^[\w\s-]+$'), Validators.required])],
+    //   regEmail: ['', Validators.compose([ Validators.pattern('[^ @]*@[^ @]*'), Validators.required])]
       
-    });
+    // });
 
   }
 
   ngOnInit() {
     this.auth.signOut();
+    
+    this.createFormControls();
+    this.createForm();
+  }
+
+  createFormControls() {
+    this.regFirstName = new FormControl('', [Validators.minLength(3), Validators.maxLength(25), Validators.required]);
+    this.regLastName = new FormControl('', [Validators.minLength(3), Validators.maxLength(25), Validators.required]);
+    this.regEmail = new FormControl('', [Validators.pattern('[^ @]*@[^ @]*'), Validators.required]);
+  }
+
+  createForm() {
+    this.registerForm = new FormGroup({
+      regFirstName: this.regFirstName,
+      regLastName: this.regLastName,
+      regEmail: this.regEmail
+    });
   }
 
   toggleLogin() {
@@ -76,14 +96,16 @@ export class LoginComponent implements OnInit {
 
     if(this.authMethod === "metamask"){
 
-      if(!this.model.username || !this.model.firstName || !this.model.lastName){
-        alert('Username, First Name and Last Name required for registration');
+      if (!this.registerForm.valid) {
+
+        alert("The registration form has errors. Please try again.");
+
         return;
       }
 
       this.loading = true;
 
-      this.auth.ethSignUp(this.model.username, this.model.firstName,this.model.lastName)
+      this.auth.ethSignUp(this.regEmail.value, this.regFirstName.value, this.regLastName.value)
         .then((data)=>{
           this.router.navigate(['/']);
         }).catch(
@@ -93,7 +115,6 @@ export class LoginComponent implements OnInit {
     } else if(this.authMethod === "google"){
 
     }
-
   }
 
 }
