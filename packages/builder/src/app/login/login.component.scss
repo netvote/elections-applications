@@ -184,20 +184,6 @@ $login-narrow-side-width: 400px;
         margin: 0 auto;
     }
 
-    .form-group{ // Bootstrap
-
-        &.is-invalid{
-
-            .form-control{
-                border-color: mix(black, theme-color("danger"), 30%);
-            }
-
-            .#{$ns}login__invalid-msg{
-                display: block;
-            }
-        }
-    }
-
     &__invalid-msg{
        // display: none;
         color: white;
