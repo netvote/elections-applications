@@ -69,58 +69,6 @@ export class AuthService {
     });
   }
 
-  emailSignUp(email: string, password: string, firstName: string, lastName: string) {
-
-    let uid: string = null;
-    let orgid: string = null;
-    let orgreference: any = null;
-
-    // Create the user in firebase
-    return this.afAuth.auth.createUserWithEmailAndPassword(email, password)
-      .then((user) => {
-        uid = user.uid;
-
-        const data = {
-          uid: user.uid,
-          email: user.email,
-          displayName: `${firstName} ${lastName}`
-        };
-
-        return this.db.set<User>(`user/${user.uid}`, data as User);
-      })
-      .then((userref) => {
-        const org = {
-          slug: uuid(),
-          displayName: `${firstName} ${lastName}`
-        };
-
-        return this.db.add<OrgUser>('org', org as Org);
-      })
-      .then((orgref) => {
-
-        orgid = orgref.id;
-        orgreference = orgref;
-
-        // Set the org relationship
-        const orguser = {
-          uid: uid,
-          orgid: orgref.id,
-          roles: ['admin']
-        };
-
-        return this.db.add<OrgUser>('orguser', orguser as OrgUser);
-
-      })
-      .then((orguser) => {
-
-        // Set the user's current org
-        return this.db.update<User>(`user/${uid}`, {currentOrg: orgreference});
-
-      })
-      .catch(error => console.log(error));
-  }
-
-
   ethSignUp(email: string, firstName: string, lastName: string) {
 
     let uid: string = null;
@@ -285,15 +233,6 @@ export class AuthService {
 
   }
 
-  emailLogin(email: string, password: string): Promise<any> {
-
-    return this.afAuth.auth.signInWithEmailAndPassword(email, password)
-      .then((fbuser) => {
-        return this.establishUser(fbuser);
-      });
-
-  }
-
   ethLogin(): Promise<any> {
 
     return new Promise<any>((resolve, reject) => {
@@ -354,10 +293,9 @@ export class AuthService {
 
   private oAuthLogin(provider): Promise<any> {
     return this.afAuth.auth.signInWithPopup(provider).then((credential) => {
-      const user = credential.user;
 
-      // Determine if user is new
-      // If new, create org, org relationship and assign user to the org, otherwise establish the user from existing org info
+      const userRef = credential.user;
+      return this.createUserMeta(userRef);
 
     })
   }

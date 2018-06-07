@@ -24,7 +24,6 @@ import {UserProfileComponent} from './user-profile/user-profile.component';
 import {BallotListComponent} from './ballot-list/ballot-list.component';
 import {LoginComponent} from './login/login.component';
 import {AuthGuard} from './core/auth.guard';
-import {RegisterComponent} from './register/register.component';
 
 import {GradientDirective} from './directives/gradient.directive';
 import {RandomImageDirective} from './directives/random-image.directive';
@@ -73,10 +72,6 @@ const appRoutes: Routes = [
       {
         path: 'login',
         component: LoginComponent
-      },
-      {
-        path: 'register',
-        component: RegisterComponent
       }
     ]
   },
@@ -91,7 +86,6 @@ const appRoutes: Routes = [
     UserProfileComponent,
     BallotListComponent,
     LoginComponent,
-    RegisterComponent,
     GradientDirective,
     MainLayoutComponent,
     LoginLayoutComponent,
