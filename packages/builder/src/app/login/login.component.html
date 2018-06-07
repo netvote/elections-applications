@@ -75,7 +75,7 @@
 
                     <div class="text-center">
 
-                        <button *ngIf="authMethod === 'metamask' && rootAccount || authMethod === 'google'" type="button" [disabled]="loading" class="btn btn-primary  text-light  my-4" (click)="register()">Login using {{authMethod | titlecase}}</button>
+                        <button *ngIf="authMethod === 'metamask' && rootAccount || authMethod === 'google'" type="button" [disabled]="loading" class="btn btn-primary  text-light  my-4" (click)="login()">Login using {{authMethod | titlecase}}</button>
                         <spinner name="registerSpinner" [(show)]="loading">
                             <div class="nv-spinner  is-animating">
                                 <div class="nv-spinner__anim"></div>

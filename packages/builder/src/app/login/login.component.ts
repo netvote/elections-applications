@@ -39,25 +39,25 @@ export class LoginComponent implements OnInit {
 
   login() {
 
-    this.loading = true;
-    this.router.navigate(['ballot-list']);
-    this.auth.emailLogin(this.model.username, this.model.password)
-      .then((data) => {
-        console.log(data);
-        this.router.navigate(['/']);
-      })
-      .catch((error) => {
+    if(this.authMethod === "metamask"){
 
-        if (error.message)
-          this.toast.error(error.message);
+      this.loading = true;
 
-        console.log('Login: ', error.message);
-        this.loading = false;
-      });
+      this.auth.ethLogin()
+        .then((data)=>{
+          this.router.navigate(['/']);
+        }).catch(
+          (error) => {
+            this.loading = false;
+          });
+    } else if(this.authMethod === "google"){
+
+    }
   }
 
   register() {
     if(this.authMethod === "metamask"){
+
       if(!this.model.username || !this.model.firstName || !this.model.lastName){
         alert('Missing form values');
         return;
@@ -75,15 +75,7 @@ export class LoginComponent implements OnInit {
     } else if(this.authMethod === "google"){
 
     }
-    //console.log(this.authMethod, this.model.username);
-    // this.loading = true;
-    // this.auth.emailSignUp(this.model.username, this.model.password, this.model.firstName, this.model.lastName)
-    //   .then((data) => {
-    //     this.router.navigate(['/']);
-    // }).catch(
-    // (error) => {
-    //   this.loading = false;
-    // });
+
   }
 
 }

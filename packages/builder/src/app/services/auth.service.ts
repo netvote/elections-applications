@@ -339,10 +339,6 @@ export class AuthService {
 
       });
 
-      // Singin with token
-
-      // Establish user
-
     });
 
   }
