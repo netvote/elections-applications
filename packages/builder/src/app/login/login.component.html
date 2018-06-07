@@ -147,6 +147,10 @@
                             </div>
                         </div>
 
+                        <div class="form-group">
+                            <p class="nv-login__eth-address"><strong>Ethereum Address:</strong>&nbsp;<span class="d-inline-block  text-truncate  align-middle  w-75" title="{{ rootAccount }}">{{rootAccount }}</span></p>
+                        </div>
+
                         <div class="text-center">
 
                             <button type="submit"  class="btn btn-secondary  my-4" [disabled]="!registerForm.valid" (click)="register()">Register using {{authMethod | titlecase}}</button>
