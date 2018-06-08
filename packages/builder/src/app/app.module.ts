@@ -38,6 +38,7 @@ import {LoginLayoutComponent} from './layouts/login-layout/login-layout.componen
 import {QRCodeModule} from 'angular2-qrcode';
 import {SpinnerModule} from '@chevtek/angular-spinners';
 import {BallotDatepickerComponent} from './ballot-datepicker/ballot-datepicker.component';
+import { ConfirmService, ConfirmState, ConfirmTemplateDirective, ConfirmModalComponent  } from './services/confirm-modal-and-service.service';
 
 
 const appRoutes: Routes = [
@@ -92,7 +93,9 @@ const appRoutes: Routes = [
     BallotBuilderComponent,
     RandomImageDirective,
     BallotAccordionComponent,
-    BallotDatepickerComponent 
+    BallotDatepickerComponent,
+    ConfirmTemplateDirective,
+    ConfirmModalComponent
   ],
   imports: [
     BrowserModule,
@@ -111,7 +114,7 @@ const appRoutes: Routes = [
     ReactiveFormsModule,
     SpinnerModule
   ],
-  providers: [AuthService, AuthGuard, {provide: ToastOptions, useClass: CustomToastOption}],
+  providers: [AuthService, AuthGuard,  ConfirmService, ConfirmState, {provide: ToastOptions, useClass: CustomToastOption}],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
