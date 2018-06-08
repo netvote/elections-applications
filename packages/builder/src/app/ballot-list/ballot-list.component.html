@@ -10,8 +10,13 @@
 
 <div [hidden]="!(ballots | async)?.length" class="nv-ballot-list">
 
-  <h1 class="mt-4 mb-5">All Ballots</h1>
+  <!-- Modal Delete Confirmation Template -->
+  <ng-template confirm>
+      <confirm-modal-component></confirm-modal-component>
+  </ng-template>
 
+  <h1 class="mt-4 mb-5">All Ballots</h1>
+  
   <div class="row  m-0">
 
     <ul class="list-unstyled">
@@ -116,8 +121,8 @@
                 </div>
 
                 <div class="col col-6">
-                    <a *ngIf="ballot.status !== 'created'" (click)="testDelete(ballot)" title="Delete this ballot"><span class="oi oi-trash"></span></a>
-                    <a *ngIf="ballot.status === 'created'" (click)="testDelete(ballot)" title="Archive this ballot"><span class="oi oi-inbox"></span></a>
+                    <a *ngIf="ballot.status !== 'created'" (click)="deleteBallot(ballot)" title="Delete this ballot"><span class="oi oi-trash"></span></a>
+                    <a *ngIf="ballot.status === 'created'" (click)="deleteBallot(ballot)" title="Archive this ballot"><span class="oi oi-inbox"></span></a>
                     <!--a *ngIf="ballot.status === 'created'"><span class="oi oi-share-boxed"></span></a-->
                 </div>
   

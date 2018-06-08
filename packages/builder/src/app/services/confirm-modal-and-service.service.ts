@@ -1,3 +1,5 @@
+// Modified from: https://gist.github.com/jnizet/15c7a0ab4188c9ce6c79ca9840c71c4e
+
 import { Component, Injectable, Directive, TemplateRef } from '@angular/core';
 import { NgbModal, NgbModalRef, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 
@@ -67,10 +69,10 @@ export class ConfirmService {
 @Component({
   selector: 'confirm-modal-component',
   template: `<div class="modal-header">
+    <h4 class="modal-title">{{ options.title}}</h4>
     <button type="button" class="close" aria-label="Close" (click)="no()">
       <span aria-hidden="true">&times;</span>
     </button>
-    <h4 class="modal-title">{{ options.title}}</h4>
   </div>
   <div class="modal-body">
     <p>{{ options.message }}</p>
@@ -110,7 +112,7 @@ export class ConfirmModalComponent {
  * in order to register the confirm template to the internal confirm state
  */
 @Directive({
-  selector: "template[confirm]"
+  selector: "[confirm]"
 })
 export class ConfirmTemplateDirective {
   constructor(confirmTemplate: TemplateRef<any>, state: ConfirmState) {
@@ -118,20 +120,20 @@ export class ConfirmTemplateDirective {
   }
 }
 
-@Component({
-  selector: 'some-applicative-component',
-  templateUrl: './some-applicative-component.html'
-})
-export class SomeApplicativeComponent {
-  constructor(private confirmService: ConfirmService) {}
+// @Component({
+//   selector: 'some-applicative-component',
+//   templateUrl: './some-applicative-component.html'
+// })
+// export class SomeApplicativeComponent {
+//   constructor(private confirmService: ConfirmService) {}
 
-  deleteFoo() {
-    this.confirmService.confirm({ title:'Confirm deletion', message: 'Do you really want to delete this foo?' }).then(
-      () => {
-        console.log('deleting...');
-      },
-      () => {
-        console.log('not deleting...');
-      });
-  }
-}
+//   deleteFoo() {
+//     this.confirmService.confirm({ title:'Confirm deletion', message: 'Do you really want to delete this foo?' }).then(
+//       () => {
+//         console.log('deleting...');
+//       },
+//       () => {
+//         console.log('not deleting...');
+//       });
+//   }
+// }

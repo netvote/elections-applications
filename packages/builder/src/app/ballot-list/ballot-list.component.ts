@@ -3,7 +3,7 @@ import {BallotService} from '../services/ballot.service';
 import {Ballot} from '@netvote/core';
 import {Observable} from 'rxjs/Observable';
 import {ToastService} from '../services/toast.service';
-
+import { ConfirmService, ConfirmState, ConfirmTemplateDirective, ConfirmModalComponent } from '../services/confirm-modal-and-service.service';
 import { SpinnerService } from '@chevtek/angular-spinners';
 
 @Component({
@@ -21,6 +21,7 @@ export class BallotListComponent implements OnInit {
   constructor(
     public spinnerService: SpinnerService,
     private ballotService: BallotService,
+    private confirmService: ConfirmService,
     private elementRef: ElementRef,
     private toast: ToastService) {
 
@@ -71,18 +72,26 @@ export class BallotListComponent implements OnInit {
     //   });
   }
 
-  async testDelete(ballot) {
+  deleteBallot(ballot) {
+    this.confirmService.confirm({ title:'Delete Ballot', message: 'Are you sure you want to delete this ballot?' }).then(
+      () => {
 
-    try {
-      // if (ballot.status /*!== 'building'*/) {
-      //   throw new Error('You cannot delete a ballot that has already been deployed');
-      // }
+        //console.log('deleting...');
 
-      await this.ballotService.deleteBallot(ballot);
+        try {
+    
+          this.ballotService.deleteBallot(ballot).then(() => {
+            this.toast.info('Ballot ' + ballot.title + ' has been deleted.');
+          });
+    
+        } catch (err) {
+          this.toast.error(err.message);
+        }
 
-    } catch (err) {
-      this.toast.error(err.message);
-    }
+      },
+      () => {
+        //console.log('not deleting...');
+      });
   }
 
   async togglePulse(ballot: any) {
