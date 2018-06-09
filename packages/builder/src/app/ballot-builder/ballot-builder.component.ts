@@ -243,7 +243,7 @@ export class BallotBuilderComponent implements OnInit {
     this.showJson = !this.showJson;
   }
 
-  saveBallot() {
+  saveBallot(): Promise<any> {
 
     if (!this.ballot) {
 
@@ -278,7 +278,11 @@ export class BallotBuilderComponent implements OnInit {
     }
   }
 
-  activateBallot() {
+  deployBallot() {
+
+    this.saveBallot().then((saved_ballot) =>{
+      this.ballotService.deployBallot(this.ballot);
+    });
 
     // First save the ballot
     //this.saveBallot().then((afs_ballot) => {

@@ -58,6 +58,13 @@ export class AuthService {
     });
   }
 
+  async getIdToken(): Promise<string> {
+    if(this.currentUser)
+      return await this.currentUser.fb.getIdToken(true);
+    else
+      return null;
+  }
+
   getEthAccounts(): Observable<any> {
     return this.web3.getAccounts();
   }
@@ -258,11 +265,11 @@ export class AuthService {
   }
 
   private getEthVerificationToken(unsigned: string, signed: string): Observable<Object> {
-    return this.http.post(`https://netvote1.firebaseapp.com/eth/auth/${unsigned}/${signed}`, null, {responseType: 'text'});
+    return this.http.post(`https://netvote2.firebaseapp.com/eth/auth/${unsigned}/${signed}`, null, {responseType: 'text'});
   }
 
   private getEthChallenge(account: string): Observable<Object> {
-    return this.http.post(`https://netvote1.firebaseapp.com/eth/auth/${account}`, null, {responseType: 'text'});
+    return this.http.post(`https://netvote2.firebaseapp.com/eth/auth/${account}`, null, {responseType: 'text'});
   }
 
   // Sends email allowing user to reset password
