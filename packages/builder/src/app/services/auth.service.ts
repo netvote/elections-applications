@@ -82,7 +82,7 @@ export class AuthService {
         userRef = fbuser;
         return userRef.updateEmail(email);
       })
-      .then(()=>{
+      .then(() => {
         return userRef.updateProfile({displayName: `${firstName} ${lastName}`});
       })
       .then(() => {
@@ -97,52 +97,6 @@ export class AuthService {
     this.currentUser = null;
     this.currentOrg = null;
     this.authState = null;
-  }
-
-  private establishEthhUser(fbuser: firebase.User, email: string) {
-
-    return new Promise<{user: User, org: Org}>((resolve, reject) => {
-
-      async.waterfall([
-
-        // Check if user exists
-        (cb) => {
-          this.db.document$(`user/${fbuser.uid}`).subscribe((user) => {
-            return cb(null);
-          });
-        },
-        // Get the attached user
-        (cb) => {
-          console.log("Waterfall:", fbuser.uid);
-          this.db.docWithRefs$<User>(`user/${fbuser.uid}`).subscribe((user) => {
-            console.log("Retrieved user: ", user);
-            if (!user) {
-              console.log("ERR: User Missing; must be created");
-            }
-            this.currentUser = user;
-            return cb(null, user);
-          });
-
-        },
-        // Get the current org
-        (user, cb) => {
-
-          user.currentOrg.subscribe((org) => {
-            this.currentOrg = org;
-            return cb(null, {user: user, org: org});
-          });
-
-        }
-
-      ], (err, res) => {
-        if (err)
-          return reject(err);
-
-        return resolve({user: res['user'], org: res['org']});
-      });
-
-    });
-
   }
 
   private createUserMeta(fbuser: firebase.User, email: string = null, displayName: string = null): Promise<any> {
@@ -162,36 +116,39 @@ export class AuthService {
       };
 
       this.db.exists<User>(`user/${fbuser.uid}`).then((exists) => {
-        if(exists){
+        if (exists) {
           return resolve();
-        }        
+        }
         else {
           this.db.set<User>(`user/${fbuser.uid}`, data as User)
-          .then(() => {
-            const org = {
-              slug: uuid(),
-              displayName: displayName || fbuser.displayName
-            };
-            return this.db.add<OrgUser>('org', org as Org);
-          })
-          .then((orgref) => {
-    
-            orgid = orgref.id;
-            orgRef = orgref;
-    
-            const orguser = {
-              uid: uid,
-              orgid: orgref.id,
-              roles: ['admin']
-            };
-            return this.db.add<OrgUser>('orguser', orguser as OrgUser);
-          })
-          .then((orguser) => {
-            return resolve(this.db.update<User>(`user/${uid}`, {currentOrg: orgRef}));
-          })
-          .catch((error) => {
-            return reject(error);
-          });
+            .then(() => {
+              const org = {
+                slug: uuid(),
+                displayName: displayName || fbuser.displayName
+              };
+              return this.db.add<OrgUser>('org', org as Org);
+            })
+            .then((orgref) => {
+
+              orgid = orgref.id;
+              orgRef = orgref;
+
+              const orguser = {
+                uid: uid,
+                orgid: orgref.id,
+                roles: ['admin']
+              };
+              return this.db.add<OrgUser>('orguser', orguser as OrgUser);
+            })
+            .then((orguser) => {
+              return this.db.update<User>(`user/${uid}`, {currentOrg: orgRef});
+            })
+            .then(()=>{
+              return resolve();
+            })
+            .catch((error) => {
+              return reject(error);
+            });
         }
       });
     });
@@ -301,11 +258,11 @@ export class AuthService {
   }
 
   private getEthVerificationToken(unsigned: string, signed: string): Observable<Object> {
-    return this.http.post(`https://metaauth.firebaseapp.com/eth-auth/${unsigned}/${signed}`, null, {responseType: 'text'});
+    return this.http.post(`https://netvote1.firebaseapp.com/eth/auth/${unsigned}/${signed}`, null, {responseType: 'text'});
   }
 
   private getEthChallenge(account: string): Observable<Object> {
-    return this.http.post(`https://metaauth.firebaseapp.com/eth-auth/${account}`, null, {responseType: 'text'});
+    return this.http.post(`https://netvote1.firebaseapp.com/eth/auth/${account}`, null, {responseType: 'text'});
   }
 
   // Sends email allowing user to reset password

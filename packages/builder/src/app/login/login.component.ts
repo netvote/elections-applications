@@ -80,6 +80,7 @@ export class LoginComponent implements OnInit {
           this.router.navigate(['/']);
         }).catch(
           (error) => {
+            console.log(error);
             this.loading = false;
           });
     }
@@ -103,6 +104,7 @@ export class LoginComponent implements OnInit {
           this.router.navigate(['/']);
         }).catch(
           (error) => {
+            console.log(error);
             this.loading = false;
           });
     } else if (this.authMethod === "google") {
