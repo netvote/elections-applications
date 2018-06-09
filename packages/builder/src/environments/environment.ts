@@ -13,3 +13,4 @@ export const environment = {
     storageBucket: 'netvote1.appspot.com',
     messagingSenderId: '465732821727'
   }
+}
