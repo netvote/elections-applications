@@ -64,19 +64,13 @@ export class BallotService {
 
   async deployBallot(ballot: Ballot) {
 
-    // Need to rename a couple of properties until made consistent
-    ballot.json.featuredImage = ballot.json.ballotImage;
-    ballot.json.type = ballot.json.ballotType;
-    ballot.json.description = ballot.json.ballotTitle;
-    console.log(ballot.json);
-
     const ipfs = this.blockchain.getIPFSConnection();
     ipfs.p.addJSON(ballot.json).then(async (address) => {
 
       await this.submitBallot(address)
 
-      // const meta = await this.getRemoteBallotMeta(ipfs);
-      // console.log(meta);
+      //const meta = await this.getRemoteBallotMeta(address);
+      //console.log(meta);
     });
 
   }
@@ -84,8 +78,6 @@ export class BallotService {
   async submitBallot(ipfs) {
 
     const token = await this.auth.getIdToken();
-
-    console.log(token);
 
     const body = {
       'autoActivate': true,
@@ -103,6 +95,7 @@ export class BallotService {
 
     this.http.post(`https://netvote2.firebaseapp.com/admin/election/`, body, httpOptions).subscribe((something)=>{
       console.log(something);
+      //{"txId":"olgcZRM4yi0YgtKRbNUG","collection":"transactionCreateElection"}
     });
   }
 

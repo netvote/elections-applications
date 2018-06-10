@@ -224,7 +224,7 @@ export class BallotListComponent implements OnInit {
       "ballotTitle": "Fulton County Ballot",
       "ballotLocation": "Fulton County",
       "ballotDate": "2017-11-07",
-      "ballotImage": "/assets/temp/test-image-6.jpg",
+      "ballotImage": "/assets/img/roswell-ga.jpg",
       "ballotInformation": null,
       "ballotGroups": [
         {

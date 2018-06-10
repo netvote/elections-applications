@@ -47,6 +47,8 @@ export class BallotDetailPage {
     if (!this.ballot) {
       return;
     }
+
+    //console.log("NV:", JSON.stringify(this.ballot));
       
     if (this.ballot.selections)
       this.currentSelected = this.ballot.selections;
@@ -56,6 +58,10 @@ export class BallotDetailPage {
       meta = await this.netvote.getRemoteBallotMeta(this.address);
     }
     this.ballot.meta = meta;
+
+    console.log("NV: img", this.ballot.featuredImage);
+    console.log("NV: title", meta.ballotTitle);
+    console.log("NV: location", meta.ballotLocation);
 
     if (this.ballot.status !== 'submitted') {
 
@@ -86,7 +92,8 @@ export class BallotDetailPage {
   }
 
   get finished(): boolean {
-    return Object.keys(this.currentSelected).length === 3;
+    return true;
+    //return Object.keys(this.currentSelected).length === 3;
   }
   
   // Cancel editing and return to list

@@ -50,11 +50,19 @@
           <div *ngIf="!readyToBuild">
 
             <div class="form-group">
+              <label >Blockchain</label>
+              <select class="form-control">
+                  <option value="ropsten" selected="selected">Ethereum Test - Ropsten</option>
+                </select>
+              <small id="ballotTypeHelp" class="form-text text-muted">Choose where to deploy this ballot.</small>
+            </div>
+
+            <div class="form-group">
               <label >Ballot Type</label>
               <select class="form-control" formControlName="ballotType">
-                  <!-- <option value="registerable">Registerable</option> -->
-                  <option value="public">Public</option>
-                  <!-- <option value="token-holder">Token Holder</option> -->
+                  <option value="registerable">Private</option>
+                  <option value="public" selected="selected">Public</option>
+                  <option value="token-holder">Token Holder</option>
                 </select>
               <small id="ballotTypeHelp" class="form-text text-muted">Choose what type of ballot this will be.</small>
             </div>

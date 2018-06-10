@@ -18,11 +18,11 @@ import {BallotDatepickerComponent} from '../ballot-datepicker/ballot-datepicker.
 export class BallotBuilderComponent implements OnInit {
 
   emptyBallot = {
-    ballotType: "registerable",
+    ballotType: "public",
     ballotTitle: "",
     ballotLocation: "",
     ballotDate: "",
-    ballotImage: "/assets/temp/test-image-6.jpg",
+    ballotImage: "/assets/img/roswell-ga.jpg",
     ballotInformation: "",
     ballotGroups: [
       {
@@ -255,6 +255,16 @@ export class BallotBuilderComponent implements OnInit {
         json: this.ballotForm.value
       } as Ballot;
 
+      // Need to rename a couple of properties until made consistent
+      this.ballot.json.ballotImage = "https://netvote.io/wp-content/uploads/2018/03/roswell-ga.jpg";
+      this.ballot.json.featuredImage = this.ballot.json.ballotImage;
+      this.ballot.json.type = this.ballot.json.ballotType;
+      this.ballot.json.description = this.ballot.json.ballotTitle;
+
+
+      // TODO: TEMP
+      this.ballot.type = "public";
+
       return this.ballotService.createBallot(this.ballot)
         .then((afs_ballot) => {
           console.log("adslfafd", afs_ballot);
@@ -269,6 +279,13 @@ export class BallotBuilderComponent implements OnInit {
       this.ballot.description = this.ballotForm.value.ballotInformation;
       this.ballot.type = this.ballotForm.value.ballotType;
       this.ballot.json = this.ballotForm.value;
+      this.ballot.json.ballotImage = "https://netvote.io/wp-content/uploads/2018/03/roswell-ga.jpg";
+      this.ballot.json.featuredImage = this.ballot.json.ballotImage;
+      this.ballot.json.type = this.ballot.json.ballotType;
+      this.ballot.json.description = this.ballot.json.ballotTitle;
+
+      // TODO: TEMP
+      this.ballot.type = "public";
 
       return this.ballotService.updateBallot(this.ballot)
         .then((afs_ballot) => {
@@ -283,26 +300,6 @@ export class BallotBuilderComponent implements OnInit {
     this.saveBallot().then((saved_ballot) =>{
       this.ballotService.deployBallot(this.ballot);
     });
-
-    // First save the ballot
-    //this.saveBallot().then((afs_ballot) => {
-
-    // const json = this.formGroup.value;
-
-    // const e = new BallotManager();
-
-    // // Deploy the ballot
-    // e.createBallot(json, 20).then((res) => {
-
-    //   this.ballot.ipfs = res.ipfs;
-
-    //   this.saveBallot().then(() => {
-
-    //   });
-
-    // });
-
-    //});
 
   }
 
