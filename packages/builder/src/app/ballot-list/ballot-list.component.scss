@@ -1,0 +1,133 @@
+// Variables
+@import '../../assets/scss/variables';
+
+.#{$ns}ballot-list{
+	//max-width: 90%;
+	padding: 0 1rem;
+
+	&__status{
+		font-size: 85%;
+
+		> div{
+			display: inline-block;
+		}
+	}
+
+	&__item{
+		overflow: hidden;
+		margin-bottom: 2rem;
+		padding-bottom: 2rem;
+		border-bottom: 1px solid #ccc;
+		
+		&__inner{
+				height: 120px;
+		}
+	
+		&__metrics{
+			position: relative;
+			background-color: #EFEFEF;
+	
+			.close{
+					position: absolute;
+					top: 0.5rem;
+					right: 1rem;
+			}
+		}
+	}
+
+	&__image{
+		height: 115px;
+		background-size: cover;
+	}
+
+	&__title{
+		font-weight: 600;
+	}
+	
+	&__desc{
+		flex: 1; /* push status down */
+		color: #999;
+		font-size: 85%;
+	}
+
+	&__qr-toggle{
+		display: block;
+		width: 1.5rem;
+		height: 1.5rem;
+		display: block;
+		position: absolute;
+		bottom: 0.5rem;
+		right: 0.5rem;
+		background: rgb(255, 255, 255);
+		padding: 5px;
+		border-radius: 50%;
+		transition: all 0.1s;
+
+		&:hover{
+			box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.5);
+		}
+
+		img{
+			display: block;
+		}
+	}
+
+	ul{
+		width: 100%;
+	}
+}
+
+
+/* BS media block */
+.media-asset{
+	position: relative;
+	width: 200px;
+	height: 115px;
+}
+
+.media-asset img{
+	max-width: 100%;
+}
+
+
+/* move to outer stylesheet for generic use - island*/
+.#{$ns}message{
+	width: 75%
+}
+
+.#{$ns}mini-grid{
+	width: 150px;
+
+	.col a{
+		color: rgba(0, 0, 0, 0.5);
+	}
+
+	img{
+		height: 1rem;
+		width: 1rem;
+		opacity: 0.5;
+	}
+
+	.row:first-child{
+		border-bottom: 1px solid #ccc;
+	}
+
+	.row .col:first-child{
+		border-right: 1px solid #ccc;
+	}
+
+	.col{
+		padding: 0.5rem 1rem;
+
+		&:hover{
+
+			a{
+				color: rgba(0, 0, 0, 1);
+			}
+
+			img{
+				opacity: 1;
+			}
+		} 
+	}
+}

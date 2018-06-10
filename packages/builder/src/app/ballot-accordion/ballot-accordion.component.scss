@@ -1,0 +1,30 @@
+
+// Pierce shadow DOM and style the accordion 
+::ng-deep {
+
+    .card{
+        border-radius: 0;
+        background: none;
+        border: none;
+    }
+
+    .card-header{
+        padding: 0;
+        background: none;
+        border: 0;
+        border-radius: 0;
+
+        a{
+            color: inherit;
+
+            &:hover{
+                color: inherit;
+                text-decoration: none;
+            }
+        }
+    }
+
+    .card-body{
+        padding: 0;
+    }
+}

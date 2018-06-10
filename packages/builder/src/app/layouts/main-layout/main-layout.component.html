@@ -1,0 +1,53 @@
+<div class="nv-page-wrap">
+    
+    <app-header></app-header>
+
+    <div class="container-fluid">
+            
+        <div class="row">
+    
+            <nav class="col-sm-3 col-md-2 sidebar">
+    
+            <a class="nv-logo" routerLink="/ballot-list">
+                <img src="/assets/netvote-logo-mark.svg" width="120" height="40" alt="">   
+            </a>
+    
+            <ul class="nav flex-column">
+            
+                <!-- <li class="nav-item"><a class="nav-link">Dashboard</a></li> -->
+    
+                <li class="nav-item"><a class="nav-link">Messages <span class="badge badge-pill badge-primary">0</span></a></li>                
+    
+            </ul>
+    
+            <ul class="nav  flex-column  nv-nav  nv-nav--callout">
+                
+                <li class="nv-nav__item  nv-nav__item--has-sub">
+    
+                    <div class="nv-nav__header">Recent Activity</div>
+                
+                    <ul class="nav flex-column nv-nav--sub">
+                            
+                        <li class="nv-nav__item">{{ballotCount}} Total Ballots</li> 
+                        <li class="nv-nav__item">{{buildingBallotCount}} Draft Ballots</li>
+                        <li class="nv-nav__item">{{activatedBallotCount}} Activated Ballots</li>
+    
+                    </ul>
+    
+                </li>                
+    
+            </ul>
+    
+            </nav>
+    
+            <main class="col-sm-9 ml-sm-auto col-md-10 pt-3">
+                    
+                <router-outlet></router-outlet>
+        
+            </main>
+    
+        </div>
+        
+    </div>
+</div>
+

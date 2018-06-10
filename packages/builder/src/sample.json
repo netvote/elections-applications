@@ -1,0 +1,60 @@
+{
+    "type": "registerable",
+    "ballotTitle": "Fulton County Ballot",
+    "ballotLocation": "Fulton County",
+    "ballotDate": "2017-11-07",
+    "ballotImage": "/assets/temp/test-image-6.jpg",
+    "ballotInformation": null,
+    "ballotGroups": [
+      {
+        "groupTitle": "City of Alpharetta",
+        "ballotSections": [
+          {
+            "sectionTitle": "City Council",
+            "sectionNote": "Post 2",
+            "ballotItems": [
+              {
+                "itemTitle": "Ben Burnett",
+                "itemDescription": ""
+              },
+              {
+                "itemTitle": "Ben H. Easterling",
+                "itemDescription": null
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "groupTitle": "City of Atlanta",
+        "ballotSections": [
+          {
+            "sectionTitle": "Mayor",
+            "sectionNote": "",
+            "ballotItems": [
+              {
+                "itemTitle": "Peter Aman",
+                "itemDescription": ""
+              },
+              {
+                "itemTitle": "Rohit Ammanamanchi",
+                "itemDescription": null
+              },
+              {
+                "itemTitle": "Keisha Lance Bottoms",
+                "itemDescription": null
+              },
+              {
+                "itemTitle": "John H. Eaves",
+                "itemDescription": null
+              },
+              {
+                "itemTitle": "Vincent Fort",
+                "itemDescription": null
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }

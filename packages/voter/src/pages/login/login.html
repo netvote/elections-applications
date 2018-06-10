@@ -44,7 +44,7 @@
           </ion-item>
 
           <div padding>
-            <button type="submit" ion-button color="primary" block (tap)="register()"
+            <button type="submit" ion-button block color="primary" (tap)="register()"
               [disabled]="processing">{{ 'SET_PASSCODE' | translate }}</button>
             <button ion-button small clear (click)="openEntryType($event, 'signin')" color="primary" [disabled]="processing">{{ 'LOGIN_BUTTON' | translate }}</button>
           </div>

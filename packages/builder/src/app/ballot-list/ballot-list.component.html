@@ -1,0 +1,178 @@
+
+
+<div [hidden]="(ballots | async)?.length" class="nv-message  mt-5  mx-auto  py-4  px-2  border  text-center">
+
+  <h3 class="mb-4">You don't have any ballots.</h3>
+
+  <button class="btn  btn-lg  btn-primary  text-light" type="button" routerLink="/ballot-builder">Build a new ballot</button>
+
+</div>
+
+<div [hidden]="!(ballots | async)?.length" class="nv-ballot-list">
+
+  <!-- Modal Delete Confirmation Template -->
+  <ng-template confirm>
+      <confirm-modal-component></confirm-modal-component>
+  </ng-template>
+
+  <h1 class="mt-4 mb-5">All Ballots</h1>
+  
+  <div class="row  m-0">
+
+    <ul class="list-unstyled">
+      
+      <li class="nv-ballot-list__item" *ngFor="let ballot of ballots | async; let i=index">
+
+        <div class="media  align-items-center  nv-ballot-list__item__inner">
+
+            <div class="mr-3 media-asset">
+              
+              <div class="nv-flip">
+
+                <div class="nv-flip__flipper" [ngClass]="{'is-flipped': ballot.showQR}">
+                  
+                  <div class="nv-flip__item  nv-flip__item--front">
+                      <div class="nv-ballot-list__image" [style.background-image]="'url(' + ballot.json.ballotImage + ')'"></div>
+                  </div>
+
+                  <div class="nv-flip__item  nv-flip__item--back">
+                      <qr-code value="{{ballot.address}}" [size]="100" class="d-block text-center"></qr-code>
+                  </div>
+                </div>
+
+              </div>
+  
+              <a (click)="toggleQR(ballot)" *ngIf="ballot.status === 'activated'" class="nv-ballot-list__qr-toggle">
+                  
+                <img *ngIf="!ballot.showQR" src="/assets/qr-icon.svg" title="Show QR code">
+  
+                <span *ngIf="ballot.showQR" class="oi  oi-loop-circular  text-dark  d-block" title="Close QR code"></span>
+  
+              </a>
+  
+            </div>
+                
+            <div class="media-body  align-self-start  h-100">
+  
+              <div class="d-flex  flex-column  w-75  h-100">
+  
+                <p class="mt-0 mb-1  nv-ballot-list__title">{{ballot.title}}</p>
+                
+                <p class="nv-ballot-list__desc">{{ballot.description}}</p>
+
+                <div class="nv-ballot-list__status">
+
+                  <b>Status:&nbsp;</b>
+
+                  <!-- Building -->
+                  <div *ngIf="ballot.status === 'building'" class="text-secondary"><span>In draft mode. <a (click)="deployBallot(ballot); $event.preventDefault();" href="#" class="text-primary">Deploy ballot?</a></span></div>
+                  <!-- Submitted-->
+                  <div *ngIf="ballot.status === 'submitted'" class="text-warning">
+                    <spinner name="ballot.id" [(show)]="ballot.showingSpinner">
+                      <div class="nv-spinner  is-animating">
+                        <div class="nv-spinner__text">On way to the blockchain!</div>
+                        <div class="nv-spinner__anim"></div>
+                      </div>
+                    </spinner>
+                  </div>
+                  <!-- Created -->
+                  <div *ngIf="ballot.status === 'created'"><span>Created on the blockchain!</span> <a (click)="activateBallot(ballot); $event.preventDefault();" href="#">Activate?</a></div>
+                  <!-- Activating -->
+                  <div *ngIf="ballot.status === 'activating'">
+                    <spinner name="ballot.id" [(show)]="ballot.showingSpinner">
+                        <div class="nv-spinner  is-animating">
+                          <div class="nv-spinner__text">Activating to allow voting.</div>
+                          <div class="nv-spinner__anim"></div>
+                        </div>
+                      </spinner>
+                  </div>
+                  <!-- Activated -->
+                  <div *ngIf="ballot.status === 'activated'" class="text-success"><span>Live on the blockchain! Voting is open.</span></div>
+                  <!-- Closed -->
+                  <div *ngIf="ballot.status === 'closed'"><span>Closed - Voting has ended.</span></div>
+
+                </div>
+  
+              </div>
+  
+            </div>
+  
+            <div class="nv-mini-grid  text-center">
+  
+              <div class="row  m-0">
+                
+                <div class="col col-6">
+
+                  <a title="Ballot metrics" (click)="togglePulse(ballot)"
+                  [attr.aria-expanded]="!ballot.showPulse" aria-controls="metricsCollapse"><span class="oi oi-pulse"></span></a>
+
+                </div>
+  
+                <div class="col col-6">
+                  <a routerLink="/ballot-builder/{{ballot.id}}"><span class="oi oi-cog"></span></a>
+                </div>
+  
+              </div>
+  
+              <div class="row  m-0">   
+  
+                <div class="col col-6">
+                    <a (click)="toggleQR(ballot)"><img src="/assets/qr-icon.svg"></a>
+                </div>
+
+                <div class="col col-6">
+                    <a *ngIf="ballot.status !== 'created'" (click)="deleteBallot(ballot)" title="Delete this ballot"><span class="oi oi-trash"></span></a>
+                    <a *ngIf="ballot.status === 'created'" (click)="deleteBallot(ballot)" title="Archive this ballot"><span class="oi oi-inbox"></span></a>
+                    <!--a *ngIf="ballot.status === 'created'"><span class="oi oi-share-boxed"></span></a-->
+                </div>
+  
+              </div>
+  
+            </div>
+
+        </div>
+        
+        <div id="metricsCollapse" [ngbCollapse]="!ballot.showPulse">
+
+          <div class="mt-2  nv-ballot-list__item__metrics">
+
+            <button type="button" class="close" aria-label="Close" (click)="togglePulse(ballot)">
+              <span aria-hidden="true">&times;</span>
+            </button>
+
+            <div class="p-4">
+
+              <h5>Ballot Activity</h5>
+
+              <h6>Blockchain:</h6>
+
+              <p>
+
+                <small>View transaction: 
+                <a *ngIf="ballot.status === 'created'" target="_blank" href="https://ropsten.etherscan.io/tx/{{ballot.tx}}" title="View transaction">{{ballot.tx}}</a></small>
+                <small *ngIf="ballot.status !== 'created'">Ballot not yet on the blockchain. <a href="">Create it?</a></small>
+
+              </p>
+
+              <h6>Voting Metrics</h6>
+
+              <small>There is currently no voting activity on this ballot.</small>
+              <small><a href="#" (click)="selfRegister(ballot); $event.preventDefault();">Register to vote</a></small>
+              <br>
+              {{ballot.currentResults}}
+
+            </div>
+
+          </div>
+          
+        </div>
+
+      </li>
+
+    </ul>
+    
+  </div>
+
+</div>
+
+

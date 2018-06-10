@@ -1,5 +1,5 @@
 import {NgModule, ErrorHandler} from '@angular/core';
-import {RollbarModule, RollbarService} from 'angular-rollbar'
+//import {RollbarModule, RollbarService} from 'angular-rollbar'
 import {AppVersion} from '@ionic-native/app-version';
 import {BrowserModule} from '@angular/platform-browser';
 import {HttpModule, Http} from '@angular/http';
@@ -54,12 +54,12 @@ export function HttpLoaderFactory(http: Http) {
 }
 
 export const firebaseConfig = {
-  apiKey: "AIzaSyBYpXBb6kk2L1GjZNVR4l4GH1uqmPnTNh8",
-  authDomain: "netvote1.firebaseapp.com",
-  databaseURL: "https://netvote1.firebaseio.com",
-  projectId: "netvote1",
-  storageBucket: "netvote1.appspot.com",
-  messagingSenderId: "465732821727"
+  apiKey: "AIzaSyCYwUBgD-jq6bgbKqvLi8zjtMbRLmStN4I",
+  authDomain: "netvote2.firebaseapp.com",
+  databaseURL: "https://netvote2.firebaseio.com",
+  projectId: "netvote2",
+  storageBucket: "netvote2.appspot.com",
+  messagingSenderId: "861498385067"
 };
 
 export function provideSettings(storage: Storage) {
@@ -83,9 +83,9 @@ export function provideSettings(storage: Storage) {
     SettingsPage
   ],
   imports: [
-    RollbarModule.forRoot({
-      accessToken: '039693e65b814a28a657fe53656e2aff'
-    }),
+    // RollbarModule.forRoot({
+    //   accessToken: '039693e65b814a28a657fe53656e2aff'
+    // }),
     //ComponentsModule,
     BrowserModule,
     HttpModule,
@@ -124,7 +124,9 @@ export function provideSettings(storage: Storage) {
     SecureStorage,
     {provide: Settings, useFactory: provideSettings, deps: [Storage]},
     // Keep this to enable Ionic's runtime error handling during development
-    {provide: ErrorHandler, useClass: RollbarService},
+    
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    // {provide: ErrorHandler, useClass: RollbarService},
     AuthProvider,
     InAppBrowser,
     NetvoteProvider,

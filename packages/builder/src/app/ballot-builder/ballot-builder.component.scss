@@ -1,0 +1,356 @@
+
+
+@import '../../assets/scss/variables';
+
+.form-horizontal{
+    font-size: 12px;
+}
+
+.nv-builder{
+    
+    &__save{
+        position: fixed;
+        z-index: 10000;
+        top: 0.5rem;
+        right: 5rem;
+    }
+
+    // &__main-header{
+    //     position: fixed;
+    //     background-color: $body-bg;
+    // }
+
+    &__form-scroll{
+        position: fixed;
+        width: 600px;
+        height: calc(100% - 200px);
+        overflow: hidden;
+    }
+
+    &__form{
+        position: absolute;
+        height: 100%;
+        overflow-y: auto;
+        width: 100%;
+        padding: 0 0.25rem 100px 0.15rem;
+    }
+
+    &__group-rail{
+        position: fixed;
+        height: 100%;
+        border-right: 2px solid #eee;
+        padding-right: 3rem;
+    }
+}
+
+.collapse, .collapse.in {
+    display: block !important;
+    transition: all .25s ease-in-out;
+  }
+  
+  .collapse {
+   opacity: 0;
+   height: 0;
+   overflow: hidden;
+  }
+  
+  .collapse.show {
+    opacity: 1;
+    height: 100%;
+  }
+
+// Accordion
+.#{$ns}builder-acc{
+
+    &__header{
+        border: 1px solid  mix(white, black, 80%);
+        overflow: hidden;
+        background-color: white;
+
+        margin-top: 5px;
+    }
+
+    &__additional{
+        margin-left: 80px;
+        border: 1px solid  mix(white, black, 80%);
+        border-top: 0;
+    }
+
+    &__identifier{
+        width: 80px;
+        text-align: center;
+        color: #333;
+        border-right: 1px solid mix(white, black, 80%);
+
+        > div{
+            flex: 1;
+        }
+
+        &--group{
+            background-color: mix(white, black, 65%);
+        }
+
+        &--section{
+            background-color: mix(white, black, 85%);
+        }
+
+        &--item{
+            background-color: mix(white, black, 95%);
+        }
+    }
+
+    &__field{
+        flex: 1;
+        position: relative;
+
+        &:before{
+            content: attr(data-mini-placeholder);
+            position: absolute;
+            left: 8px;
+            font-size: 9px;
+            color: rgb(131, 131, 131);
+        }
+
+        > .form-control{ // input
+            border: none;
+            border-radius: 0;
+            padding-top: 13px;
+
+            &:focus{
+                box-shadow: none;
+                background-image: linear-gradient(45deg, rgba($app-color-pri,0.1) 0%,rgba($app-color-pri,0.1) 30%,rgba(white,0) 100%);
+            }
+        }
+    }
+
+    &__identifier, &__field > input{
+        padding: 0.5rem;
+    }
+
+    &__group{
+
+        &:not(:first-child){
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 4px solid #bbb;
+        }
+    }
+
+    &__items{
+        margin-left: 80px;
+    }
+
+    &__actions{
+        transform: translateX(50%);
+        transition: all 0.15s linear;
+
+        > button{
+            height: 100%;
+            min-width: 42px;
+            border-radius: 0; 
+        }
+
+        .btn-link{
+            color: #ddd;
+        }
+
+        .oi-caret-left{
+            transition: all 0.1s linear;
+            transform: rotate(0);
+        }
+
+        &.is-active{
+            transform: translateX(0);
+
+            .oi-caret-left{
+                transform: rotate(-180deg);
+            }
+        }
+    }
+
+    &__add-new{
+        border: 1px dashed #ccc;
+        margin-top: 6px;
+        margin-bottom: 8px;
+        padding: 8px;
+        text-align: center;
+        color: #bbb;
+
+        &:hover, &focus{
+            color: #999;
+        }
+    }
+}
+
+// Mock area
+.nv-mock{
+    position: relative;
+
+    &__inner{
+        position: fixed;
+        top: 100px;
+        right: 4rem;
+        width: 275px;
+    }
+
+    &__preview{
+        position: absolute;
+        top: 65px;
+        left: 17px;
+        height: 426px;
+        width: 240px;
+        background: $app-color-sec;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        -ms-overflow-style: none;
+    }
+
+    &__json{
+        background: white;
+        font-size: 10px;
+    }
+}
+
+
+/* PREVIEW AREA INSIDE MOCK PHONE*/
+.nv-preview{
+
+    &__navbar{
+        position: fixed;
+        z-index: 3;
+        width: 240px;
+        padding: 10px;
+        background: $app-color-sec;
+        color: white;
+        text-align: center;
+
+        img{
+            height: 24px;
+            margin-left: -16px;
+        }
+    }
+
+    &__header{
+        position: relative;
+        line-height: 1;
+        padding-top: 44px;
+
+        &:after{
+            content: "";
+            position: absolute;
+            bottom: 0;
+            z-index: 1;
+            height: 55%;
+            width: 100%;
+            background: linear-gradient(to bottom, rgba(0,0,0,0) 0%,rgba(0,0,0,0.67) 50%,rgba(0,0,0,1) 100%);
+        }
+    }
+
+    &__title{
+        margin-bottom: 0.25rem;
+    }
+
+    &__location{
+        margin-bottom: 0.25rem;
+    }
+
+    &__date{
+        font-size: 10px;
+    }
+
+    &__image{
+        position: relative;
+        background-size: cover;
+        height: 150px;
+        z-index: 0;
+    }
+
+    &__meta{
+        position: absolute;
+        bottom: 0.5rem;
+        z-index: 2;
+        padding-left: 10px;
+        font-size: 12px;
+        color: white;
+    } 
+
+    &__groups{
+        font-size: 12px;
+        line-height: 1;
+    }
+
+    &__group{
+        //min-height: 150px;
+
+        &__title{
+            padding: 0.25rem 0.5rem;
+            background-color: white;
+            color: $app-color-sec;
+        }
+    }
+
+    &__section{
+        
+        &__title{
+            padding: 0.25rem 0.5rem 0.25rem 0.625rem;
+            background-color: $app-color-ter;
+            color: white;
+        }
+    }
+
+    &__item{
+        border-bottom: 1px solid $app-color-ter;
+        color: white;
+
+        &__title{
+            padding: 0.5rem 0.5rem 0.125rem 0.625rem;
+        }
+
+        &__desc{
+            padding: 0 0.5rem 0.5rem 0.625rem;
+            color: rgba(white, 0.4);
+            font-size: 10px;
+        }
+    }
+
+    &__end{
+        padding: 1rem 0;
+        font-style: italic;
+        color: white;
+        font-size: 10px;
+        text-align: center;
+    }
+}
+
+.nv-svg-shadow {
+    filter: drop-shadow( 0 0 10px rgba(0, 0, 0, 0.3) );
+}
+
+.nv-skeleton{
+    display: block;
+    height: 12px;
+
+    &--thin{
+        height: 10px;
+    }
+    
+    &--light{
+        background-color: rgba(white, 0.5);
+    }
+
+    &--dark{
+        background-color: rgba(0, 0, 0, 0.3);
+    }
+
+    &--50{
+        width: 50px;
+    }
+
+    &--100{
+        width: 100px;
+    }
+
+    &--150{
+        width: 150px;
+    }
+}
