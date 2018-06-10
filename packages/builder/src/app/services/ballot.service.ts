@@ -65,38 +65,42 @@ export class BallotService {
   async deployBallot(ballot: Ballot) {
 
     const ipfs = this.blockchain.getIPFSConnection();
-    ipfs.p.addJSON(ballot.json).then(async (address) => {
-
-      await this.submitBallot(address)
-
-      //const meta = await this.getRemoteBallotMeta(address);
-      //console.log(meta);
-    });
+    const address = await ipfs.p.addJSON(ballot.json);
+    const info = await this.submitBallot(address);
+    console.log(info);
+    return;
 
   }
 
-  async submitBallot(ipfs) {
+  submitBallot(ipfs): Promise<any> {
 
-    const token = await this.auth.getIdToken();
+    return new Promise<any>((resolve, reject) => {
 
-    const body = {
-      'autoActivate': true,
-      'metadataLocation': ipfs,
-      'allowUpdates': true,
-      'isPublic': true
-    }
+      this.auth.getIdToken().then((token) => {
 
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/json',
-        'Authorization': 'Bearer ' + token
-      })
-    };
+        const body = {
+          'autoActivate': true,
+          'metadataLocation': ipfs,
+          'allowUpdates': true,
+          'isPublic': true
+        }
 
-    this.http.post(`https://netvote2.firebaseapp.com/admin/election/`, body, httpOptions).subscribe((something)=>{
-      console.log(something);
-      //{"txId":"olgcZRM4yi0YgtKRbNUG","collection":"transactionCreateElection"}
+        const httpOptions = {
+          headers: new HttpHeaders({
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token
+          })
+        };
+
+        this.http.post(`https://netvote2.firebaseapp.com/admin/election/`, body, httpOptions).subscribe((res) => {
+          return resolve(res);
+          //{"txId":"olgcZRM4yi0YgtKRbNUG","collection":"transactionCreateElection"}
+        });
+
+      });
+
     });
+
   }
 
   async getRemoteBallotMeta(ipfsKey: string): Promise<any> {

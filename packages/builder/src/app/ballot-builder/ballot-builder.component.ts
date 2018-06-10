@@ -297,6 +297,7 @@ export class BallotBuilderComponent implements OnInit {
 
   deployBallot() {
 
+    this.ballot.status = "building";
     this.saveBallot().then((saved_ballot) =>{
       this.ballotService.deployBallot(this.ballot);
     });
