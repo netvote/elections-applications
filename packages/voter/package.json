@@ -40,9 +40,11 @@
     "@ngx-translate/http-loader": "0.0.3",
     "@types/jwt-decode": "^2.2.1",
     "@types/password-hash-and-salt": "^0.1.0",
-    "angularfire2": "^5.0.0-rc.10",
+    "angularfire2": "^5.0.0-rc.6",
     "branch-cordova-sdk": "^2.6.23",
     "chart.js": "^2.7.1",
+    "cordova-android": "6.4.0",
+    "cordova-ios": "~4.5.4",
     "cordova-plugin-app-version": "^0.1.9",
     "cordova-plugin-compat": "^1.2.0",
     "cordova-plugin-device": "^1.1.7",
@@ -56,7 +58,7 @@
     "cordova-plugin-whitelist": "^1.3.3",
     "cordova-sqlite-storage": "^2.2.1",
     "ethjs": "^0.2.8",
-    "firebase": "^5.0.3",
+    "firebase": "4.8.2",
     "ionic-angular": "3.9.2",
     "ionic-plugin-keyboard": "^2.2.1",
     "ionicons": "3.0.0",
@@ -99,7 +101,10 @@
       "cordova-plugin-screen-orientation": {},
       "cordova-plugin-app-version": {}
     },
-    "platforms": []
+    "platforms": [
+      "android",
+      "ios"
+    ]
   },
   "config": {
     "ionic_webpack": "./config/webpack.config.js"
