@@ -1,6 +1,6 @@
 {
     "paths": {
-        "gatewayBase": "https://netvote1.firebaseapp.com",
+        "gatewayBase": "https://2.firebaseapp.com",
         "ethereumBase": "https://ropsten.etherscan.io",
         "infuraBase": "https://ropsten.infura.io"        
     },
