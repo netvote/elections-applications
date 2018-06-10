@@ -115,5 +115,4 @@
     <plugin name="cordova-plugin-screen-orientation" spec="^3.0.1" />
     <plugin name="cordova-plugin-app-version" spec="^0.1.9" />
     <allow-navigation href="http://192.168.50.1:8100" />
-    <engine name="ios" spec="~4.5.4" />
 </widget>
