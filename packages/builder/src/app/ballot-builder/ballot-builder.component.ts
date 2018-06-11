@@ -308,7 +308,7 @@ export class BallotBuilderComponent implements OnInit {
     }
   }
 
-  deployBallot(ballot) {
+  deployBallot(ballot: Ballot) {
 
     let ngbModalOptions: NgbModalOptions = {
       backdrop : 'static',
@@ -322,11 +322,26 @@ export class BallotBuilderComponent implements OnInit {
     modalRef.componentInstance.modalText = 'Ballot "' + this.ballot.title + '" is being deployed to the blockchain!';
 
     this.ballot.status = "building";
-    this.saveBallot(true).then((saved_ballot) =>{
+    this.saveBallot(false).then((saved_ballot) =>{
+      this.ballot.status = "deploying";
       this.ballotService.deployBallot(this.ballot).then((info) =>{
         
-        modalRef.componentInstance.deployStatus = 'complete';
-        modalRef.componentInstance.ballotTx = info.txId;
+        const observable = this.ballotService.getCreationObservable(info.collection, info.txId);
+        observable.subscribe(async (res: any) => {
+
+          if(res.address && res.metadataLocation && res.tx) {
+            this.ballot.status = "created";
+            this.ballot.electionAddress = res.address;
+            this.ballot.ethTxid = res.tx;
+            this.ballot.ipfs = res.metadataLocation;
+            await this.saveBallot(false);
+            modalRef.componentInstance.deployStatus = 'complete';
+            modalRef.componentInstance.ballotTx = this.ballot.ethTxid;
+            modalRef.componentInstance.ballotLink = `https://demo.netvote.io/vote/?election=${this.ballot.electionAddress}&auth=uport`;
+          } else {
+            this.ballot.status = "building";
+          }
+        });
 
       });
     });

@@ -15,6 +15,10 @@ export interface Ballot {
   pins: string[];
   history: string[];
   featuredImage: string;
+  createTxId: string;
+  createCollection: string;
+  ethTxid: string;
+  electionAddress: string;
 }
 
 export interface Transaction {

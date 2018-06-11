@@ -144,22 +144,29 @@
 
               <h5>Ballot Activity</h5>
 
+              <h6>Voting:</h6>
+
+              <p>
+
+                <small>View election voter link: 
+                <a *ngIf="ballot.status === 'created'" target="_blank" href="https://demo.netvote.io/vote/?election={{ballot.electionAddress}}&auth=uport" title="View Voter Link">Voter Link</a></small>
+              </p>
+
               <h6>Blockchain:</h6>
 
               <p>
 
-                <small>View transaction: 
-                <a *ngIf="ballot.status === 'created'" target="_blank" href="https://ropsten.etherscan.io/tx/{{ballot.tx}}" title="View transaction">{{ballot.tx}}</a></small>
-                <small *ngIf="ballot.status !== 'created'">Ballot not yet on the blockchain. <a href="">Create it?</a></small>
+                <small>View ethereum transaction: 
+                <a *ngIf="ballot.status === 'created'" target="_blank" href="https://ropsten.etherscan.io/tx/{{ballot.ethTxid}}" title="View transaction">{{ballot.ethTxid}}</a></small>
 
               </p>
 
-              <h6>Voting Metrics</h6>
+              <!-- <h6>Voting Metrics</h6>
 
               <small>There is currently no voting activity on this ballot.</small>
               <small><a href="#" (click)="selfRegister(ballot); $event.preventDefault();">Register to vote</a></small>
               <br>
-              {{ballot.currentResults}}
+              {{ballot.currentResults}} -->
 
             </div>
 
