@@ -164,7 +164,7 @@ export class BallotBuilderComponent implements OnInit {
   
   // UI actions on to show Section panel dropdown content
   async toggleSectionsPanel(target: any) {
-    target.showSectionPanel = !target.showSectionPanel;
+    target.showSectionPanel = !target.showSectionPanel;    
   }
 
   addNewBallotGroup() {
@@ -302,7 +302,7 @@ export class BallotBuilderComponent implements OnInit {
           if(!noToast){
             this.toast.info('Ballot has been updated.');
           }
-          
+
           return afs_ballot;
         });
     }
