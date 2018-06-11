@@ -151,16 +151,21 @@
 
               <p>
 
-                <small>View election voter link: 
-                <a *ngIf="ballot.status === 'created'" target="_blank" href="https://demo.netvote.io/vote/?election={{ballot.electionAddress}}&auth=uport" title="View Voter Link">Voter Link</a></small>
+                <small [ngClass]="{ 'alert alert-info': ballot.status !== 'created' }">View election voter link: 
+                  <a *ngIf="ballot.status === 'created'" target="_blank" href="https://demo.netvote.io/vote/?election={{ballot.electionAddress}}&auth=uport" title="View Voter Link">Voter Link</a>
+                  <em *ngIf="ballot.status !== 'created'" class="text-muted">A voter link is not yet available because the ballot has not been deployed yet.</em>
+                </small>
+                
               </p>
 
               <h6>Blockchain:</h6>
 
               <p>
 
-                <small>View ethereum transaction: 
-                <a *ngIf="ballot.status === 'created'" target="_blank" href="https://ropsten.etherscan.io/tx/{{ballot.ethTxid}}" title="View transaction">{{ballot.ethTxid}}</a></small>
+                <small [ngClass]="{ 'alert alert-info': ballot.status !== 'created' }">View ethereum transaction: 
+                  <a *ngIf="ballot.status === 'created'" target="_blank" href="https://ropsten.etherscan.io/tx/{{ballot.ethTxid}}" title="View transaction">{{ballot.ethTxid}}</a>
+                  <em *ngIf="ballot.status !== 'created'" class="text-muted">An Ethereum transaction is not yet available because the ballot has not been deployed yet.</em>
+                </small>
 
               </p>
 
