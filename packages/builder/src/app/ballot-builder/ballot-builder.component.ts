@@ -330,7 +330,7 @@ export class BallotBuilderComponent implements OnInit {
         observable.subscribe(async (res: any) => {
 
           if(res.address && res.metadataLocation && res.tx) {
-            this.ballot.status = "deployed";
+            this.ballot.status = "created";
             this.ballot.electionAddress = res.address;
             this.ballot.ethTxid = res.tx;
             this.ballot.ipfs = res.metadataLocation;
