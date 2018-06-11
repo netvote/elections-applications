@@ -274,7 +274,7 @@ export class BallotBuilderComponent implements OnInit {
 
       return this.ballotService.createBallot(this.ballot)
         .then((afs_ballot) => {
-          console.log("adslfafd", afs_ballot);
+          console.log("afs_ballot: ", afs_ballot);
           if(!noToast){
             this.toast.success('Ballot: ' + this.ballot.title + ' has been created!', '', {allowHtml: true, tapToDismiss: true });
           }

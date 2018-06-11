@@ -109,7 +109,10 @@
               <textarea formControlName="ballotInformation" type="text" class="form-control" placeholder=""></textarea>
             </div>
 
-            <button class="btn btn-primary btn-large text-light" [disabled]="!ballotForm.value.ballotTitle" (click)="toggleReadyToBuild($event);">Start Building</button>
+            <button class="btn btn-primary btn-large text-light" [disabled]="!ballotForm.value.ballotTitle" (click)="toggleReadyToBuild($event);">
+              <span *ngIf="!ballot">Start Building</span>
+              <span *ngIf="ballot">Continue Building</span>
+            </button>
 
           </div>
 
