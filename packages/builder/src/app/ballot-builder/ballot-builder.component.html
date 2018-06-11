@@ -1,19 +1,30 @@
 <div class="p-3">
 
   <div class="nv-builder__save">
-    <button (click)="saveBallot()" class="btn  btn-large  btn-primary  text-light">Save Ballot</button>
-    <button [disabled]="!ballotForm.value.ballotTitle" (click)="deployBallot()" class="btn  btn-large  btn-secondary">Deploy Ballot</button>
-    <button (click)="testDelete(ballot)" class="btn btn-danger btn-large">
-      <span class="oi oi-trash"></span>
-    </button>
+
+    <div *ngIf="ballot && ballot.status !== 'created'" >
+        <button (click)="saveBallot()" class="btn  btn-large  btn-primary  text-light">Save Ballot</button>
+        <button [disabled]="!ballotForm.value.ballotTitle" (click)="deployBallot()" class="btn  btn-large  btn-secondary">Deploy Ballot</button>
+        <button (click)="testDelete(ballot)" class="btn btn-danger btn-large">
+          <span class="oi oi-trash"></span>
+        </button>
+    </div>
+
+    <!-- <div *ngIf="ballot.status === 'created'" class="text-muted  nv-builder__msg"><small><em>Ballot has been deployed to the blockchain<br>and can no longer be edited.</em></small></div> -->
+    
   </div>
 
-  <div class="nv-builder__main-header">
+  <div *ngIf="ballot.status !== 'created'" class="nv-builder__main-header">
     <h1>Build a Ballot</h1>
     <p>Build a ballot to use on Netvote apps.</p>
   </div>
 
-  <div class="row mt-5" *ngIf="readyToBuild">
+  <div *ngIf="ballot.status === 'created'" class="nv-builder__main-header">
+      <h1>Ballot Details</h1>
+      <p>Viewing details of a successfully deployed ballot.</p>
+    </div>
+
+  <div class="row mt-5" *ngIf="readyToBuild && ballot.status !== 'created'">
     <div class="col col-8">
       <h6><strong>Current Ballot:</strong> <span style="color: #60bebd; text-decoration: underline;" (click)="readyToBuild = false">{{ballotForm.value.ballotTitle}}</span></h6>
     </div>
@@ -21,7 +32,8 @@
 
   <div class="row mt-4">
 
-    <div class="col col-2" *ngIf="readyToBuild">
+    <!-- EDITING(Pre-Deploy) LAYOUT -->
+    <div class="col col-2" *ngIf="readyToBuild && ballot.status !== 'created'">
 
       <div class="nv-builder__group-rail">
 
@@ -41,7 +53,7 @@
 
     </div>
 
-    <div class="col col-md-6  pl-4">
+    <div *ngIf="ballot.status !== 'created'" class="col col-md-6  pl-4">
 
       <div class="nv-builder__form-scroll">
 
@@ -247,6 +259,24 @@
 
     </div>
 
+    <!-- POST DEPLOY LAYOUT -->
+    <div *ngIf="ballot.status === 'created'" class="col col-md-6  pl-4">
+
+        <div class="alert alert-info" role="alert">
+          This ballot has been deployed to the blockchain and can no longer be modified.
+        </div>
+
+        <p>
+          You may view the transaction of this ballot on the blockchain or go to the voter application for this ballot.
+        </p>
+        
+        <p><a href="https://demo.netvote.io/vote/?election={{ballot.electionAddress}}&auth=uport" target="_blank" class="btn  btn-tertiary">Go to the Voter Link <span class="oi oi-external-link ml-1" title="external link" aria-hidden="true"></span></a></p>
+        <p><a href="https://ropsten.etherscan.io/tx/{{ballot.ethTxid}}" target="_blank" class="btn  btn-tertiary">View ballot on blockchain <span class="oi oi-external-link ml-1" title="external link" aria-hidden="true"></span></a></p>
+        <p><button type="button" class="btn btn-primary text-light"  routerLink="/ballot-builder">Build a new ballot</button></p>
+
+    </div>
+    
+    <!-- MOCK LAYOUT -->
     <div class="col" [ngClass]="readyToBuild ? 'col-md-4' : 'col-md-6'">
 
       <div class="mt-5">

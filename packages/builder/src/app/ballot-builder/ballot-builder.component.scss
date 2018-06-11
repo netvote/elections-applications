@@ -6,6 +6,10 @@
 
 .nv-builder{
     
+    &__msg{
+        line-height: 1rem;
+    }
+
     &__save{
         position: fixed;
         z-index: 1040;

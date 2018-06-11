@@ -52,7 +52,7 @@ export class BallotBuilderComponent implements OnInit {
 
   ballot: Ballot = null;
   ready = false;
-  newBallot: any;
+  newBallot: boolean = true;
   readyToBuild: boolean = false;
   modalText: any;
   deployStatus: string = '';
@@ -77,6 +77,9 @@ export class BallotBuilderComponent implements OnInit {
     })
 
     this.setBallot(this.emptyBallot);
+
+    this.ballot = {} as Ballot;
+    this.ballot.status = "building";
 
   }
 
@@ -133,6 +136,7 @@ export class BallotBuilderComponent implements OnInit {
     this.route.params.subscribe(params => {
 
       if (params['id']) {
+        this.newBallot = false;
         this.ballot = null;
         this.ballotService.getBallot(params['id'])
           .subscribe((ballot) => {
@@ -278,6 +282,7 @@ export class BallotBuilderComponent implements OnInit {
           if(!noToast){
             this.toast.success('Ballot: ' + this.ballot.title + ' has been created!', '', {allowHtml: true, tapToDismiss: true });
           }
+
           this.router.navigate([`/ballot-builder/${afs_ballot.id}`]);
           return afs_ballot;
         });
