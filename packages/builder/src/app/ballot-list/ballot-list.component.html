@@ -112,7 +112,7 @@
                 </div>
   
                 <div class="col col-6">
-                  <a routerLink="/ballot-builder/{{ballot.id}}"><span class="oi oi-cog"></span></a>
+                  <a routerLink="/ballot-builder/{{ballot.id}}" title="Edit ballot"><span class="oi oi-cog" ></span></a>
                 </div>
   
               </div>
@@ -120,7 +120,7 @@
               <div class="row  m-0">   
   
                 <div class="col col-6">
-                    <a (click)="toggleQR(ballot)"><img src="/assets/qr-icon.svg"></a>
+                    <a (click)="toggleQR(ballot)"><img src="/assets/qr-icon.svg" title="Show QR code"></a>
                 </div>
 
                 <div class="col col-6">
