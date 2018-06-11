@@ -80,6 +80,7 @@ export class BallotBuilderComponent implements OnInit {
 
     this.ballot = {} as Ballot;
     this.ballot.status = "building";
+    this.ballot.isNew = true;
 
   }
 
@@ -254,16 +255,17 @@ export class BallotBuilderComponent implements OnInit {
     this.showJson = !this.showJson;
   }
 
-  saveBallot(noToast ?: boolean): Promise<any> {
+  saveBallot(showToast ?: boolean): Promise<any> {
 
-    if (!this.ballot) {
+    if (this.ballot.isNew) {
 
       this.ballot = {
         title: this.ballotForm.value.ballotTitle,
         description: this.ballotForm.value.ballotInformation,
         status: 'building',
         type: this.ballotForm.value.ballotType,
-        json: this.ballotForm.value
+        json: this.ballotForm.value,
+        isNew: false
       } as Ballot;
 
       // Need to rename a couple of properties until made consistent
@@ -272,17 +274,16 @@ export class BallotBuilderComponent implements OnInit {
       this.ballot.json.type = this.ballot.json.ballotType;
       this.ballot.json.description = this.ballot.json.ballotTitle;
 
-
       // TODO: TEMP
       this.ballot.type = "public";
 
       return this.ballotService.createBallot(this.ballot)
         .then((afs_ballot) => {
           console.log("afs_ballot: ", afs_ballot);
-          if(!noToast){
+          if(showToast){
             this.toast.success('Ballot: ' + this.ballot.title + ' has been created!', '', {allowHtml: true, tapToDismiss: true });
           }
-
+          
           this.router.navigate([`/ballot-builder/${afs_ballot.id}`]);
           return afs_ballot;
         });
@@ -297,6 +298,7 @@ export class BallotBuilderComponent implements OnInit {
       this.ballot.json.featuredImage = this.ballot.json.ballotImage;
       this.ballot.json.type = this.ballot.json.ballotType;
       this.ballot.json.description = this.ballot.json.ballotTitle;
+      this.ballot.isNew = false;
 
       // TODO: TEMP
       this.ballot.type = "public";
@@ -304,7 +306,7 @@ export class BallotBuilderComponent implements OnInit {
       return this.ballotService.updateBallot(this.ballot)
         .then((afs_ballot) => {
 
-          if(!noToast){
+          if(showToast){
             this.toast.info('Ballot has been updated.');
           }
 
@@ -372,7 +374,7 @@ export class BallotBuilderComponent implements OnInit {
 
   async toggleReadyToBuild(e) {
     e.preventDefault();
-    this.saveBallot();
+    this.saveBallot(true);
     this.readyToBuild = !this.readyToBuild;
   }
 

@@ -19,6 +19,7 @@ export interface Ballot {
   createCollection: string;
   ethTxid: string;
   electionAddress: string;
+  isNew: boolean;
 }
 
 export interface Transaction {

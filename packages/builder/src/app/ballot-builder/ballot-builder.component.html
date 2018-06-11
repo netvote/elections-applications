@@ -3,14 +3,12 @@
   <div class="nv-builder__save">
 
     <div *ngIf="ballot && ballot.status !== 'created'" >
-        <button (click)="saveBallot()" class="btn  btn-large  btn-primary  text-light">Save Ballot</button>
+        <button (click)="saveBallot(true)" class="btn  btn-large  btn-primary  text-light">Save Ballot</button>
         <button [disabled]="!ballotForm.value.ballotTitle" (click)="deployBallot()" class="btn  btn-large  btn-secondary">Deploy Ballot</button>
         <button (click)="testDelete(ballot)" class="btn btn-danger btn-large">
           <span class="oi oi-trash"></span>
         </button>
     </div>
-
-    <!-- <div *ngIf="ballot.status === 'created'" class="text-muted  nv-builder__msg"><small><em>Ballot has been deployed to the blockchain<br>and can no longer be edited.</em></small></div> -->
     
   </div>
 
