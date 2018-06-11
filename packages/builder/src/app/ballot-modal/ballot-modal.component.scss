@@ -1,0 +1,35 @@
+@import '../../assets/scss/variables';
+
+::ng-deep .#{$ns}modal{
+    color: white;
+
+    .modal-content{
+        background: transparent;
+        border: none;
+    }
+
+    &__bg{
+
+        &.modal-backdrop{
+
+            &.show{
+                opacity: 0.95;
+            }
+        }
+        &--dark-gradient{
+            background: radial-gradient(ellipse at center, $app-color-pri 0%, $app-color-sec 100%);
+        }
+    }
+
+    &__text{
+        font-size: 1.25rem;
+    }
+
+    spinner{
+        display: block;
+        text-align: center;
+        background: rgba(white, 0.2);
+        padding: 1rem;
+        font-size: 1.25rem;
+    }
+}

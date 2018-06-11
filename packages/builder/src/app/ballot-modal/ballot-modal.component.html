@@ -1,0 +1,38 @@
+<div class="modal-header" *ngIf="deployStatus !== 'complete'">
+  <h4 class="modal-title">Deploying Ballot</h4>
+</div>
+
+<div class="modal-header" *ngIf="deployStatus === 'complete'">
+  <h4 class="modal-title">Deploy Complete!</h4>
+</div>
+
+<div class="modal-body">
+
+  <div *ngIf="deployStatus !== 'complete'">
+
+      <p class="nv-modal__text">{{ modalText }}</p>
+
+      <spinner name="modalSpinner" [(show)]="modalText">
+        <div class="nv-spinner  is-animating">
+          <div class="nv-spinner__text">Deploying</div>
+          <div class="nv-spinner__anim"></div>
+        </div>
+      </spinner>
+
+      <p class="mt-3">Please be patient. This can take some time.</p>
+
+  </div>
+  
+  <div *ngIf="deployStatus === 'complete'">
+
+    <p class="nv-modal__text">Your ballot has been deployed to the blockchain!</p>
+    <p><a href="https://ropsten.etherscan.io/tx/{{ballotTx}}"target="_blank" class="btn  btn-tertiary">View ballot on blockchain <span class="oi oi-external-link ml-1" title="external link" aria-hidden="true"></span></a></p>
+    <p><button *ngIf="modalText" type="button" class="btn btn-secondary" (click)="activeModal.close('Close click')">Return to ballot builder</button></p>
+
+  </div>
+  
+</div>
+
+<!-- <div class="modal-footer" *ngIf="deployStatus === 'complete'">
+  <button *ngIf="modalText" type="button" class="btn btn-secondary" (click)="activeModal.close('Close click')">Close</button>
+</div> -->
