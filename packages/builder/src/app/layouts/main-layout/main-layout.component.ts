@@ -14,6 +14,7 @@ export class MainLayoutComponent {
   ballotCount: number;
   buildingBallotCount: number;
   activatedBallotCount: number
+  deployedBallotCount: number;
 
   constructor( private ballotService: BallotService ) { 
 
@@ -27,16 +28,29 @@ export class MainLayoutComponent {
 
       this.ballotCount = result.length;
 
-      let j = 0;
+      let a = 0; // activated
+      let b = 0; // building
+      let c = 0; // created
       for (var i in result) {
+
+        if(result[i].status === 'activated'){
+          a++;
+        }
+
         if(result[i].status === 'building'){
-          j++;
+          b++;
+        }
+
+        if(result[i].status === 'created'){
+          c++;
         }
      }
 
-     this.buildingBallotCount = j;
-    
-     this.activatedBallotCount = 0;
+     this.activatedBallotCount = a;
+
+     this.buildingBallotCount = b;
+
+     this.deployedBallotCount = c;
     
     });
   }

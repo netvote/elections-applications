@@ -42,7 +42,7 @@
 
               </div>
   
-              <a (click)="toggleQR(ballot)" *ngIf="ballot.status === 'activated'" class="nv-ballot-list__qr-toggle">
+              <a (click)="toggleQR(ballot)" *ngIf="ballot.status === 'created'" class="nv-ballot-list__qr-toggle">
                   
                 <img *ngIf="!ballot.showQR" src="/assets/qr-icon.svg" title="Show QR code">
   
@@ -58,7 +58,10 @@
   
                 <p class="mt-0 mb-1  nv-ballot-list__title">{{ballot.title}}</p>
                 
-                <p class="nv-ballot-list__desc">{{ballot.description}}</p>
+                <p class="nv-ballot-list__desc">
+                  <span *ngIf="ballot.description">{{ballot.description}}</span>
+                  <em *ngIf="!ballot.description">No description provided for this ballot.</em>
+                </p>
 
                 <div class="nv-ballot-list__status">
 
