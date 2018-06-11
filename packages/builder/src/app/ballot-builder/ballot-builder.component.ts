@@ -308,7 +308,7 @@ export class BallotBuilderComponent implements OnInit {
     }
   }
 
-  deployBallot(ballot) {
+  deployBallot(ballot: Ballot) {
 
     let ngbModalOptions: NgbModalOptions = {
       backdrop : 'static',
@@ -327,6 +327,16 @@ export class BallotBuilderComponent implements OnInit {
         
         modalRef.componentInstance.deployStatus = 'complete';
         modalRef.componentInstance.ballotTx = info.txId;
+
+        const observable = this.ballotService.getCreationObservable(info.collection, info.txId);
+        observable.subscribe(async (res: any) => {
+          if(res.address && res.metadataLocation && res.tx) {
+            this.ballot.electionAddress = res.address;
+            this.ballot.ethTxid = res.tx;
+            this.ballot.ipfs = res.metadataLocation;
+            await this.saveBallot(false);
+          }
+        });
 
       });
     });

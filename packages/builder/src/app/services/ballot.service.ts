@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {FirestoreService} from './firestore.service';
+import {AngularFirestore} from 'angularfire2/firestore';
 import {AuthService} from './auth.service';
 import {Observable} from 'rxjs/Observable';
 import {Ballot, BlockchainConnection} from '@netvote/core';
@@ -12,6 +13,7 @@ export class BallotService {
 
   constructor(private auth: AuthService,
     private db: FirestoreService,
+    private afs: AngularFirestore,
     private http: HttpClient) {
     this.blockchain = new BlockchainConnection();
     console.log('New Ballot Service');
@@ -67,9 +69,20 @@ export class BallotService {
     const ipfs = this.blockchain.getIPFSConnection();
     const address = await ipfs.p.addJSON(ballot.json);
     const info = await this.submitBallot(address);
-    console.log(info);
+
+    if(info.txId) {
+      ballot.createTxId = info.txId;
+      ballot.createCollection = info.collection;
+      await this.updateBallot(ballot);      
+    }
+    
     return info;
 
+  }
+
+  getCreationObservable(path: string, id: string): Observable<Ballot> {
+    const itemDoc = this.afs.doc<Ballot>(`${path}/${id}`);
+    return itemDoc.valueChanges();
   }
 
   submitBallot(ipfs): Promise<any> {
