@@ -1,5 +1,3 @@
-
-
 @import '../../assets/scss/variables';
 
 .form-horizontal{
@@ -10,7 +8,7 @@
     
     &__save{
         position: fixed;
-        z-index: 10000;
+        z-index: 1040;
         top: 0.5rem;
         right: 5rem;
     }

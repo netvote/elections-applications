@@ -2,7 +2,7 @@
 
   <div class="nv-builder__save">
     <button (click)="saveBallot()" class="btn  btn-large  btn-primary  text-light">Save Ballot</button>
-    <button (click)="deployBallot()" class="btn  btn-large  btn-secondary">Deploy Ballot</button>
+    <button [disabled]="!ballotForm.value.ballotTitle" (click)="deployBallot()" class="btn  btn-large  btn-secondary">Deploy Ballot</button>
     <button (click)="testDelete(ballot)" class="btn btn-danger btn-large">
       <span class="oi oi-trash"></span>
     </button>
@@ -69,7 +69,7 @@
 
             <div class="form-group">
               <label>Ballot Title</label>
-              <input formControlName="ballotTitle" type="text" class="form-control" placeholder="">
+              <input formControlName="ballotTitle" type="text" class="form-control" placeholder="" required>
             </div>
 
             <div class="form-group">
@@ -109,7 +109,7 @@
               <textarea formControlName="ballotInformation" type="text" class="form-control" placeholder=""></textarea>
             </div>
 
-            <button class="btn btn-primary btn-large text-light" (click)="toggleReadyToBuild($event);">Start Building</button>
+            <button class="btn btn-primary btn-large text-light" [disabled]="!ballotForm.value.ballotTitle" (click)="toggleReadyToBuild($event);">Start Building</button>
 
           </div>
 

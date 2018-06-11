@@ -7,8 +7,11 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {Ballot} from '@netvote/core';
 import {ToastService} from '../services/toast.service';
 
+import {NgbModal, NgbModalOptions} from '@ng-bootstrap/ng-bootstrap';
 import {NgbPanelChangeEvent} from '@ng-bootstrap/ng-bootstrap';
+
 import {BallotDatepickerComponent} from '../ballot-datepicker/ballot-datepicker.component';
+import { BallotModalComponent } from '../ballot-modal/ballot-modal.component';
 
 @Component({
   selector: 'ballot-builder',
@@ -51,13 +54,17 @@ export class BallotBuilderComponent implements OnInit {
   ready = false;
   newBallot: any;
   readyToBuild: boolean = false;
+  modalText: any;
+  deployStatus: string = '';
 
   constructor(
     private fb: FormBuilder,
     private ballotService: BallotService,
     private route: ActivatedRoute,
     private router: Router,
-    private toast: ToastService) {
+    private toast: ToastService,
+    private modal: NgbModal
+    ) {
 
     this.ballotForm = this.fb.group({
       ballotType: this.emptyBallot.ballotType,
@@ -243,7 +250,7 @@ export class BallotBuilderComponent implements OnInit {
     this.showJson = !this.showJson;
   }
 
-  saveBallot(): Promise<any> {
+  saveBallot(noToast ?: boolean): Promise<any> {
 
     if (!this.ballot) {
 
@@ -268,7 +275,9 @@ export class BallotBuilderComponent implements OnInit {
       return this.ballotService.createBallot(this.ballot)
         .then((afs_ballot) => {
           console.log("adslfafd", afs_ballot);
-          this.toast.success('Ballot: ' + this.ballot.title + ' has been created!', '', {allowHtml: true, tapToDismiss: true });
+          if(!noToast){
+            this.toast.success('Ballot: ' + this.ballot.title + ' has been created!', '', {allowHtml: true, tapToDismiss: true });
+          }
           this.router.navigate([`/ballot-builder/${afs_ballot.id}`]);
           return afs_ballot;
         });
@@ -289,17 +298,37 @@ export class BallotBuilderComponent implements OnInit {
 
       return this.ballotService.updateBallot(this.ballot)
         .then((afs_ballot) => {
-          this.toast.info('Ballot has been updated.');
+
+          if(!noToast){
+            this.toast.info('Ballot has been updated.');
+          }
+          
           return afs_ballot;
         });
     }
   }
 
-  deployBallot() {
+  deployBallot(ballot) {
+
+    let ngbModalOptions: NgbModalOptions = {
+      backdrop : 'static',
+      keyboard : false,
+      centered: true,
+      backdropClass: 'nv-modal__bg  nv-modal__bg--dark-gradient',
+      windowClass: 'nv-modal'
+    };
+
+    const modalRef = this.modal.open(BallotModalComponent, ngbModalOptions);
+    modalRef.componentInstance.modalText = 'Ballot "' + this.ballot.title + '" is being deployed to the blockchain!';
 
     this.ballot.status = "building";
-    this.saveBallot().then((saved_ballot) =>{
-      this.ballotService.deployBallot(this.ballot);
+    this.saveBallot(true).then((saved_ballot) =>{
+      this.ballotService.deployBallot(this.ballot).then((info) =>{
+        
+        modalRef.componentInstance.deployStatus = 'complete';
+        modalRef.componentInstance.ballotTx = info.txId;
+
+      });
     });
 
   }

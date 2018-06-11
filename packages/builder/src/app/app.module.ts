@@ -39,6 +39,7 @@ import {QRCodeModule} from 'angular2-qrcode';
 import {SpinnerModule} from '@chevtek/angular-spinners';
 import {BallotDatepickerComponent} from './ballot-datepicker/ballot-datepicker.component';
 import { ConfirmService, ConfirmState, ConfirmTemplateDirective, ConfirmModalComponent  } from './services/confirm-modal-and-service.service';
+import { BallotModalComponent } from './ballot-modal/ballot-modal.component';
 
 
 const appRoutes: Routes = [
@@ -95,7 +96,8 @@ const appRoutes: Routes = [
     BallotAccordionComponent,
     BallotDatepickerComponent,
     ConfirmTemplateDirective,
-    ConfirmModalComponent
+    ConfirmModalComponent,
+    BallotModalComponent
   ],
   imports: [
     BrowserModule,
@@ -115,6 +117,7 @@ const appRoutes: Routes = [
     SpinnerModule
   ],
   providers: [AuthService, AuthGuard,  ConfirmService, ConfirmState, {provide: ToastOptions, useClass: CustomToastOption}],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [BallotModalComponent]
 })
 export class AppModule {}

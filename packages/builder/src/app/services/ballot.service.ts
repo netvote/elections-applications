@@ -68,7 +68,7 @@ export class BallotService {
     const address = await ipfs.p.addJSON(ballot.json);
     const info = await this.submitBallot(address);
     console.log(info);
-    return;
+    return info;
 
   }
 
