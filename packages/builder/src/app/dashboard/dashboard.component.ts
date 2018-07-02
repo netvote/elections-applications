@@ -1,43 +1,35 @@
 import { Component, OnInit } from '@angular/core';
+import {Observable} from 'rxjs/Observable';
 import {BallotService} from '../services/ballot.service';
 import {Ballot} from '@netvote/core';
-import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
-  selector: 'ballot-results',
-  templateUrl: './ballot-results.component.html',
-  styleUrls: ['./ballot-results.component.scss']
+  selector: 'dashboard',
+  templateUrl: './dashboard.component.html',
+  styleUrls: ['./dashboard.component.scss']
 })
-export class BallotResultsComponent implements OnInit {
+export class DashboardComponent implements OnInit {
 
-  ballot: Ballot = null;
+  ballots: Observable<Ballot[]>;
 
-  constructor( 
-    private ballotService: BallotService,
-    private route: ActivatedRoute,
-    private router: Router) { 
+  constructor(private ballotService: BallotService) {
 
-  }
+    this.ballots = this.ballotService.getOrgBallots(); 
+
+   }
 
   ngOnInit() {
 
-    this.route.params.subscribe(params => {
+    this.ballots.subscribe(result => {
 
-      if (params['id']) {
-        this.ballot = null;
-        this.ballotService.getBallot(params['id'])
-          .subscribe((ballot) => {
-            const json = ballot.json;
-            this.ballot = ballot;
-            console.log(this.ballot);
-          });
-      }
+      console.log(result);
 
     });
 
   }
 
-  // TEST BAR CHART DATA
+
+  // TEST CHART DATA
   public barChartOptions:any = {
     scaleShowVerticalLines: false,
     responsive: true
@@ -77,5 +69,6 @@ export class BallotResultsComponent implements OnInit {
   public chartHovered(e:any):void {
     console.log(e);
   }
+
 
 }

@@ -43,6 +43,7 @@ import { BallotModalComponent } from './ballot-modal/ballot-modal.component';
 
 import { ChartsModule } from 'ng2-charts';
 import { BallotResultsComponent } from './ballot-results/ballot-results.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 const appRoutes: Routes = [
 
@@ -72,8 +73,8 @@ const appRoutes: Routes = [
         component: BallotResultsComponent
       },
       {
-        path: 'ballot-results',
-        component: BallotResultsComponent
+        path: 'dashboard',
+        component: DashboardComponent
       }
     ]
   },
@@ -108,7 +109,8 @@ const appRoutes: Routes = [
     ConfirmTemplateDirective,
     ConfirmModalComponent,
     BallotModalComponent,
-    BallotResultsComponent
+    BallotResultsComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,
