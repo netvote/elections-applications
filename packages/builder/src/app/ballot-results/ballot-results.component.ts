@@ -56,11 +56,7 @@ export class BallotResultsComponent implements OnInit {
     },
     { // grey
       backgroundColor: 'rgba(148,159,177,0.2)',
-      borderColor: 'rgba(148,159,177,1)',
-      pointBackgroundColor: 'rgba(148,159,177,1)',
-      pointBorderColor: '#fff',
-      pointHoverBackgroundColor: '#fff',
-      pointHoverBorderColor: 'rgba(148,159,177,0.8)'
+      borderColor: 'rgba(148,159,177,1)'
     }
   ];
  
