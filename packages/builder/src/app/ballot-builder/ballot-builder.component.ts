@@ -134,7 +134,7 @@ export class BallotBuilderComponent implements OnInit {
 
   ngOnInit() {
 
-    this.route.params.subscribe(params => {
+    this.route.params.subscribe((params) => {
 
       if (params['id']) {
         this.newBallot = false;

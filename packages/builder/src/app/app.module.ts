@@ -41,6 +41,8 @@ import {BallotDatepickerComponent} from './ballot-datepicker/ballot-datepicker.c
 import { ConfirmService, ConfirmState, ConfirmTemplateDirective, ConfirmModalComponent  } from './services/confirm-modal-and-service.service';
 import { BallotModalComponent } from './ballot-modal/ballot-modal.component';
 
+import { ChartsModule } from 'ng2-charts';
+import { BallotResultsComponent } from './ballot-results/ballot-results.component';
 
 const appRoutes: Routes = [
 
@@ -64,6 +66,14 @@ const appRoutes: Routes = [
       {
         path: 'ballot-list',
         component: BallotListComponent
+      },
+      {
+        path: 'ballot-results/:id',
+        component: BallotResultsComponent
+      },
+      {
+        path: 'ballot-results',
+        component: BallotResultsComponent
       }
     ]
   },
@@ -97,7 +107,8 @@ const appRoutes: Routes = [
     BallotDatepickerComponent,
     ConfirmTemplateDirective,
     ConfirmModalComponent,
-    BallotModalComponent
+    BallotModalComponent,
+    BallotResultsComponent
   ],
   imports: [
     BrowserModule,
@@ -114,7 +125,8 @@ const appRoutes: Routes = [
     BrowserAnimationsModule,
     QRCodeModule,
     ReactiveFormsModule,
-    SpinnerModule
+    SpinnerModule,
+    ChartsModule
   ],
   providers: [AuthService, AuthGuard,  ConfirmService, ConfirmState, {provide: ToastOptions, useClass: CustomToastOption}],
   bootstrap: [AppComponent],

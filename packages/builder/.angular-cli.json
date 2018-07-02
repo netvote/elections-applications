@@ -22,7 +22,7 @@
         "../node_modules/ng2-toastr/bundles/ng2-toastr.min.css",
         "assets/scss/main.scss"
       ],
-      "scripts": [],
+      "scripts": ["../node_modules/chart.js/dist/Chart.js"],
       "environmentSource": "environments/environment.ts",
       "environments": {
         "dev": "environments/environment.ts",
