@@ -20,11 +20,11 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit() {
 
-    this.ballots.subscribe(result => {
+    // this.ballots.subscribe(result => {
 
-      console.log(result);
+    //   console.log(result);
 
-    });
+    // });
 
   }
 
