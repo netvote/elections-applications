@@ -1,8 +1,8 @@
-<div class="p-3">
+<div class="p-3" *ngIf="ballot">
 
   <div class="nv-builder__save">
 
-    <div *ngIf="ballot && ballot.status !== 'created'" >
+    <div *ngIf="ballot.status !== 'created'" >
         <button (click)="saveBallot(true)" class="btn  btn-large  btn-primary  text-light">Save Ballot</button>
         <button [disabled]="!ballotForm.value.ballotTitle" (click)="deployBallot()" class="btn  btn-large  btn-secondary">Deploy Ballot</button>
         <button (click)="testDelete(ballot)" class="btn btn-danger btn-large">
@@ -61,8 +61,9 @@
 
             <div class="form-group">
               <label >Blockchain</label>
-              <select class="form-control">
-                  <option value="ropsten" selected="selected">Ethereum Test - Ropsten</option>
+              <select class="form-control" formControlName="ballotNetwork">
+                  <option value="ropsten" selected="selected">Ethereum Test Network - Ropsten</option>
+                  <option value="netvote">Ethereum Private Network - Netvote</option>
                 </select>
               <small id="ballotTypeHelp" class="form-text text-muted">Choose where to deploy this ballot.</small>
             </div>

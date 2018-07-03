@@ -21,6 +21,7 @@ import { BallotModalComponent } from '../ballot-modal/ballot-modal.component';
 export class BallotBuilderComponent implements OnInit {
 
   emptyBallot = {
+    ballotNetwork: "ropsten",
     ballotType: "public",
     ballotTitle: "",
     ballotLocation: "",
@@ -66,8 +67,9 @@ export class BallotBuilderComponent implements OnInit {
     private modal: NgbModal
     ) {
 
-    this.ballotForm = this.fb.group({
+    this.ballotForm = this.fb.group({      
       ballotType: this.emptyBallot.ballotType,
+      ballotNetwork: this.emptyBallot.ballotNetwork,
       ballotTitle: this.emptyBallot.ballotTitle,
       ballotLocation: this.emptyBallot.ballotLocation,
       ballotDate: this.emptyBallot.ballotDate,
@@ -86,8 +88,9 @@ export class BallotBuilderComponent implements OnInit {
 
   setBallot(ballot) {
 
-    this.ballotForm = this.fb.group({
+    this.ballotForm = this.fb.group({      
       ballotType: ballot.ballotType,
+      ballotNetwork: ballot.ballotNetwork,
       ballotTitle: ballot.ballotTitle,
       ballotLocation: ballot.ballotLocation,
       ballotDate: ballot.ballotDate,
@@ -264,6 +267,7 @@ export class BallotBuilderComponent implements OnInit {
         description: this.ballotForm.value.ballotInformation,
         status: 'building',
         type: this.ballotForm.value.ballotType,
+        network: this.ballotForm.value.ballotNetwork,
         json: this.ballotForm.value,
         isNew: false
       } as Ballot;
@@ -293,7 +297,8 @@ export class BallotBuilderComponent implements OnInit {
       this.ballot.title = this.ballotForm.value.ballotTitle;
       this.ballot.description = this.ballotForm.value.ballotInformation;
       this.ballot.type = this.ballotForm.value.ballotType;
-      this.ballot.json = this.ballotForm.value;
+      this.ballot.network = this.ballotForm.value.ballotNetwork;
+      this.ballot.json = this.ballotForm.value;      
       this.ballot.json.ballotImage = "https://netvote.io/wp-content/uploads/2018/03/roswell-ga.jpg";
       this.ballot.json.featuredImage = this.ballot.json.ballotImage;
       this.ballot.json.type = this.ballot.json.ballotType;

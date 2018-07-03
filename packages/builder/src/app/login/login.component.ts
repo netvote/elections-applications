@@ -29,7 +29,8 @@ export class LoginComponent implements OnInit {
     public formBuilder: FormBuilder
   ) {
     this.auth.getEthAccounts().subscribe((accounts) => {
-      this.rootAccount = accounts[0];
+      if(accounts.length)
+        this.rootAccount = accounts[0];
     })
 
   }

@@ -68,7 +68,7 @@ export class BallotService {
 
     const ipfs = this.blockchain.getIPFSConnection();
     const address = await ipfs.p.addJSON(ballot.json);
-    const info = await this.submitBallot(address);
+    const info = await this.submitBallot(address, ballot.network);
 
     if(info.txId) {
       ballot.createTxId = info.txId;
@@ -85,7 +85,7 @@ export class BallotService {
     return itemDoc.valueChanges();
   }
 
-  submitBallot(ipfs): Promise<any> {
+  submitBallot(ipfs: string, network: string): Promise<any> {
 
     return new Promise<any>((resolve, reject) => {
 
@@ -95,7 +95,8 @@ export class BallotService {
           'autoActivate': true,
           'metadataLocation': ipfs,
           'allowUpdates': true,
-          'isPublic': true
+          'isPublic': true,
+          'network': network
         }
 
         const httpOptions = {
@@ -107,7 +108,6 @@ export class BallotService {
 
         this.http.post(`https://netvote2.firebaseapp.com/admin/election/`, body, httpOptions).subscribe((res) => {
           return resolve(res);
-          //{"txId":"olgcZRM4yi0YgtKRbNUG","collection":"transactionCreateElection"}
         });
 
       });

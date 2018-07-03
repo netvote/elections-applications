@@ -15,6 +15,9 @@ export class Web3Service {
   }
 
   getAccounts(): Observable<string[]> {
+    if(!this.web3)
+      return Observable.of([]);
+      
     return Observable.create(observer => {
       this.web3.eth.getAccounts((err, accs: string[]) => {
         if (err != null) {

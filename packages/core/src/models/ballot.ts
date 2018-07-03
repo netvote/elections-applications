@@ -12,6 +12,7 @@ export interface Ballot {
   address: string;
   tx: string;
   type: string;
+  network: string;
   pins: string[];
   history: string[];
   featuredImage: string;
