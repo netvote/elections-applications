@@ -9,7 +9,7 @@ import * as jwtdecode from 'jwt-decode'
 import * as  URL  from 'url-parse';
 
 import {SecureStorage, SecureStorageObject} from "@ionic-native/secure-storage";
-import {BallotFactory, BlockchainConnection} from '@netvote/core';
+import {BlockchainConnection} from '@netvote/core';
 import {ConfigurationProvider} from '../configuration/configuration';
 import {BallotProvider} from '../../providers/ballot/ballot';
 import {Ballot} from '../../models/ballot';
@@ -22,6 +22,13 @@ export interface VoteTransaction {
   status: string;
   tx: string;
   voteId: string; 
+}
+
+export interface DeployedElection { 
+  demo: boolean;
+  metadataLocation: string;
+  network: string;
+  version: string;
 }
 
 @Injectable()
@@ -41,6 +48,28 @@ export class NetvoteProvider {
   public getVoteObservable(path: string, id: string): Observable<VoteTransaction> {
     const itemDoc = this.afs.doc<VoteTransaction>(`${path}/${id}`);
     return itemDoc.valueChanges();
+  }
+
+  // Sorry for below :/
+  public getRemoteBallotMeta(address: string): Promise<any> {
+
+    return new Promise((resolve, reject) => {
+
+      const itemDoc = this.afs.doc<DeployedElection>(`deployedElections/${address}`);
+      itemDoc.valueChanges().subscribe(async (meta: DeployedElection) => {
+
+        const ipfs = this.blockchain.getIPFSConnection();
+        const result = await ipfs.p.catJSON(meta.metadataLocation);
+        if (!result)
+          return reject("Ballot meta is no longer present");
+    
+        result.ipfs = meta.metadataLocation;
+
+        return resolve(result);
+      });
+
+    });
+
   }
 
   public async ImportBallotByUrl(url: string): Promise<any> {
@@ -70,26 +99,6 @@ export class NetvoteProvider {
     ballot.token = jwt;
     await this.ballotProvider.addBallot(ballot);
     return {meta: meta, id: id, address: address, token: jwt};
-  }
-
-  public async getRemoteBallotMeta(address: string): Promise<any> {
-
-    const BallotContract = BallotFactory.getMeta("public");
-    const contract = this.blockchain.getContract(BallotContract.abi, address);
-    const ref = await contract.metadataLocation();
-    if (!ref)
-      throw new Error("Missing IPFS Reference in Smart Contract");
-
-    const ipfsKey = ref[0].toString();
-
-    const ipfs = this.blockchain.getIPFSConnection();
-    const result = await ipfs.p.catJSON(ipfsKey);
-    if (!result)
-      throw new Error("Ballot meta is no longer present");
-
-    result.ipfs = ipfsKey;
-
-    return result;
   }
 
   public getVoterToken(ballotKey: string, ballotAddress: string) {

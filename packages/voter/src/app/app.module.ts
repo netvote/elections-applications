@@ -43,7 +43,6 @@ import {NetvoteProvider} from '../providers/netvote/netvote';
 import {SecureStorage} from "@ionic-native/secure-storage";
 import {TouchID} from '@ionic-native/touch-id';
 import {BallotProvider} from '../providers/ballot/ballot';
-import {GatewayProvider} from '../providers/gateway/gateway';
 import {ConfigurationProvider} from '../providers/configuration/configuration';
 import {Issuehandler} from '../providers/issuehandler/issuehandler';
 
@@ -131,7 +130,6 @@ export function provideSettings(storage: Storage) {
     InAppBrowser,
     NetvoteProvider,
     BallotProvider,
-    GatewayProvider,
     ConfigurationProvider
   ]
 })
