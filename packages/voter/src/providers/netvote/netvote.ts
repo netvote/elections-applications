@@ -1,5 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Http, Headers} from '@angular/http';
+import {AngularFirestore} from 'angularfire2/firestore';
+import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import * as protobuf from 'protobufjs';
 import * as tally from '@netvote/elections-tally';
@@ -14,17 +16,31 @@ import {Ballot} from '../../models/ballot';
 
 export declare var lightwallet: any;
 
+export interface VoteTransaction { 
+  address: string;
+  encryptedVote: string;
+  status: string;
+  tx: string;
+  voteId: string; 
+}
+
 @Injectable()
 export class NetvoteProvider {
 
   blockchain: BlockchainConnection;
 
   constructor(
+    public afs: AngularFirestore,
     public config: ConfigurationProvider,
     private ballotProvider: BallotProvider,
     public http: Http,
     private secureStorage: SecureStorage) {
     this.blockchain = new BlockchainConnection();
+  }
+
+  public getVoteObservable(path: string, id: string): Observable<VoteTransaction> {
+    const itemDoc = this.afs.doc<VoteTransaction>(`${path}/${id}`);
+    return itemDoc.valueChanges();
   }
 
   public async ImportBallotByUrl(url: string): Promise<any> {
@@ -56,7 +72,6 @@ export class NetvoteProvider {
     return {meta: meta, id: id, address: address, token: jwt};
   }
 
-  // Using ipfs address, get ballot meta
   public async getRemoteBallotMeta(address: string): Promise<any> {
 
     const BallotContract = BallotFactory.getMeta("public");

@@ -6,7 +6,6 @@ import {InAppBrowser} from '@ionic-native/in-app-browser';
 
 import {NetvoteProvider} from '../../providers/netvote/netvote';
 import {BallotProvider} from '../../providers/ballot/ballot';
-import {GatewayProvider} from '../../providers/gateway/gateway';
 import {ConfigurationProvider} from '../../providers/configuration/configuration';
 
 @IonicPage({
@@ -44,7 +43,6 @@ export class CastBallotPage {
     private iab: InAppBrowser,
     private netvote: NetvoteProvider,
     private ballotProvider: BallotProvider,
-    private gatewayProvider: GatewayProvider,
     public config: ConfigurationProvider) {
 
     this.verifyBypass = config.base.ballotVerifyBypass;
@@ -123,7 +121,7 @@ export class CastBallotPage {
 
     console.log(`NV: Waiting on ${result.collection} for item ${result.txId}`);
     
-    const gatewayOb = this.gatewayProvider.getVoteObservable(result.collection, result.txId);
+    const gatewayOb = this.netvote.getVoteObservable(result.collection, result.txId);
     gatewayOb.subscribe(async (vote) => {
 
       console.log(`NV: Observer response`);

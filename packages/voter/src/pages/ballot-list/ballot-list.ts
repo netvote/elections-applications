@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 import {IonicPage, NavController, NavParams, ModalController, AlertController, ItemSliding } from 'ionic-angular';
 import {BallotProvider} from '../../providers/ballot/ballot';
 import {Ballot} from '../../models/ballot';
-import {GatewayProvider} from '../../providers/gateway/gateway';
+import {NetvoteProvider} from '../../providers/netvote/netvote';
 import {ConfigurationProvider} from '../../providers/configuration/configuration';
 
 @IonicPage({
@@ -25,7 +25,7 @@ export class BallotListPage {
     private modal: ModalController,
     private alertCtrl: AlertController,
     private ballotProvider: BallotProvider,
-    private gatewayProvider: GatewayProvider,
+    private netvote: NetvoteProvider,
     public config: ConfigurationProvider) {
   }
 
@@ -45,7 +45,7 @@ export class BallotListPage {
     for (let ballot of this.ballots) {
       if (ballot.status === "submitted" && ballot.collection && ballot.result && !ballot.tx) {
         ballot.waiting = true;
-        const gatewayOb = this.gatewayProvider.getVoteObservable(ballot.collection, ballot.result);
+        const gatewayOb = this.netvote.getVoteObservable(ballot.collection, ballot.result);
         gatewayOb.subscribe(async (vote) => {
           if(vote.tx)
             ballot.waiting = false;
