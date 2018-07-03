@@ -338,7 +338,7 @@ export class BallotBuilderComponent implements OnInit {
       this.ballot.status = "deploying";
       this.ballotService.deployBallot(this.ballot).then((info) =>{
         
-        const observable = this.ballotService.getCreationObservable(info.collection, info.txId);
+        const observable = this.ballotService.getBallotObservable(info.collection, info.txId);
         observable.subscribe(async (res: any) => {
 
           if(res.address && res.metadataLocation && res.tx) {

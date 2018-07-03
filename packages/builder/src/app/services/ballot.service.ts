@@ -6,6 +6,14 @@ import {AuthService} from './auth.service';
 import {Observable} from 'rxjs/Observable';
 import {Ballot, BlockchainConnection} from '@netvote/core';
 
+export interface Tally {
+  address: string;
+  completeTime: number;
+  results: string;
+  status: string;
+  timestamp: number;
+}
+
 @Injectable()
 export class BallotService {
 
@@ -70,19 +78,39 @@ export class BallotService {
     const address = await ipfs.p.addJSON(ballot.json);
     const info = await this.submitBallot(address, ballot.network);
 
-    if(info.txId) {
+    if (info.txId) {
       ballot.createTxId = info.txId;
       ballot.createCollection = info.collection;
-      await this.updateBallot(ballot);      
+      await this.updateBallot(ballot);
     }
-    
+
     return info;
 
   }
 
-  getCreationObservable(path: string, id: string): Observable<Ballot> {
+  getBallotObservable(path: string, id: string): Observable<Ballot> {
     const itemDoc = this.afs.doc<Ballot>(`${path}/${id}`);
     return itemDoc.valueChanges();
+  }
+
+  // TODO: Push to common
+  getTally(address: string): Observable<Tally> {
+
+    return Observable.create(observer => {
+      this.http.get(`https://netvote2.firebaseapp.com/tally/election/${address}`).subscribe((res: any) => {
+        const txId = res.txId;
+        const collection = res.collection;
+        const doc = this.afs.doc<Tally>(`${collection}/${txId}`);
+        doc.valueChanges().subscribe((info: Tally) => {
+          if (info.status === "complete") {
+            observer.next(info);
+            observer.complete();
+          }
+        });
+
+      });
+      return () => {}
+    });
   }
 
   submitBallot(ipfs: string, network: string): Promise<any> {

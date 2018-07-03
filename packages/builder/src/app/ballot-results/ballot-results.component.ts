@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {BallotService} from '../services/ballot.service';
+import {BallotService, Tally} from '../services/ballot.service';
 import {Ballot} from '@netvote/core';
 import {ActivatedRoute, Router} from '@angular/router';
 
@@ -29,7 +29,10 @@ export class BallotResultsComponent implements OnInit {
           .subscribe((ballot) => {
             const json = ballot.json;
             this.ballot = ballot;
-            console.log(this.ballot);
+            this.ballotService.getTally(this.ballot.electionAddress).subscribe((tally: Tally)=>{
+              const results = JSON.parse(tally.results);
+              console.log("Tally:", results);
+            });
           });
       }
 
