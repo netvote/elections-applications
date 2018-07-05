@@ -29,9 +29,13 @@ export class BallotResultsComponent implements OnInit {
           .subscribe((ballot) => {
             const json = ballot.json;
             this.ballot = ballot;
+            
             this.ballotService.getTally(this.ballot.electionAddress).subscribe((tally: Tally)=>{
-              const results = JSON.parse(tally.results);
+              const resultData = JSON.parse(tally.results);
+              const results = resultData.ballots[Object.keys(resultData.ballots)[0]].results;
+
               console.log("Tally:", results);
+              //this.generatePieChart(results.ballots[0])
             });
           });
       }
@@ -77,4 +81,23 @@ export class BallotResultsComponent implements OnInit {
     console.log(e);
   }
 
+
+
+
+
+
+  // Test PIE Chart
+  public pieChartLabels:string[] = ['Candidate 1', 'Candidate 2', 'Candidate 3'];
+  public pieChartData:number[] = [300, 500, 100];
+  public pieChartType:string = 'pie';
+  public pieChartOptions:any = {
+    responsive: true,
+    legend: {position: 'bottom'}
+  };
+  public pieChartColors:Array<any> = [{ backgroundColor: [
+    'rgba(100, 190, 188, 1.00)', 
+    "rgba(17, 55, 74, 1.00)", 
+    "rgba(148,159,177,1)"] 
+  }];
+ 
 }
