@@ -11,6 +11,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 export class BallotResultsComponent implements OnInit {
 
   ballot: Ballot = null;
+  pieChartData:number[];
 
   constructor( 
     private ballotService: BallotService,
@@ -43,6 +44,9 @@ export class BallotResultsComponent implements OnInit {
                     item.result.counts = results[sectionIdx][item.itemTitle];
                     item.result.group = group;
                     item.result.section = section;
+
+                    this.pieChartData = item.result.counts;
+
                   });
                   sectionIdx++;
                 })
@@ -61,51 +65,8 @@ export class BallotResultsComponent implements OnInit {
 
   }
 
-  // TEST BAR CHART DATA
-  public barChartOptions:any = {
-    scaleShowVerticalLines: false,
-    responsive: true
-  };
-  public barChartLabels:string[] = ['2006', '2007', '2008', '2009', '2010', '2011', '2012'];
-  public barChartType:string = 'bar';
-  public barChartLegend:boolean = true;
-  public barChartColors:Array<any> = [
-    { // nv green
-      backgroundColor: '#64BEBC',
-      borderColor: '#64BEBC'
-    },
-    { // nv blue
-      backgroundColor: '#11374A',
-      borderColor: '#11374A'
-    },
-    { // grey
-      backgroundColor: 'rgba(148,159,177,0.2)',
-      borderColor: 'rgba(148,159,177,1)'
-    }
-  ];
- 
-  public barChartData:any[] = [
-    {data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A'},
-    {data: [28, 48, 40, 19, 86, 27, 90], label: 'Series B'}
-  ];
- 
-  // events
-  public chartClicked(e:any):void {
-    console.log(e);
-  }
- 
-  public chartHovered(e:any):void {
-    console.log(e);
-  }
-
-
-
-
-
-
   // Test PIE Chart
-  public pieChartLabels:string[] = ['Candidate 1', 'Candidate 2', 'Candidate 3'];
-  public pieChartData:number[] = [300, 500, 100];
+  public pieChartLabels:string[] = ['Candidate 0', 'Candidate 2', 'Candidate 3'];
   public pieChartType:string = 'pie';
   public pieChartOptions:any = {
     responsive: true,
@@ -116,5 +77,45 @@ export class BallotResultsComponent implements OnInit {
     "rgba(17, 55, 74, 1.00)", 
     "rgba(148,159,177,1)"] 
   }];
+
+
+
+  // // TEST BAR CHART DATA
+  // public barChartOptions:any = {
+  //   scaleShowVerticalLines: false,
+  //   responsive: true
+  // };
+  // public barChartLabels:string[] = ['2006', '2007', '2008', '2009', '2010', '2011', '2012'];
+  // public barChartType:string = 'bar';
+  // public barChartLegend:boolean = true;
+  // public barChartColors:Array<any> = [
+  //   { // nv green
+  //     backgroundColor: '#64BEBC',
+  //     borderColor: '#64BEBC'
+  //   },
+  //   { // nv blue
+  //     backgroundColor: '#11374A',
+  //     borderColor: '#11374A'
+  //   },
+  //   { // grey
+  //     backgroundColor: 'rgba(148,159,177,0.2)',
+  //     borderColor: 'rgba(148,159,177,1)'
+  //   }
+  // ];
+ 
+  // public barChartData:any[] = [
+  //   {data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A'},
+  //   {data: [28, 48, 40, 19, 86, 27, 90], label: 'Series B'}
+  // ];
+ 
+  // // events
+  // public chartClicked(e:any):void {
+  //   console.log(e);
+  // }
+ 
+  // public chartHovered(e:any):void {
+  //   console.log(e);
+  // }
+
  
 }
