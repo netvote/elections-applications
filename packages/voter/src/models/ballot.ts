@@ -5,6 +5,7 @@ export class Ballot {
         public title: string,
         public ipfs: string,
         public type: string,
+        public network: string,
         public featuredImage: string,
         public waiting?: boolean,
         public status?: string,        

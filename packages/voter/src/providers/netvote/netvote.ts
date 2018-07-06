@@ -93,11 +93,12 @@ export class NetvoteProvider {
       id = decoded.sub;
     }
     const meta = await this.getRemoteBallotMeta(address);
+    
     let ballot = await this.ballotProvider.getBallot(address, id);
     if (ballot) {
       await this.ballotProvider.removeBallot(address, id);
     }
-    ballot = new Ballot(address, id, meta.ballotTitle, meta.ipfs, meta.type, meta.featuredImage);
+    ballot = new Ballot(address, id, meta.ballotTitle, meta.ipfs, meta.type, meta.ballotNetwork, meta.featuredImage);
     ballot.description = meta.description;
     ballot.token = jwt;
     await this.ballotProvider.addBallot(ballot);

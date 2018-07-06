@@ -38,7 +38,7 @@
         <button ion-button icon-left padding class="nv-ballot-card__reveal-btn" *ngIf="ballot.tx" (tap)="reveal()"><ion-icon name="eye"></ion-icon> View Your Blockchain Votes</button>
     </ion-item>
 
-    <ion-item margin-bottom *ngIf="ballot.tx">
+    <ion-item margin-bottom *ngIf="ballot.tx && ballot.network !== 'netvote'">
       <strong>Blockchain {{ 'TRANSACTION_ID' | translate }}: </strong><br><a href="#" (click)='$event.preventDefault(); launchTxLink(ballot.url);' *ngIf="ballot.tx">{{ballot.tx}}</a>
   </ion-item>
 
