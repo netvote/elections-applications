@@ -12,6 +12,7 @@ export class BallotResultsComponent implements OnInit {
 
   ballot: Ballot = null;
   pieChartData:number[];
+  isDataAvailable:boolean = false;
 
   constructor( 
     private ballotService: BallotService,
@@ -46,7 +47,10 @@ export class BallotResultsComponent implements OnInit {
                     item.result.section = section;
 
                     this.pieChartData = item.result.counts;
-
+                    
+                    asyncFnWithCallback(()=>{ 
+                      this.isDataAvailable = true
+                    });
                   });
                   sectionIdx++;
                 })

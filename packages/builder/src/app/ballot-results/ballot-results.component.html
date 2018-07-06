@@ -19,7 +19,7 @@
 
               <p>{{bSection.sectionTitle}}</p>
     
-              <canvas baseChart
+              <canvas *ngIf="isDataAvailable" baseChart
               [data]="pieChartData"
               [labels]="pieChartLabels"
               [options]="pieChartOptions"
