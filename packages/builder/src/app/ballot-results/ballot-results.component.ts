@@ -47,10 +47,9 @@ export class BallotResultsComponent implements OnInit {
                     item.result.section = section;
 
                     this.pieChartData = item.result.counts;
+
+                    this.isDataAvailable = true;
                     
-                    asyncFnWithCallback(()=>{ 
-                      this.isDataAvailable = true
-                    });
                   });
                   sectionIdx++;
                 })
