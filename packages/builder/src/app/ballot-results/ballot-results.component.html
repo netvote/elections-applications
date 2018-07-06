@@ -18,7 +18,17 @@
             (chartHover)="chartHovered($event)"
             (chartClick)="chartClicked($event)"></canvas> -->
 
-    <canvas baseChart
+    
+
+    <div *ngFor="let bGroup of ballot.json.ballotGroups; let groupIdx = index; last as isLast" class="nv-results__group" [class.is-last-group]="isLast">
+
+      <div *ngFor="let bSection of bGroup.ballotSections; let sectionIdx = index" class="nv-chart">
+
+        <h5 padding-horizontal>{{bSection.sectionTitle}}</h5>
+        
+        <!-- <results-chart #resultChart [resultData]="bSection"></results-chart> -->
+
+        <canvas baseChart
         [data]="pieChartData"
         [labels]="pieChartLabels"
         [options]="pieChartOptions"
@@ -26,6 +36,10 @@
         [chartType]="pieChartType"
         (chartHover)="chartHovered($event)"
         (chartClick)="chartClicked($event)"></canvas>
+
+      </div>
+    
+    </div>
 
   </div>
 
