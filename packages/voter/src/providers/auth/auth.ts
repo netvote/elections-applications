@@ -13,7 +13,7 @@ export declare var lightwallet: any;
 @Injectable()
 export class AuthProvider {
 
-  readonly STORAGE_KEY = "auth_1";
+  readonly STORAGE_KEY = "auth_2";
   readonly LOGIN_STATE_KEY = "state_1";
   readonly WALLLET_XREF_KEY = "walletxref_1";
   readonly HASH_KEY = "hash_1";
