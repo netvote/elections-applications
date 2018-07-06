@@ -26,16 +26,33 @@ export class BallotResultsComponent implements OnInit {
       if (params['id']) {
         this.ballot = null;
         this.ballotService.getBallot(params['id'])
-          .subscribe((ballot) => {
+          .subscribe((ballot: any) => {
+            
             const json = ballot.json;
             this.ballot = ballot;
             
             this.ballotService.getTally(this.ballot.electionAddress).subscribe((tally: Tally)=>{
               const resultData = JSON.parse(tally.results);
-              const results = resultData.ballots[Object.keys(resultData.ballots)[0]].results;
+              const results = resultData.ballots[Object.keys(resultData.ballots)[0]].results.ALL;
 
-              console.log("Tally:", results);
-              //this.generatePieChart(results.ballots[0])
+              let sectionIdx = 0;
+              json.ballotGroups.forEach((group, index) => {
+                group.ballotSections.forEach((section, index) => {
+                  section.ballotItems.forEach((item, index) => {
+                    item.result = {};
+                    item.result.counts = results[sectionIdx][item.itemTitle];
+                    item.result.group = group;
+                    item.result.section = section;
+                  });
+                  sectionIdx++;
+                })
+        
+              });
+              
+              // At this point, each item now has a result property with the counts. This is the same as in the mobile app
+              
+              console.log("Tally:", ballot);
+              
             });
           });
       }
