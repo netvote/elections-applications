@@ -1,6 +1,6 @@
 <ion-header class="nv-header" no-border>
 
-  <ion-navbar>
+  <ion-navbar hideBackButton="{{ballotStatus == 'submitting' || ballotStatus == 'submitted'}}">
 
     <button ion-button icon-only menuToggle>
       <ion-icon name="menu"></ion-icon>
@@ -156,6 +156,13 @@
               Success! Your votes have been registered.
 
               <p>
+                <button ion-button color="attention" (tap)="backToBallotList()">Go to My Ballots</button>
+              </p>
+              <p>
+                <button ion-button color="attention" (tap)="viewResults()">View current ballot results</button>
+              </p>
+
+              <p *ngIf="ballot.network !=='netvote'">
                 <a color="attention" href="#" (click)="$event.preventDefault; launchTxLink(ballot.url);">
                   <small>View your votes on the blockchain</small>
                 </a>
@@ -168,10 +175,6 @@
                 <br>{{ballot.tx}}
 
               </div>
-
-              <p>
-                <button ion-button color="attention" (tap)="viewResults()">View current ballot results</button>
-              </p>
 
             </div>
 
