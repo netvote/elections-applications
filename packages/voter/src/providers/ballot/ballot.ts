@@ -6,7 +6,7 @@ import {Ballot} from '../../models/ballot';
 @Injectable()
 export class BallotProvider {
 
-  readonly STORAGE_KEY = "ballots_1";
+  readonly STORAGE_KEY = "ballots_2";
   
   private _ballots: Ballot[];
 
