@@ -4,27 +4,26 @@ import {AngularFirestore} from 'angularfire2/firestore';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import * as protobuf from 'protobufjs';
-import * as tally from '@netvote/elections-tally';
 import * as jwtdecode from 'jwt-decode'
-import * as  URL  from 'url-parse';
+import * as  URL from 'url-parse';
 
 import {SecureStorage, SecureStorageObject} from "@ionic-native/secure-storage";
-import {BlockchainConnection} from '@netvote/core';
+import {BlockchainConnection, Tally} from '@netvote/core';
 import {ConfigurationProvider} from '../configuration/configuration';
 import {BallotProvider} from '../../providers/ballot/ballot';
 import {Ballot} from '../../models/ballot';
 
 export declare var lightwallet: any;
 
-export interface VoteTransaction { 
+export interface VoteTransaction {
   address: string;
   encryptedVote: string;
   status: string;
   tx: string;
-  voteId: string; 
+  voteId: string;
 }
 
-export interface DeployedElection { 
+export interface DeployedElection {
   demo: boolean;
   metadataLocation: string;
   network: string;
@@ -55,6 +54,8 @@ export class NetvoteProvider {
 
     return new Promise((resolve, reject) => {
 
+      console.log("NV: Getting deployed election: ", address);
+
       const itemDoc = this.afs.doc<DeployedElection>(`deployedElections/${address}`);
       itemDoc.valueChanges().subscribe(async (meta: DeployedElection) => {
 
@@ -62,7 +63,9 @@ export class NetvoteProvider {
         const result = await ipfs.p.catJSON(meta.metadataLocation);
         if (!result)
           return reject("Ballot meta is no longer present");
-    
+
+        console.log("NV: Got election", result);
+
         result.ipfs = meta.metadataLocation;
 
         return resolve(result);
@@ -75,19 +78,19 @@ export class NetvoteProvider {
   public async ImportBallotByUrl(url: string): Promise<any> {
     try {
       const u = new URL(url);
-      if(u.protocol === "netvote:") {
+      if (u.protocol === "netvote:") {
         const res = await this.importBallot(u.hostname, u.pathname.substring(1));
         return res;
       } else return {};
-    } catch (error) {     
+    } catch (error) {
     }
   }
 
   public async importBallot(address: string, jwt: string): Promise<any> {
     let id: string = null;
     if (jwt) {
-      const decoded: any = jwtdecode(jwt);  
-      id = decoded.sub;    
+      const decoded: any = jwtdecode(jwt);
+      id = decoded.sub;
     }
     const meta = await this.getRemoteBallotMeta(address);
     let ballot = await this.ballotProvider.getBallot(address, id);
@@ -177,33 +180,57 @@ export class NetvoteProvider {
     return this.blockchain.getTransaction(tx);
   }
 
-  public getTally(address: string): Promise<any> {
+  // TODO: Push to common
+  public getTally(address: string): Observable<Tally> {
 
-    const baseUrl = this.config.base.paths.infuraBase;
+    return Observable.create(observer => {
+      this.http.get(`https://netvote2.firebaseapp.com/tally/election/${address}`)
+        .map((res) => res.json())
+        .subscribe((res: any) => {
 
-    return tally.tally({
-      electionAddress: address,
-      provider: baseUrl,
-      protoPath: 'assets/proto/vote.proto',
-      resultsUpdateCallback: (resultsStatusObj) => {
-      }
+          const txId = res.txId;
+          const collection = res.collection;
+          const doc = this.afs.doc<Tally>(`${collection}/${txId}`);
+          doc.valueChanges().subscribe((info: Tally) => {
+
+            if (info.status === "complete") {
+              observer.next(info);
+              observer.complete();
+            }
+          });
+
+        });
+      return () => {}
     });
+  }
+
+  public getVote(address: string, txId: string): Observable<any> {
+
+    console.log("NV: CALL", `https://netvote2.firebaseapp.com/vote/lookup/${address}/${txId}`);
+
+    return this.http.get(`https://netvote2.firebaseapp.com/vote/lookup/${address}/${txId}`)
+        .map((res) => res.json())
+        .map((res) => {
+          res.results = JSON.parse(res.results);
+          return res;
+        })
 
   }
 
-  public getVote(address: string, txId: string): Promise<any> {
 
-    console.log(`NV: getting vote for address: ${address} and tx: ${txId}`);
-    const baseUrl = this.config.base.paths.infuraBase;
+  // public getVote(address: string, txId: string): Promise<any> {
 
-    return tally.tallyTxVote({
-      electionAddress: address,
-      provider: baseUrl,
-      protoPath: 'assets/proto/vote.proto',
-      txId: txId
-    });
+  //   console.log(`NV: getting vote for address: ${address} and tx: ${txId}`);
+  //   const baseUrl = this.config.base.paths.infuraBase;
 
-  }
+  //   return tally.tallyTxVote({
+  //     electionAddress: address,
+  //     provider: baseUrl,
+  //     protoPath: 'assets/proto/vote.proto',
+  //     txId: txId
+  //   });
+
+  // }
 
   // TODO: Implement
   public verifyVote() {

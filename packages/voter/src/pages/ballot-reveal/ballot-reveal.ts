@@ -33,37 +33,33 @@ export class BallotRevealPage {
   }
 
   async getVote() {
-    const vote = await this.netvote.getVote(this.address, this.tx);
-    this.ballot = await this.netvote.getRemoteBallotMeta(this.address);
 
-    const ballot = vote.ballots[this.address];
-    
-    if (ballot && ballot.results) {
-      const results = ballot.results.ALL;      
-      let collapsedIdx = 0;
-      this.ballot.ballotGroups.forEach((group, groupIdx) => {
-        group.ballotSections.forEach((section, sectionIdx) => {
-          section.ballotItems.forEach((item, itemIdx) => {
-            if(results[collapsedIdx][item.itemTitle] === 1) {
-              this.currentSelected[`${groupIdx}-${sectionIdx}`]=itemIdx;
-            }
-            //this.currentSelected[`${sectionIdx}-${index}`]
-            // item.result = {};
-            // item.result.counts = results[sectionIdx][item.itemTitle];
-            // item.result.group = group;
-            // item.result.section = section;
-          });
-          collapsedIdx++;
-        })
+    this.netvote.getVote(this.address, this.tx).subscribe(async (vote) => {
 
-      });
-    }
+      this.ballot = await this.netvote.getRemoteBallotMeta(this.address);
 
-    this.loading = false;
+      const ballot = vote.results.ballots[this.address];
 
-    console.log("NV: selections; ", this.currentSelected);
-    console.log("NV: ballot; ", this.ballot);
-    console.log("NV: vote; ", vote);
+      if (ballot && ballot.results) {
+        const results = ballot.results.ALL;      
+        let collapsedIdx = 0;
+        this.ballot.ballotGroups.forEach((group, groupIdx) => {
+          group.ballotSections.forEach((section, sectionIdx) => {
+            section.ballotItems.forEach((item, itemIdx) => {
+              if(results[collapsedIdx][item.itemTitle] === 1) {
+                this.currentSelected[`${groupIdx}-${sectionIdx}`]=itemIdx;
+              }
+            });
+            collapsedIdx++;
+          })
+  
+        });
+      }
+  
+      this.loading = false;
+  
+    });
+
   }
 
   returnToList() {

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {BallotService, Tally} from '../services/ballot.service';
-import {Ballot} from '@netvote/core';
+import {BallotService} from '../services/ballot.service';
+import {Ballot, Tally} from '@netvote/core';
 import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({

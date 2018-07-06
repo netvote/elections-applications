@@ -26,3 +26,11 @@ export interface Ballot {
 export interface Transaction {
   id: string;
 }
+
+export interface Tally {
+  address: string;
+  completeTime: number;
+  results: string;
+  status: string;
+  timestamp: number;
+}

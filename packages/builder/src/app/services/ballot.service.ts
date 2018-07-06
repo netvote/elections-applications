@@ -4,15 +4,8 @@ import {FirestoreService} from './firestore.service';
 import {AngularFirestore} from 'angularfire2/firestore';
 import {AuthService} from './auth.service';
 import {Observable} from 'rxjs/Observable';
-import {Ballot, BlockchainConnection} from '@netvote/core';
+import {Ballot, BlockchainConnection, Tally} from '@netvote/core';
 
-export interface Tally {
-  address: string;
-  completeTime: number;
-  results: string;
-  status: string;
-  timestamp: number;
-}
 
 @Injectable()
 export class BallotService {

@@ -5,6 +5,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {NetvoteProvider} from '../../providers/netvote/netvote';
 import {BallotProvider} from '../../providers/ballot/ballot';
 import {Ballot} from '../../models/ballot';
+import {Tally} from '@netvote/core';
 
 @IonicPage({
   segment: "ballot-results/:address",
@@ -57,12 +58,9 @@ export class BallotResultsPage {
 
   async tallyIt() {
 
-    const res = await this.netvote.getTally(this.ballot.address);
-    
-    const ballot = res.ballots[this.address];
-    
-    if (ballot && ballot.results) {
-      const results = ballot.results.ALL;      
+    this.netvote.getTally(this.ballot.address).subscribe((tally: Tally)=>{
+      const resultData = JSON.parse(tally.results);
+      const results = resultData.ballots[Object.keys(resultData.ballots)[0]].results.ALL;
       let sectionIdx = 0;
       this.ballot.meta.ballotGroups.forEach((group, index) => {
         group.ballotSections.forEach((section, index) => {
@@ -76,9 +74,10 @@ export class BallotResultsPage {
         })
 
       });
-    }
 
-    this.tallied = true;
+      this.tallied = true;
+      
+    });
     
   }
 

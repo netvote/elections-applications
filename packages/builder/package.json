@@ -26,7 +26,7 @@
     "@ng-dynamic-forms/ui-bootstrap": "5.4.7",
     "angular2-qrcode": "^2.0.1",
     "angular2-text-mask": "^8.0.4",
-    "angularfire2": "^5.0.0-rc.6",
+    "angularfire2": "5.0.0-rc.6",
     "bootstrap": "^4.0.0",
     "chart.js": "^2.7.2",
     "core-js": "^2.4.1",
