@@ -80,7 +80,8 @@ export class ResultsChartComponent {
               },
               ticks: {
                 fontColor: 'rgba(255,255,255, 0.8)',
-                beginAtZero: true
+                beginAtZero: true,
+                stepSize: 1
               }
             }],
             yAxes: [{
