@@ -99,7 +99,14 @@ export class BallotResultsComponent implements OnInit {
     "rgba(148,159,177,1)"] 
   }];
 
+  // events
+  public chartClicked(e:any):void {
+    console.log(e);
+  }
 
+  public chartHovered(e:any):void {
+    console.log(e);
+  }
 
   // // TEST BAR CHART DATA
   // public barChartOptions:any = {
