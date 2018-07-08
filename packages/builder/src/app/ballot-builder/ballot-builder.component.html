@@ -270,7 +270,7 @@
         </p>
         
         <p><a href="https://demo.netvote.io/vote/?election={{ballot.electionAddress}}&auth=uport" target="_blank" class="btn  btn-tertiary">Go to the Voter Link <span class="oi oi-external-link ml-1" title="external link" aria-hidden="true"></span></a></p>
-        <p><a href="https://ropsten.etherscan.io/tx/{{ballot.ethTxid}}" target="_blank" class="btn  btn-tertiary">View ballot on blockchain <span class="oi oi-external-link ml-1" title="external link" aria-hidden="true"></span></a></p>
+        <p *ngIf="ballot.network !== 'netvote'"><a href="https://ropsten.etherscan.io/tx/{{ballot.ethTxid}}" target="_blank" class="btn  btn-tertiary">View ballot on blockchain <span class="oi oi-external-link ml-1" title="external link" aria-hidden="true"></span></a></p>
         <p><a routerLink="/ballot-results/{{ballot.id}}" class="btn  btn-tertiary">View ballot results</a></p>
         <p><button type="button" class="btn btn-primary text-light"  routerLink="/ballot-builder">Build a new ballot</button></p>
 

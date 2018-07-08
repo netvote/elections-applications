@@ -158,9 +158,9 @@
                 
               </p>
 
-              <h6>Blockchain:</h6>
+              <h6 *ngIf="ballot.network !=='netvote'">Blockchain:</h6>
 
-              <p>
+              <p *ngIf="ballot.network !=='netvote'">
 
                 <small [ngClass]="{ 'alert alert-info': ballot.status !== 'created' }">View ethereum transaction: 
                   <a *ngIf="ballot.status === 'created'" target="_blank" href="https://ropsten.etherscan.io/tx/{{ballot.ethTxid}}" title="View transaction">{{ballot.ethTxid}}</a>
