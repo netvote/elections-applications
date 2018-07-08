@@ -273,17 +273,14 @@ export class BallotBuilderComponent implements OnInit {
       } as Ballot;
 
       // Need to rename a couple of properties until made consistent
-      this.ballot.json.ballotImage = "https://netvote.io/wp-content/uploads/2018/03/roswell-ga.jpg";
+      this.ballot.json.ballotImage = "https://netvote.io/wp-content/uploads/2018/03/roswell-ga.jpg";  // TODO: Temp
       this.ballot.json.featuredImage = this.ballot.json.ballotImage;
       this.ballot.json.type = this.ballot.json.ballotType;
       this.ballot.json.description = this.ballot.json.ballotTitle;
 
-      // TODO: TEMP
-      this.ballot.type = "public";
-
       return this.ballotService.createBallot(this.ballot)
         .then((afs_ballot) => {
-          console.log("afs_ballot: ", afs_ballot);
+          
           if(showToast){
             this.toast.success('Ballot: ' + this.ballot.title + ' has been created!', '', {allowHtml: true, tapToDismiss: true });
           }
@@ -299,14 +296,11 @@ export class BallotBuilderComponent implements OnInit {
       this.ballot.type = this.ballotForm.value.ballotType;
       this.ballot.network = this.ballotForm.value.ballotNetwork;
       this.ballot.json = this.ballotForm.value;      
-      this.ballot.json.ballotImage = "https://netvote.io/wp-content/uploads/2018/03/roswell-ga.jpg";
+      this.ballot.json.ballotImage = "https://netvote.io/wp-content/uploads/2018/03/roswell-ga.jpg";  // TODO: Temp
       this.ballot.json.featuredImage = this.ballot.json.ballotImage;
       this.ballot.json.type = this.ballot.json.ballotType;
       this.ballot.json.description = this.ballot.json.ballotTitle;
       this.ballot.isNew = false;
-
-      // TODO: TEMP
-      this.ballot.type = "public";
 
       return this.ballotService.updateBallot(this.ballot)
         .then((afs_ballot) => {
@@ -346,6 +340,7 @@ export class BallotBuilderComponent implements OnInit {
             this.ballot.electionAddress = res.address;
             this.ballot.ethTxid = res.tx;
             this.ballot.ipfs = res.metadataLocation;
+            console.log("NV: Ballot", this.ballot);
             await this.saveBallot(false);
             modalRef.componentInstance.deployStatus = 'complete';
             modalRef.componentInstance.ballotTx = this.ballot.ethTxid;

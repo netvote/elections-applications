@@ -21,6 +21,7 @@ export interface Ballot {
   ethTxid: string;
   electionAddress: string;
   isNew: boolean;
+  resultsAvailable: boolean;
 }
 
 export interface Transaction {
