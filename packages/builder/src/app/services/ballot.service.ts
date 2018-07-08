@@ -4,6 +4,7 @@ import {FirestoreService} from './firestore.service';
 import {AngularFirestore} from 'angularfire2/firestore';
 import {AuthService} from './auth.service';
 import {Observable} from 'rxjs/Observable';
+import {catchError} from 'rxjs/operators';
 import {Ballot, BlockchainConnection, Tally} from '@netvote/core';
 
 
@@ -69,7 +70,7 @@ export class BallotService {
 
     const ipfs = this.blockchain.getIPFSConnection();
     const address = await ipfs.p.addJSON(ballot.json);
-    const info = await this.submitBallot(address, ballot.network);
+    const info = await this.submitBallot(address, ballot.network, ballot.type);
 
     if (info.txId) {
       ballot.createTxId = info.txId;
@@ -90,23 +91,24 @@ export class BallotService {
   getTally(address: string): Observable<Tally> {
 
     return Observable.create(observer => {
-      this.http.get(`https://netvote2.firebaseapp.com/tally/election/${address}`).subscribe((res: any) => {
-        const txId = res.txId;
-        const collection = res.collection;
-        const doc = this.afs.doc<Tally>(`${collection}/${txId}`);
-        doc.valueChanges().subscribe((info: Tally) => {
-          if (info.status === "complete") {
-            observer.next(info);
-            observer.complete();
-          }
-        });
+      this.http.get(`https://netvote2.firebaseapp.com/tally/election/${address}`)
+        .subscribe((res: any) => {
+          const txId = res.txId;
+          const collection = res.collection;
+          const doc = this.afs.doc<Tally>(`${collection}/${txId}`);
+          doc.valueChanges().subscribe((info: Tally) => {
+            if (info.status === "complete") {
+              observer.next(info);
+              observer.complete();
+            }
+          });
 
-      });
+        });
       return () => {}
     });
   }
 
-  submitBallot(ipfs: string, network: string): Promise<any> {
+  submitBallot(ipfs: string, network: string, type: string): Promise<any> {
 
     return new Promise<any>((resolve, reject) => {
 
@@ -116,7 +118,7 @@ export class BallotService {
           'autoActivate': true,
           'metadataLocation': ipfs,
           'allowUpdates': true,
-          'isPublic': true,
+          'isPublic': type === "public",
           'network': network
         }
 
