@@ -28,7 +28,6 @@
     <p class="nv-modal__text">Your ballot has been deployed to the blockchain!</p>
     
     <p><a href="{{ballotLink}}"target="_blank" class="btn  btn-tertiary">Go to the Voter Link <span class="oi oi-external-link ml-1" title="external link" aria-hidden="true"></span></a></p>
-    <p *ngIf="ballot.network !== 'netvote'"><a href="https://ropsten.etherscan.io/tx/{{ballotTx}}"target="_blank" class="btn  btn-tertiary">View ballot on blockchain <span class="oi oi-external-link ml-1" title="external link" aria-hidden="true"></span></a></p>
     <p><button *ngIf="modalText" type="button" class="btn btn-secondary" (click)="activeModal.close('Close click')">Return to ballot builder</button></p>
 
   </div>
