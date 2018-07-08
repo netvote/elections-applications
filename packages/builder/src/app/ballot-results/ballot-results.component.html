@@ -15,7 +15,7 @@
       </div>
     </spinner>
 
-    <div *ngIf="isDataAvailable">
+    <div>
 
       <div *ngFor="let bGroup of ballot.json.ballotGroups; let groupIdx = index; last as isLast" class="nv-results__group" [class.is-last-group]="isLast">
     

@@ -10,6 +10,7 @@ import { BaseChartDirective }   from 'ng2-charts/ng2-charts';
 })
 export class BallotResultsChartComponent implements OnInit{
   @ViewChild(BaseChartDirective) chart: BaseChartDirective;
+  
   @ViewChild('resultChart', {read: ElementRef}) resultPieChart;
   @Input('resultData') resultData;
 

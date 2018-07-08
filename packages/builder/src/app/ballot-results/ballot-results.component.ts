@@ -1,18 +1,19 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {BallotService} from '../services/ballot.service';
 import {Ballot, Tally} from '@netvote/core';
 import {ActivatedRoute, Router} from '@angular/router';
+import { BaseChartDirective } from 'ng2-charts/ng2-charts';
 
 @Component({
   selector: 'ballot-results',
   templateUrl: './ballot-results.component.html',
   styleUrls: ['./ballot-results.component.scss']
 })
-export class BallotResultsComponent implements OnInit {
+export class BallotResultsComponent{
+  @ViewChild(BaseChartDirective) chart: BaseChartDirective;
 
   ballot: Ballot = null;
   pieChartData:Array<any>;
-  pieChartType:string = 'pie';
   pieChartLabels:string[];
   isDataAvailable:boolean = false;
 
@@ -23,7 +24,7 @@ export class BallotResultsComponent implements OnInit {
 
   }
 
-  ngOnInit() {
+  ngAfterViewInit() {
 
     this.route.params.subscribe(params => {
 
@@ -62,9 +63,10 @@ export class BallotResultsComponent implements OnInit {
 
                     });
                     this.pieChartData = pieResults;
-                    this.pieChartType = 'pie';
                     this.pieChartLabels = pieLabels;
+                    //this.chart.chart.config.data.labels = pieLabels
                     sectionIdx++;
+                    console.log("THE CHART INSTANCE", this.chart);
                     console.log('PIE CHART DATA ', this.pieChartData);
                     console.log('PIE CHART LABELS ', this.pieChartLabels);
                   })
@@ -74,7 +76,7 @@ export class BallotResultsComponent implements OnInit {
               
               
               // At this point, each item now has a result property with the counts. This is the same as in the mobile app
-              this.isDataAvailable = true;
+              
               console.log("Tally:", ballot);
               
               
@@ -87,7 +89,7 @@ export class BallotResultsComponent implements OnInit {
   }
 
   // Test PIE Chart
-  //public pieChartType:string = 'pie';
+  public pieChartType:string = 'pie';
   public pieChartOptions:any = {
     responsive: true,
     legend: {position: 'bottom'}
