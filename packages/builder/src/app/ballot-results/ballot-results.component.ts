@@ -1,16 +1,14 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {BallotService} from '../services/ballot.service';
 import {Ballot, Tally} from '@netvote/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import { BaseChartDirective } from 'ng2-charts/ng2-charts';
 
 @Component({
   selector: 'ballot-results',
   templateUrl: './ballot-results.component.html',
   styleUrls: ['./ballot-results.component.scss']
 })
-export class BallotResultsComponent{
-  @ViewChild(BaseChartDirective) chart: BaseChartDirective;
+export class BallotResultsComponent implements OnInit {
 
   ballot: Ballot = null;
   pieChartData:Array<any>;
@@ -24,7 +22,7 @@ export class BallotResultsComponent{
 
   }
 
-  ngAfterViewInit() {
+  ngOnInit() {
 
     this.route.params.subscribe(params => {
 
@@ -64,9 +62,7 @@ export class BallotResultsComponent{
                     });
                     this.pieChartData = pieResults;
                     this.pieChartLabels = pieLabels;
-                    //this.chart.chart.config.data.labels = pieLabels
                     sectionIdx++;
-                    console.log("THE CHART INSTANCE", this.chart);
                     console.log('PIE CHART DATA ', this.pieChartData);
                     console.log('PIE CHART LABELS ', this.pieChartLabels);
                   })
@@ -76,7 +72,7 @@ export class BallotResultsComponent{
               
               
               // At this point, each item now has a result property with the counts. This is the same as in the mobile app
-              
+              this.isDataAvailable = true;
               console.log("Tally:", ballot);
               
               
