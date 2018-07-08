@@ -11,7 +11,8 @@ import {ActivatedRoute, Router} from '@angular/router';
 export class BallotResultsComponent implements OnInit {
 
   ballot: Ballot = null;
-  pieChartData:number[];
+  pieChartData: any;
+  // pieChartLabels:string[];
   isDataAvailable:boolean = false;
 
   constructor( 
@@ -39,21 +40,33 @@ export class BallotResultsComponent implements OnInit {
 
               if(results.length > 0){
                 console.log("THE RESULTS", results);
+                
                 let sectionIdx = 0;
                 json.ballotGroups.forEach((group, index) => {
                   group.ballotSections.forEach((section, index) => {
+                    const pieResults = [];
                     section.ballotItems.forEach((item, index) => {
                       item.result = {};
                       item.result.counts = results[sectionIdx][item.itemTitle];
                       item.result.group = group;
                       item.result.section = section;
 
-                      this.pieChartData = [item.result.counts];
+                      // this.pieChartData = [item.result.counts];
+                      // this.pieChartLabels = [item.itemTitle];
+                      // console.log('PIE CHART DATA ', this.pieChartData);
 
-                      console.log('PIE CHART DATA ', this.pieChartData);
+
+                      pieResults.push({
+                        label: item.itemTitle,
+                        data: [item.result.counts]
+                      });
+                      
+                      // console.log('PIE CHART DATA ', this.pieChartData);
 
                     });
+                    this.pieChartData = pieResults;
                     sectionIdx++;
+                    console.log('PIE CHART DATA ', this.pieChartData);
                   })
           
                 });
@@ -64,6 +77,7 @@ export class BallotResultsComponent implements OnInit {
               this.isDataAvailable = true;
               console.log("Tally:", ballot);
               
+              
             });
           });
       }
@@ -73,12 +87,12 @@ export class BallotResultsComponent implements OnInit {
   }
 
   // Test PIE Chart
-  public pieChartLabels:string[] = ['Candidate 0', 'Candidate 2', 'Candidate 3'];
   public pieChartType:string = 'pie';
   public pieChartOptions:any = {
     responsive: true,
     legend: {position: 'bottom'}
   };
+  public pieChartLegend:boolean = true;
   public pieChartColors:Array<any> = [{ backgroundColor: [
     'rgba(100, 190, 188, 1.00)', 
     "rgba(17, 55, 74, 1.00)", 

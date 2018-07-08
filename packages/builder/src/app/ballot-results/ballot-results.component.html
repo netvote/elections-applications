@@ -29,10 +29,10 @@
                   <p>{{bSection.sectionTitle}}</p>
         
                   <canvas baseChart
-                  [data]="pieChartData"
-                  [labels]="pieChartLabels"
+                  [datasets]="pieChartData"
                   [options]="pieChartOptions"
                   [colors]="pieChartColors"
+                  [legend]="pieChartLegend"
                   [chartType]="pieChartType"
                   (chartHover)="chartHovered($event)"
                   (chartClick)="chartClicked($event)"></canvas>
