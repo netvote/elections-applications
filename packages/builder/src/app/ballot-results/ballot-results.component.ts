@@ -29,7 +29,7 @@ export class BallotResultsComponent implements OnInit {
         this.ballot = null;
         this.ballotService.getBallot(params['id'])
           .subscribe((ballot: any) => {
-            
+            // console.log("BALLOT", ballot);
             const json = ballot.json;
             this.ballot = ballot;
             
@@ -37,33 +37,37 @@ export class BallotResultsComponent implements OnInit {
               const resultData = JSON.parse(tally.results);
               const results = resultData.ballots[Object.keys(resultData.ballots)[0]].results.ALL;
 
-              let sectionIdx = 0;
-              json.ballotGroups.forEach((group, index) => {
-                group.ballotSections.forEach((section, index) => {
-                  section.ballotItems.forEach((item, index) => {
-                    item.result = {};
-                    item.result.counts = results[sectionIdx][item.itemTitle];
-                    item.result.group = group;
-                    item.result.section = section;
+              if(results.length > 0){
+                console.log("THE RESULTS", results);
+                let sectionIdx = 0;
+                json.ballotGroups.forEach((group, index) => {
+                  group.ballotSections.forEach((section, index) => {
+                    section.ballotItems.forEach((item, index) => {
+                      item.result = {};
+                      item.result.counts = results[sectionIdx][item.itemTitle];
+                      item.result.group = group;
+                      item.result.section = section;
 
-                    this.pieChartData = item.result.counts;
+                      this.pieChartData = [item.result.counts];
 
-                    this.isDataAvailable = true;
-                    
-                  });
-                  sectionIdx++;
-                })
-        
-              });
+                      console.log('PIE CHART DATA ', this.pieChartData);
+
+                    });
+                    sectionIdx++;
+                  })
+          
+                });
+              }
+              
               
               // At this point, each item now has a result property with the counts. This is the same as in the mobile app
-              
+              this.isDataAvailable = true;
               console.log("Tally:", ballot);
               
             });
           });
       }
-
+      
     });
 
   }

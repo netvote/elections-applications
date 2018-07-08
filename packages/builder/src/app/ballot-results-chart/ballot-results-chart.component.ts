@@ -1,18 +1,19 @@
-import {Component, ViewChild, ElementRef, Renderer, Input } from '@angular/core';
+import {Component, ViewChild, ElementRef, Renderer, Input, OnInit } from '@angular/core';
 
-import { Chart } from 'chart.js';
+// import { Chart } from 'chart.js';
+import { BaseChartDirective }   from 'ng2-charts/ng2-charts';
 
 @Component({
   selector: 'ballot-results-chart',
   templateUrl: './ballot-results-chart.component.html',
   styleUrls: ['./ballot-results-chart.component.scss']
 })
-export class BallotResultsChartComponent {
-
+export class BallotResultsChartComponent implements OnInit{
+  @ViewChild(BaseChartDirective) chart: BaseChartDirective;
   @ViewChild('resultChart', {read: ElementRef}) resultPieChart;
   @Input('resultData') resultData;
 
-  chart: any;
+  //chart: any;
   pieChartData: any;
   pieChartLabels:string[] = ['Candidate 0', 'Candidate 2', 'Candidate 3'];
   pieChartType:string = 'pie';
@@ -25,16 +26,18 @@ export class BallotResultsChartComponent {
     "rgba(17, 55, 74, 1.00)", 
     "rgba(148,159,177,1)"] 
   }];
+  // isDataAvailable:boolean = false;
 
   constructor(public renderer: Renderer) {}
 
-  ngAfterViewInit(){
+  ngOnInit(){
     
     const results = [];
     let opacity = 1.00;
     this.resultData.ballotItems.forEach((item, index) => {
-      console.log(item.result);
+     
       this.pieChartData = item.result.counts;
+      console.log("DA CHART DATA", this.pieChartData);
       // results.push({
       //   label: item.itemTitle,
       //   backgroundColor: `rgba(95, 192, 189, ${opacity})`,

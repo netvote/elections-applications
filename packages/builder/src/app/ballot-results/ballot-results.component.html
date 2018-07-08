@@ -8,63 +8,46 @@
 
   <div *ngIf="ballot">
 
-    <div *ngFor="let bGroup of ballot.json.ballotGroups; let groupIdx = index; last as isLast" class="nv-results__group" [class.is-last-group]="isLast">
-      
-      <h5>{{bGroup.groupTitle}}</h5>
-      <div class="row">
-
-        <ng-container *ngFor="let bSection of bGroup.ballotSections; let sectionIdx = index" >
-
-          <div class="col-4 mb-5">
-
-              <p>{{bSection.sectionTitle}}</p>
-    
-              <!-- <canvas *ngIf="isDataAvailable" baseChart
-              [data]="pieChartData"
-              [labels]="pieChartLabels"
-              [options]="pieChartOptions"
-              [colors]="pieChartColors"
-              [chartType]="pieChartType"
-              (chartHover)="chartHovered($event)"
-              (chartClick)="chartClicked($event)"></canvas> -->
-    
-              <ballot-results-chart *ngIf="isDataAvailable"  #resultChart [resultData]="bSection"></ballot-results-chart>
-
-            </div>
-            <div *ngIf="(i + 1) % 3 == 0" class="w-100"></div>
-
-        </ng-container>
-
+    <spinner name="resultsSpinner" [(hidden)]="isDataAvailable">
+      <div class="nv-spinner  is-animating">
+        <div class="nv-spinner__text">Compiling Results...</div>
+        <div class="nv-spinner__anim"></div>
       </div>
-      
-    </div>
+    </spinner>
 
-  </div>
+    <div *ngIf="isDataAvailable">
 
-  <div *ngIf="!ballot">
+      <div *ngFor="let bGroup of ballot.json.ballotGroups; let groupIdx = index; last as isLast" class="nv-results__group" [class.is-last-group]="isLast">
     
-    <div class="row">
-
-      <ng-container *ngFor="let ballot of ballots | async; let i=index">
-
-        <div class="col-4 mb-5">
-
-          <p>{{ballot.json.ballotTitle}}</p>
-          <canvas baseChart
-            [datasets]="barChartData"
-            [labels]="barChartLabels"
-            [options]="barChartOptions"
-            [legend]="barChartLegend"
-            [colors]="barChartColors"
-            [chartType]="barChartType"
-            (chartHover)="chartHovered($event)"
-            (chartClick)="chartClicked($event)"></canvas>
-
+          <h5>{{bGroup.groupTitle}}</h5>
+          <div class="row">
+    
+            <ng-container *ngFor="let bSection of bGroup.ballotSections; let sectionIdx = index" >
+    
+              <div class="col-4 mb-5">
+    
+                  <p>{{bSection.sectionTitle}}</p>
+        
+                  <canvas baseChart
+                  [data]="pieChartData"
+                  [labels]="pieChartLabels"
+                  [options]="pieChartOptions"
+                  [colors]="pieChartColors"
+                  [chartType]="pieChartType"
+                  (chartHover)="chartHovered($event)"
+                  (chartClick)="chartClicked($event)"></canvas>
+        
+                  <!-- <ballot-results-chart *ngIf="isDataAvailable" [resultData]="bSection"></ballot-results-chart> -->
+    
+                </div>
+                <div *ngIf="(i + 1) % 3 == 0" class="w-100"></div>
+    
+            </ng-container>
+    
+          </div>
+          
         </div>
-        <div *ngIf="(i + 1) % 3 == 0" class="w-100"></div>
 
-      </ng-container>
-      
     </div>
 
   </div>
