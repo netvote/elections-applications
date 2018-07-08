@@ -11,9 +11,10 @@ import {ActivatedRoute, Router} from '@angular/router';
 export class BallotResultsComponent implements OnInit {
 
   ballot: Ballot = null;
-  pieChartData: any;
-  // pieChartLabels:string[];
-  isDataAvailable: boolean = false;
+  pieChartData:Array<any>;
+  pieChartType:string = 'pie';
+  pieChartLabels:string[];
+  isDataAvailable:boolean = false;
 
   constructor(
     private ballotService: BallotService,
@@ -30,56 +31,54 @@ export class BallotResultsComponent implements OnInit {
         this.ballot = null;
         this.ballotService.getBallot(params['id'])
           .subscribe((ballot: any) => {
-            // console.log("BALLOT", ballot);
             const json = ballot.json;
             this.ballot = ballot;
+            
+            this.ballotService.getTally(this.ballot.electionAddress).subscribe((tally: Tally)=>{
+              const resultData = JSON.parse(tally.results);
+              const results = resultData.ballots[Object.keys(resultData.ballots)[0]].results.ALL;
 
-            this.ballotService.getTally(this.ballot.electionAddress)
-              .subscribe((tally: Tally) => {
-                const resultData = JSON.parse(tally.results);
-                const results = resultData.ballots[Object.keys(resultData.ballots)[0]].results.ALL;
+              if(results.length > 0){
+                console.log("THE RESULTS", results);
+                
+                let sectionIdx = 0;
+                json.ballotGroups.forEach((group, index) => {
+                  group.ballotSections.forEach((section, index) => {
+                    const pieResults = [];
+                    const pieLabels = [];
+                    section.ballotItems.forEach((item, index) => {
+                      item.result = {};
+                      item.result.counts = results[sectionIdx][item.itemTitle];
+                      item.result.group = group;
+                      item.result.section = section;
 
-                if (results.length > 0) {
-                  console.log("THE RESULTS", results);
-
-                  let sectionIdx = 0;
-                  json.ballotGroups.forEach((group, index) => {
-                    group.ballotSections.forEach((section, index) => {
-                      const pieResults = [];
-                      section.ballotItems.forEach((item, index) => {
-                        item.result = {};
-                        item.result.counts = results[sectionIdx][item.itemTitle];
-                        item.result.group = group;
-                        item.result.section = section;
-
-                        // this.pieChartData = [item.result.counts];
-                        // this.pieChartLabels = [item.itemTitle];
-                        // console.log('PIE CHART DATA ', this.pieChartData);
-
-
-                        pieResults.push({
-                          label: item.itemTitle,
-                          data: [item.result.counts]
-                        });
-
-                        // console.log('PIE CHART DATA ', this.pieChartData);
-
+                      pieLabels.push(item.itemTitle);
+                      pieResults.push({
+                        label: item.itemTitle,
+                        data: [item.result.counts]
                       });
-                      this.pieChartData = pieResults;
-                      sectionIdx++;
-                      console.log('PIE CHART DATA ', this.pieChartData);
-                    })
+                      
+                      // console.log('PIE CHART DATA ', this.pieChartData);
 
-                  });
-                }
-
-
-                // At this point, each item now has a result property with the counts. This is the same as in the mobile app
-                this.isDataAvailable = true;
-                console.log("Tally:", ballot);
-
-
-              }, error => {console.log("ERROR RES", error)});
+                    });
+                    this.pieChartData = pieResults;
+                    this.pieChartType = 'pie';
+                    this.pieChartLabels = pieLabels;
+                    sectionIdx++;
+                    console.log('PIE CHART DATA ', this.pieChartData);
+                    console.log('PIE CHART LABELS ', this.pieChartLabels);
+                  })
+          
+                });
+              }
+              
+              
+              // At this point, each item now has a result property with the counts. This is the same as in the mobile app
+              this.isDataAvailable = true;
+              console.log("Tally:", ballot);
+              
+              
+            });
           });
       }
 
@@ -88,8 +87,8 @@ export class BallotResultsComponent implements OnInit {
   }
 
   // Test PIE Chart
-  public pieChartType: string = 'pie';
-  public pieChartOptions: any = {
+  //public pieChartType:string = 'pie';
+  public pieChartOptions:any = {
     responsive: true,
     legend: {position: 'bottom'}
   };

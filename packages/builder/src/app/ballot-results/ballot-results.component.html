@@ -30,9 +30,9 @@
         
                   <canvas baseChart
                   [datasets]="pieChartData"
+                  [labels]="pieChartLabels"
                   [options]="pieChartOptions"
                   [colors]="pieChartColors"
-                  [legend]="pieChartLegend"
                   [chartType]="pieChartType"
                   (chartHover)="chartHovered($event)"
                   (chartClick)="chartClicked($event)"></canvas>
