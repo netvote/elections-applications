@@ -19,17 +19,16 @@
 
               <p>{{bSection.sectionTitle}}</p>
     
-              <canvas *ngIf="isDataAvailable" baseChart
+              <!-- <canvas *ngIf="isDataAvailable" baseChart
               [data]="pieChartData"
               [labels]="pieChartLabels"
               [options]="pieChartOptions"
               [colors]="pieChartColors"
               [chartType]="pieChartType"
               (chartHover)="chartHovered($event)"
-              (chartClick)="chartClicked($event)"></canvas>
+              (chartClick)="chartClicked($event)"></canvas> -->
     
-              <!-- <ballot-results-chart #resultChart [resultData]="bSection"></ballot-results-chart> -->
-
+              <ballot-results-chart *ngIf="isDataAvailable"  #resultChart [resultData]="bSection"></ballot-results-chart>
 
             </div>
             <div *ngIf="(i + 1) % 3 == 0" class="w-100"></div>

@@ -1,1 +1,8 @@
-<canvas #resultChart></canvas>
+<canvas baseChart #resultChart
+        [data]="pieChartData"
+        [labels]="pieChartLabels"
+        [options]="pieChartOptions"
+        [colors]="pieChartColors"
+        [chartType]="pieChartType"
+        (chartHover)="chartHovered($event)"
+        (chartClick)="chartClicked($event)"></canvas>
