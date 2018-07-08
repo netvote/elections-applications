@@ -7,6 +7,7 @@ export class Ballot {
         public type: string,
         public network: string,
         public featuredImage: string,
+        public resultsAvailable?: boolean,
         public waiting?: boolean,
         public status?: string,        
         public description?: string,

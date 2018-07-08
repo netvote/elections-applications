@@ -79,7 +79,7 @@
                     </spinner>
                   </div>
                   <!-- Created -->
-                  <div *ngIf="ballot.status === 'created'"><span>Created on the blockchain!</span> <a (click)="activateBallot(ballot); $event.preventDefault();" href="#">Activate?</a></div>
+                  <div *ngIf="ballot.status === 'created'"><span>Created on the blockchain</span></div>
                   <!-- Activating -->
                   <div *ngIf="ballot.status === 'activating'">
                     <spinner name="ballot.id" [(show)]="ballot.showingSpinner">
@@ -158,9 +158,9 @@
                 
               </p>
 
-              <h6>Blockchain:</h6>
+              <h6 *ngIf="ballot.network !=='netvote'">Blockchain:</h6>
 
-              <p>
+              <p *ngIf="ballot.network !=='netvote'">
 
                 <small [ngClass]="{ 'alert alert-info': ballot.status !== 'created' }">View ethereum transaction: 
                   <a *ngIf="ballot.status === 'created'" target="_blank" href="https://ropsten.etherscan.io/tx/{{ballot.ethTxid}}" title="View transaction">{{ballot.ethTxid}}</a>
