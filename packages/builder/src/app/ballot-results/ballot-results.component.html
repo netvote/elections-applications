@@ -8,16 +8,18 @@
 
   <div *ngIf="ballot">
 
-    <spinner name="resultsSpinner" [(hidden)]="isDataAvailable">
+    <!-- <spinner name="resultsSpinner" [(show)]="!isDataAvailable">
       <div class="nv-spinner  is-animating">
         <div class="nv-spinner__text">Compiling Results...</div>
         <div class="nv-spinner__anim"></div>
       </div>
-    </spinner>
+    </spinner> -->
+
+    <div *ngIf="!isDataAvailable" class="alert alert-info text-center mt-5">Compiling results and generating charts...</div>
 
     <div *ngIf="isDataAvailable">
 
-      <div *ngFor="let bGroup of ballot.json.ballotGroups; let groupIdx = index; last as isLast" class="nv-results__group" [class.is-last-group]="isLast">
+      <div *ngFor="let bGroup of ballot.json.ballotGroups; let groupIdx = index; last as isLast" class="mt-5" [class.is-last-group]="isLast">
     
           <h5>{{bGroup.groupTitle}}</h5>
           <div class="row">
@@ -27,17 +29,8 @@
               <div class="col-4 mb-5">
     
                   <p>{{bSection.sectionTitle}}</p>
-        
-                  <canvas baseChart
-                  [datasets]="pieChartData"
-                  [labels]="pieChartLabels"
-                  [options]="pieChartOptions"
-                  [colors]="pieChartColors"
-                  [chartType]="pieChartType"
-                  (chartHover)="chartHovered($event)"
-                  (chartClick)="chartClicked($event)"></canvas>
-        
-                  <!-- <ballot-results-chart *ngIf="isDataAvailable" [resultData]="bSection"></ballot-results-chart> -->
+
+                  <ballot-results-chart [pieCounts]="bSection.pieCounts" [pieLabels]="bSection.pieLabels"></ballot-results-chart>
     
                 </div>
                 <div *ngIf="(i + 1) % 3 == 0" class="w-100"></div>
