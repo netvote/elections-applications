@@ -344,7 +344,8 @@ export class BallotBuilderComponent implements OnInit {
             await this.saveBallot(false);
             modalRef.componentInstance.deployStatus = 'complete';
             modalRef.componentInstance.ballotTx = this.ballot.ethTxid;
-            modalRef.componentInstance.ballotLink = `https://demo.netvote.io/vote/?election=${this.ballot.electionAddress}&auth=uport`;
+            // modalRef.componentInstance.ballotLink = `https://demo.netvote.io/vote/?election=${this.ballot.electionAddress}&auth=uport`;
+            modalRef.componentInstance.ballotLink = `https://demo.netvote.io/vote/?election=${this.ballot.electionAddress}&auth=lifeid`;
           } else {
             this.ballot.status = "building";
           }
