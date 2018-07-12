@@ -26,10 +26,10 @@ export class BallotRevealPage {
     private netvote: NetvoteProvider) {
   }
 
-  ionViewDidLoad() {
+  async ionViewDidLoad() {
     this.address = this.navParams.get('address');
     this.tx = this.navParams.get('tx');
-    this.getVote();
+    await this.getVote();
   }
 
   async getVote() {
@@ -37,8 +37,11 @@ export class BallotRevealPage {
     this.netvote.getVote(this.address, this.tx).subscribe(async (vote) => {
 
       this.ballot = await this.netvote.getRemoteBallotMeta(this.address);
-
-      const ballot = vote.results.ballots[this.address];
+      
+      // TODO: We need to store the ballot address as the BC address and store the DB unique key in another property vs conflating the two.
+      const key = Object.keys(vote.results.ballots)[0];
+      const ballot = vote.results.ballots[key];
+      
 
       if (ballot && ballot.results) {
         const results = ballot.results.ALL;      
@@ -57,6 +60,8 @@ export class BallotRevealPage {
       }
   
       this.loading = false;
+
+      return true;
   
     });
 

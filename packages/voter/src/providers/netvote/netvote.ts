@@ -55,8 +55,6 @@ export class NetvoteProvider {
 
     return new Promise((resolve, reject) => {
 
-      console.log("NV: Getting deployed election: ", address);
-
       const itemDoc = this.afs.doc<DeployedElection>(`deployedElections/${address}`);
       itemDoc.valueChanges().subscribe(async (meta: DeployedElection) => {
 
@@ -64,8 +62,6 @@ export class NetvoteProvider {
         const result = await ipfs.p.catJSON(meta.metadataLocation);
         if (!result)
           return reject("Ballot meta is no longer present");
-
-        console.log("NV: Got election", result);
 
         result.ipfs = meta.metadataLocation;
 
@@ -207,9 +203,6 @@ export class NetvoteProvider {
   }
 
   public getVote(address: string, txId: string): Observable<any> {
-
-    console.log("NV: CALL", `https://netvote2.firebaseapp.com/vote/lookup/${address}/${txId}`);
-
     return this.http.get(`https://netvote2.firebaseapp.com/vote/lookup/${address}/${txId}`)
         .map((res) => res.json())
         .map((res) => {
