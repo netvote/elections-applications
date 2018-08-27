@@ -19,6 +19,7 @@ export class AuthProvider {
   readonly HASH_KEY = "hash_1";
   readonly KEYSTORE_KEY = "keystore_1";
   readonly BIOMETRIC_KEY = "biometric_1";
+  readonly EXTERNAL_TOKEN = "external_token_1";
 
   readonly ENABLE_KEYSTORE = false;
 
@@ -197,6 +198,18 @@ export class AuthProvider {
       return false;
     await storage.set(this.LOGIN_STATE_KEY, AuthState.Locked.toString());
     return true;
+  }
+
+  public async setExternalToken(token): Promise<boolean> {
+    const storage = await this.getSecureStorage(this.STORAGE_KEY);
+    await storage.set(this.EXTERNAL_TOKEN, token);
+    return true;
+  }
+
+  public async getExternalToken(): Promise<string> {
+    const storage = await this.getSecureStorage(this.STORAGE_KEY);
+    const token = await storage.get(this.EXTERNAL_TOKEN);
+    return token;
   }
 
   public async logout(removeBiometric: boolean = true): Promise<boolean> {

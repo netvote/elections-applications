@@ -151,6 +151,30 @@ export class NetvoteProvider {
     });
   }
 
+  public getBallotFromCode(code: string, token: string): Promise<any> {
+
+    const baseUrl = this.config.base.paths.gatewayBase;
+
+    return new Promise((resolve, reject) => {
+
+      const headers = new Headers();
+      headers.append('Authorization', 'Bearer ' + token);
+      var body = {"shortCode": code};
+
+      this.http.post(`${baseUrl}/vote/ballotGroup/auth`, body, {
+        headers: headers,
+      })
+        .map((res) => res.json())
+        .subscribe((res) => {
+          return resolve(res);
+        },
+          (err) => {
+            return reject(err);
+          });
+
+    });
+  }
+
   public postWithAuth(token: string, url: string) {
 
     const baseUrl = this.config.base.paths.gatewayBase;

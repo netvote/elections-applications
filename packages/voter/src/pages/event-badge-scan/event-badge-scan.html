@@ -1,0 +1,67 @@
+<ion-header class="nv-header" no-border>
+
+  <ion-navbar>
+
+    <button ion-button icon-only menuToggle>
+
+      <ion-icon name="menu"></ion-icon>
+
+    </button>
+
+    <div class="nv-header__logo">
+
+      <img src="assets/img/netvote-logo-mark-check.png">
+
+    </div>
+
+    <ion-buttons end>
+      <ion-badge color="warning">{{ 'DEMO' | translate }}</ion-badge>
+    </ion-buttons>
+
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content>
+
+  <div padding>
+
+    <h1>Scan an Event Badge</h1>
+
+    <p>Scanning your event badge will associate your identity with this application.</p>
+
+    <ion-row *ngIf="!newScan" align-items-center>
+
+      <ion-col>
+
+        <button *ngIf="externalToken" (tap)="scanQr()" ion-button block color="attention">Re-scan an Event Badge</button>
+        <button *ngIf="!externalToken" (tap)="scanQr()" ion-button block color="attention">Scan an Event Badge</button>
+
+      </ion-col>
+
+    </ion-row>
+
+    <ion-row *ngIf="externalToken && !newScan" align-items-center>
+
+      <ion-col>
+
+        <p >Please note: You have already assigned an identity to this app. It will be replaced if you scan again.</p>
+
+      </ion-col>
+
+    </ion-row>
+
+    <ion-row *ngIf="externalToken" align-items-center>
+
+      <ion-col>
+
+        <button (tap)="enterCode()" ion-button block color="attention">Enter a Ballot Code</button>
+
+      </ion-col>
+
+    </ion-row>
+
+
+  </div>
+
+</ion-content>

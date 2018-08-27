@@ -45,6 +45,7 @@ export class NetVoteApp {
 
   pages: any[] = [
     {title: 'My Ballots', component: "ballot-list"},
+    {title: 'Scan an Event Badge', component: "event-badge-scan"},
     {title: 'Scan a Ballot', component: "ballot-scan"},
     {title: 'Settings', component: SettingsPage},
   ];
