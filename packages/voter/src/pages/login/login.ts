@@ -128,7 +128,7 @@ export class LoginPage {
     }
 
     if (this.registerForm.valid) {
-
+      console.log("FORM IS VALID ..... CARRY ON....");
       this.keyboard.close();
       await this.pause(500);
 
@@ -136,7 +136,12 @@ export class LoginPage {
       await this.ballotProvider.clear();
       const res = await this.authProvider.register(this.registerForm.value.passcode, this.registerForm.value.touchId);
       if (res.success) {
+        console.log("result", res.success);
         this.hideLoading();
+      }
+      else{
+        console.log("************************************ no login success *******************************");
+        console.log(res);
       }
     }
   }
@@ -208,7 +213,6 @@ export class LoginPage {
 
     if (!this.loginForm.valid) {
       console.log("NV: Login form values are invalid!");
-
       this.presentPasscodeInvalidAlert();
 
     }
