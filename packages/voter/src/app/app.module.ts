@@ -123,7 +123,7 @@ export function provideSettings(storage: Storage) {
     SecureStorage,
     {provide: Settings, useFactory: provideSettings, deps: [Storage]},
     // Keep this to enable Ionic's runtime error handling during development
-    
+
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     // {provide: ErrorHandler, useClass: RollbarService},
     AuthProvider,
